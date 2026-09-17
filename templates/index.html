@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Programming Portfolio</title>
-</head>
-<body>
-    <header>
+{% extends "base.html" %} 
+{% block title %} Home {% endblock %} 
+
+
+    {% block header %}
+
         <h1>Web Programming Portfolio — Michel Hajjar </h1>
         <p>A live site that grows one page or feature every week.</p>
-    </header>
+    
+    {% endblock %}
 
-    <main>
+    {% block content %}
+    
         <section>
             <h2>Weekly Work</h2>
             <!-- Each week you add a link here to that week's page or feature. -->
@@ -23,14 +22,5 @@
                 {% endfor %}
             </ul>
         </section>
-    </main>
+    {% endblock %}
 
-    <footer>
-        <p>Web Programming — built with Flask and deployed on Render.</p>
-        <p>This website is created for educational purposes
-            only, as part of the GIN446 - Web Programming course,
-            School of Engineering, USEK. (Fall 2026-2027)</p>
-
-    </footer>
-</body>
-</html>
