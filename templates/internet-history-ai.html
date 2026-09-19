@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet History (AI)</title>
-</head>
-<body>
-<header>
+{% extends "nav-base.html" %} 
+{% block title %} History of the Internet (AI){% endblock %} 
+
+{% block header %}
     <h1>History of the Internet</h1>
-</header>
 
-<nav>
-    <a href="/">Home</a> <br>
-    <a href="/internet-history">Internet History</a> <br>
-    <a href="/web-history">Web History</a> <br>
-    <a href="/web-history-ai">Web History (AI)</a> <br>
-</nav>
+{% endblock %}
 
-<main>
-
-    <section id="introduction">
+{% block content %}
         <h2>Introduction</h2>
 
         <p>
@@ -32,9 +19,9 @@
             Wide Web made the Internet much easier for people around the world to
             access and use.
         </p>
-    </section>
+    
 
-    <section id="timeline">
+    <section>
         <h2>Timeline</h2>
 
         <article>
@@ -126,24 +113,62 @@
         </article>
 
         <article>
-            <h3>6. World Wide Web Proposed (1989)</h3>
 
-            <p>
-                Tim Berners-Lee proposed the World Wide Web at CERN. The Web provided
-                an easy way to access and connect information using hypertext. It later
-                became one of the main ways people used the Internet.
-            </p>
+    <h3>6. DNSSEC Strengthens Internet Security (2010)</h3>
 
-            <p>
-                Source:
-                <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" rel="noopener noreferrer">
-                    CERN
-                </a>
-            </p>
-        </article>
-    </section>
+    <p>
+        The DNS root zone was digitally signed using DNSSEC (Domain Name System
+        Security Extensions). This was an important development because DNSSEC helps
+        protect users from forged or manipulated DNS information by allowing DNS
+        responses to be verified as authentic. ICANN described the first root-zone
+        key-signing ceremony in June 2010 as a major milestone for Internet security.
+    </p>
 
-    <section id="technologies">
+    <p>
+        Source:
+        <a href="https://www.icann.org/en/announcements/details/icanns-first-dnssec-key-ceremony-for-the-root-zone-7-6-2010-en" target="_blank" rel="noopener noreferrer">
+            ICANN — First DNSSEC Key Ceremony for the Root Zone
+        </a>
+    </p>
+</article>
+<article>
+
+    <h3>7. IPv6 Deployment Begins to Expand (2012)</h3>
+
+    <p>
+        As the Internet continued to grow, IPv6 became increasingly important because
+        the available IPv4 address space was limited. In 2012, Internet Society
+        organized World IPv6 Launch, during which companies permanently enabled IPv6
+        on their websites and services.
+    </p>
+
+    <p>
+        Source:
+        <a href="https://www.internetsociety.org/news/press-releases/2012/world-ipv6-launch-solidifies-global-support-for-new-internet-protocol/" target="_blank" rel="noopener noreferrer">
+            Internet Society — World IPv6 Launch
+        </a>
+    </p>
+</article>
+<article>
+
+    <h3>8. New DNS Root Zone Security Key Generated (2024)</h3>
+
+    <p>
+        ICANN generated a new Root Zone Key Signing Key (KSK). The key is part of the
+        security system used to protect the DNS root zone. This was an important step
+        in maintaining the security and stability of the Internet's DNS infrastructure.
+    </p>
+
+    <p>
+        Source:
+        <a href="https://www.icann.org/en/announcements/details/icann-to-generate-new-dns-cryptographic-key-at-april-2024-ceremony-28-02-2024-en" target="_blank" rel="noopener noreferrer">
+            ICANN — New DNS Root Zone Security Key Generated
+        </a>
+    </p>
+</article>
+</section>
+
+    <section>
         <h2>Three Key Technologies</h2>
 
         <article>
@@ -186,7 +211,7 @@
         </article>
     </section>
 
-    <section id="sources">
+    <section>
         <h2>Reliable Sources</h2>
 
         <ul>
@@ -198,7 +223,7 @@
 
             <li>
                 <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet-related-networks/" target="_blank" rel="noopener noreferrer">
-                    Internet Society — A Brief History of the Internet &amp; Related Networks
+                    Internet Society — A Brief History of the Internet-Related Networks
                 </a>
             </li>
 
@@ -220,24 +245,24 @@
                 </a>
             </li>
 
-            <li>
-                <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" rel="noopener noreferrer">
-                    CERN — The Birth of the World Wide Web
-                </a>
-            </li>
+             <li>
+            <a href="https://www.icann.org/en/announcements/details/icanns-first-dnssec-key-ceremony-for-the-root-zone-7-6-2010-en" target="_blank" rel="noopener noreferrer">
+                ICANN — First DNSSEC Key Ceremony for the Root Zone
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.internetsociety.org/news/press-releases/2012/world-ipv6-launch-solidifies-global-support-for-new-internet-protocol/" target="_blank" rel="noopener noreferrer">
+                Internet Society — World IPv6 Launch
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.icann.org/en/announcements/details/icann-to-generate-new-dns-cryptographic-key-at-april-2024-ceremony-28-02-2024-en" target="_blank" rel="noopener noreferrer">
+                ICANN — New DNS Root Zone Security Key Generated
+            </a>
+        </li>
         </ul>
     </section>
 
-</main>
-
-<footer>
-    <p>Web Programming — built with Flask and deployed on Render.</p>
-
-    <p>
-        This website is created for educational purposes only, as part of the
-        GIN446 - Web Programming course, School of Engineering, USEK.
-        (Fall 2026-2027).
-    </p>
-</footer>
-</body>
-</html>
+{% endblock %}

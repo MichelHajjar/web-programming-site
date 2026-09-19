@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet History</title>
-</head>
+{% extends "nav-base.html" %} 
+{% block title %} Internet History {% endblock %} 
 
-<body>
-    <header>
-        <h1>History of the Internet</h1>
-    </header>
-<nav>
-    <a href="/">Home</a><br>
-    <a href="/web-history">Web History</a><br>
-    <a href="/internet-history-ai">Internet History (AI)</a><br>
-    <a href="/web-history-ai">Web History (AI)</a><br>
-</nav>
+{% block header %}
+    <h1>History of the Internet</h1>
 
-<main>
-<h2 id="introduction">Introduction</h2>
+{% endblock %}
+
+{% block content %}
+<h2>Introduction</h2>
     <p>
- The Internet developed over many years through the work of researchers,
- universities, governments, and technology organizations. 
- It started with early research on how computers could communicate and share information, 
- which later led to the creation of ARPANET and the development of TCP/IP. 
- These technologies allowed different networks to connect with each other and then became the foundation of the modern Internet.
- Later, the World Wide Web made the Internet much easier for people around the world to access and use.
+        The Internet developed over many years through the work of researchers,
+        universities, and technology organizations. At first, it was one big question:
+        how computers could communicate and share information? That is why ARPANET
+        and the development of TCP/IP were created. These technologies allowed
+        different networks to connect with each other and became the foundation of the
+        modern Internet.
 </p>
 <section>
-    <h2 id="Events and Timeline">Events and Timeline</h2>
+    <h2>Events and Timeline</h2>
 <article>
 
     <h3>1-Packet Switching (1960s)</h3>
@@ -71,8 +60,8 @@
 
     <p>
         Vint Cerf and Bob Kahn developed the concepts that became TCP/IP. 
-        TCP/IP allowed different networks to communicate with one another, creating the foundation
-        for an interconnected "network of networks."
+        TCP/IP allowed different networks to communicate with one another, creating
+        the foundation for an interconnected "network of networks."
     </p>
 
     <p>
@@ -85,8 +74,8 @@
     <h3>4-TCP/IP Becomes the Standard (1983)</h3>
 
     <p>
-        ARPANET officially switched from NCP to TCP/IP on January 1, 1983. 
-        This established TCP/IP as the main communication protocol for the growing Internet.
+        ARPANET officially switched from NCP to TCP/IP on January 1, 1983. This
+        established TCP/IP as the main communication protocol for the growing Internet.
     </p>
 
     <p>
@@ -99,9 +88,9 @@
     <h3>5-DNS Introduced (1983)</h3>
 
     <p>
-        The Domain Name System (DNS) was developed to translate human-readable domain names into numerical
-        IP addresses. DNS made the growing Internet easier to use because people could use names instead
-        of remembering numerical addresses.
+        The Domain Name System (DNS) was developed to translate human-readable domain
+        names into numerical IP addresses. DNS made the growing Internet easier to use
+        because people could use names instead of remembering numerical addresses.
     </p>
 
     <p>
@@ -111,21 +100,54 @@
 </article>
 <article>
 
-    <h3>6-World Wide Web Proposed (1989)</h3>
+    <h3>6-DNSSEC Strengthens Internet Security(2010)</h3>
 
     <p>
-        Tim Berners-Lee proposed the World Wide Web at CERN. The Web provided an easy way to access and connect
-         information using hypertext. It later became one of the main ways people used the Internet.
+        The DNS root zone was digitally signed using DNSSEC (Domain Name System
+        Security Extensions). This was an important development because DNSSEC helps
+        protect users from forged or manipulated DNS information by allowing DNS
+        responses to be verified as authentic. ICANN described the first root-zone
+        key-signing ceremony in June 2010 as a major milestone for Internet security.
     </p>
 
     <p>
         Source:
-        <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" >CERN — The Birth of the World Wide Web</a>
+        <a href="https://www.icann.org/en/announcements/details/icanns-first-dnssec-key-ceremony-for-the-root-zone-7-6-2010-en" target="_blank" >ICANN — First DNSSEC Key Ceremony for the Root Zone</a>
+    </p>
+</article>
+<article>
+
+    <h3>7-IPv6 Deployment Begins to Expand (2012)</h3>
+
+    <p>
+        As the Internet continued to grow, IPv6 became increasingly important because the available IPv4 
+        address space was limited. In 2012, Internet Society organized World IPv6 Launch, during which 
+        companies permanently enabled IPv6 on their websites and services.   
+    </p>
+
+    <p>
+        Source:
+        <a href="https://www.internetsociety.org/news/press-releases/2012/world-ipv6-launch-solidifies-global-support-for-new-internet-protocol/	" target="_blank" >Internet Society — World IPv6 Launch</a>
+    </p>
+</article>
+<article>
+
+    <h3>8-New DNS Root Zone Security Key Generated(2024)</h3>
+
+    <p>
+        ICANN generated a new Root Zone Key Signing Key (KSK). The key is part of the security system 
+        used to protect the DNS root zone. This was an important step in maintaining the security and 
+        stability of the Internet's DNS infrastructure.    
+    </p>
+
+    <p>
+        Source:
+        <a href="https://www.icann.org/en/announcements/details/icann-to-generate-new-dns-cryptographic-key-at-april-2024-ceremony-28-02-2024-en" target="_blank" >ICANN — New DNS Root Zone Security Key Generated</a>
     </p>
 </article>
 </section>
 <section>
-    <h2 id="Key Technologies">Key Technologies</h2>
+    <h2>Key Technologies</h2>
     <article>
 
         <h3>Packet Switching</h3>
@@ -154,16 +176,18 @@
         <h3>DNS</h3>
 
         <p>
-           Introduced in 1983, the Domain Name System (DNS) is a core network protocol that translates human-readable 
-           domain names into numerical IP addresses. Before its creation, users had to memorize complex strings of 
-           numbers to reach specific servers. By allowing people to navigate using simple, memorable names instead, 
-           DNS made the Internet significantly more intuitive and user-friendly.
+            Introduced in 1983, the Domain Name System (DNS) is a core network
+            protocol that translates human-readable domain names into numerical IP
+            addresses. Before its creation, users had to memorize complex strings of
+            numbers to reach specific servers. By allowing people to navigate using
+            simple, memorable names instead, DNS made the Internet significantly more
+            intuitive and user-friendly.
         </p>
     </article>
 </section>
 <section>
 
-    <h2 id="Reliable Sources">Reliable Sources</h2>
+    <h2>Reliable Sources</h2>
 
     <p>
         <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">Internet Society — A Brief History of the Internet</a>
@@ -182,19 +206,16 @@
      <p>
         <a href="https://datatracker.ietf.org/doc/rfc882/" target="_blank">Internet Engineering Task Force — RFC 882</a>
     </p>
-
-     <p>
-        <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank">CERN — The Birth of the World Wide Web</a>
+    
+    <p>
+        <a href="https://www.icann.org/en/announcements/details/icann-to-generate-new-dns-cryptographic-key-at-april-2024-ceremony-28-02-2024-en" target="_blank">ICANN — New DNS Root Zone Security Key Generated</a>
+    </p>
+    <p>
+        <a href="https://www.icann.org/en/announcements/details/icanns-first-dnssec-key-ceremony-for-the-root-zone-7-6-2010-en" target="_blank">ICANN — First DNSSEC Key Ceremony for the Root Zone</a>
+    </p>
+    <p>
+        <a href="https://www.internetsociety.org/news/press-releases/2012/world-ipv6-launch-solidifies-global-support-for-new-internet-protocol/" target="_blank">Internet Society — World IPv6 Launch</a>
     </p>
 
 </section>
-</main>
-
-    <footer>
-        <p>Web Programming — built with Flask and deployed on Render.</p>
-        <p>This website is created for educational purposes
-            only, as part of the GIN446 - Web Programming course,
-            School of Engineering, USEK. (Fall 2026-2027)</p>
-    </footer>
-</body>
-</html>
+{% endblock%}

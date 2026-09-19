@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web History</title>
-</head>
-<body>
-    <header>
-        <h1>History of the Web</h1>
-    </header>
-<nav>
-    <a href="/">Home</a> <br>
-    <a href="/internet-history">Internet History</a> <br>
-    <a href="/internet-history-ai">Internet History (AI)</a> <br>
-    <a href="/web-history-ai">Web History (AI)</a> <br>
-</nav>
-<main>
-    <h2 id="introduction">Introduction</h2>
-    <p>The World Wide Web began in 1989 when Tim Berners-Lee, a researcher at CERN, proposed a better 
+{% extends "nav-base.html" %} 
+{% block title %} Web History {% endblock %} 
+
+{% block header %}
+    <h1>History of the Web</h1>
+
+{% endblock %}
+
+{% block content %}
+    <h2>Introduction</h2>
+    <p>
+        The World Wide Web began in 1989 when Tim Berners-Lee, a researcher at CERN, proposed a better 
         way for scientists to share and link information using hypertext. To make his idea work, he 
         built the core technologies that still power the Web today: HTML, HTTP, and URLs. After launching 
         the first website and web browser right from CERN, the technology was released to the public for 
@@ -25,7 +17,7 @@
         information across the globe.
     </p>
     <section>
-        <h2 id="Events and Timeline">Events and Timeline</h2>
+        <h2>Events and Timeline</h2>
         <article>
             <h3>1-The World Wide Web is Proposed (1989)</h3>
             <p>
@@ -113,9 +105,48 @@
                 <a href="https://www.w3.org/standards/" target="_blank">W3C — Standards</a>
             </p>
         </article>
+        <article>
+            <h3>8-Web 2.0 Becomes Popular(2004)</h3>
+            <p>
+                The term “Web 2.0” became widely used after the first Web 2.0 Conference. It described a
+                shift toward a more interactive Web, where users could create and share content through blogs,
+                wikis, social networks, and other interactive websites. This marked an important change from the
+                earlier Web, where users were mainly consumers of information.
+            </p>
+            <p>
+                source:
+                <a href="https://www.computerhistory.org/timeline/networking-the-web/?utm_source=computerhistory.org" target="_blank"> Computer History Museum</a>
+            </p>
+        </article>
+        <article>
+            <h3>9-HTML5 Becomes a W3C Recommendation(2014)</h3>
+            <p>
+                The World Wide Web Consortium (W3C) published HTML5 as an official Recommendation. HTML5
+                introduced important capabilities for modern Web pages and applications, including native audio and
+                video, graphics, and improved support across different devices. It became an important foundation
+                for the modern Web.
+            </p>
+            <p>
+                source:
+                <a href="https://www.w3.org/press-releases/2014/html5-rec/?utm_source=w3.org" target="_blank">W3C — HTML5 Recommendation</a>
+            </p>
+        </article>
+        <article>
+            <h3>10-HTTP/3 Becomes an Internet Standard(2022)</h3>
+            <p>
+                HTTP/3 was published as an official Internet standard by the IETF. HTTP is one of the main
+                protocols used by Web browsers and Web servers to communicate. HTTP/3 uses QUIC to improve the
+                performance and reliability of Web connections, making it an important development in the modern
+                Web.
+            </p>
+            <p>
+                source:
+                <a href="https://www.rfc-editor.org/rfc/rfc9114.html?utm_source	" target="_blank">RFC Editor - RFC 9114 (HTTP/3)</a>
+            </p>
+        </article>
     </section>
     <section>
-        <h2 id="Key Technologies">Key Technologies</h2>
+        <h2>Key Technologies</h2>
         <article>
             <h3>HTML (HyperText Markup Language) </h3>
             <p>
@@ -148,7 +179,7 @@
         </article>
     </section>
     <section>
-        <h2 id="Reliable Sources">Reliable Sources</h2>
+        <h2>Reliable Sources</h2>
         <p>
             <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank">CERN — The Birth of the Web</a>
         </p>
@@ -160,15 +191,17 @@
         </p>
         <p>
             <a href="https://www.ncsa.illinois.edu/about/history/" target="_blank">NCSA — History of the Web</a>
-        </P>
+        </p>
+        <p>
+            <a href="https://www.computerhistory.org/timeline/networking-the-web/" target="_blank">Computer History Museum — Networking the Web</a>
+        </p>
+        <p>
+            <a href="https://www.rfc-editor.org/rfc/rfc9114.html" target="_blank">RFC Editor — RFC 9114 (HTTP/3)</a>
+        </p>
+        <p>
+            <a href="https://www.w3.org/press-releases/2014/html5-rec/" target="_blank">W3C — HTML5 Recommendation</a>
+        </p>
     </section>
-</main>
-    <footer>
-        <p>Web Programming — built with Flask and deployed on Render.</p>
-        <p>This website is created for educational purposes
-            only, as part of the GIN446 - Web Programming course,
-            School of Engineering, USEK. (Fall 2026-2027)</p>
-    </footer>
-</body>
-</html>
+{% endblock %}
+
 

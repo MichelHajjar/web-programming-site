@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History of the Web (AI)</title>
-</head>
-<body>
-    <header>
+{% extends "nav-base.html" %} 
+{% block title %} History of the Web (AI) {% endblock %} 
+
+{% block header %}
     <h1>History of the World Wide Web</h1>
-</header>
 
-<nav>
-    <a href="/">Home</a> <br>
-    <a href="/internet-history">Internet History</a> <br>
-    <a href="/web-history">Web History</a> <br>
-    <a href="/internet-history-ai">Internet History (AI)</a> <br>
-</nav>
+{% endblock %}
 
-<main>
-
-    <section id="introduction">
+{% block content %}
         <h2>Introduction</h2>
 
         <p>
@@ -31,9 +18,8 @@
             to the public for free. This ultimately transformed the Web into the
             primary way people navigate and share information across the globe.
         </p>
-    </section>
 
-    <section id="timeline">
+    <section>
         <h2>Timeline</h2>
 
         <article>
@@ -169,9 +155,54 @@
                 </a>
             </p>
         </article>
+         <article>
+            <h3>8. Web 2.0 Becomes Popular(2004)</h3>
+            <p>
+                The term “Web 2.0” became widely used after the first Web 2.0 Conference. It described a
+                shift toward a more interactive Web, where users could create and share content through blogs,
+                wikis, social networks, and other interactive websites. This marked an important change from the
+                earlier Web, where users were mainly consumers of information.
+            </p>
+            <p>
+                source:
+                <a href="https://www.computerhistory.org/timeline/networking-the-web/" target="_blank" rel="noopener noreferrer">
+                    Computer History Museum
+                </a>
+            </p>
+        </article>
+        <article>
+            <h3>9. HTML5 Becomes a W3C Recommendation(2014)</h3>
+            <p>
+                The World Wide Web Consortium (W3C) published HTML5 as an official Recommendation. HTML5
+                introduced important capabilities for modern Web pages and applications, including native audio and
+                video, graphics, and improved support across different devices. It became an important foundation
+                for the modern Web.
+            </p>
+            <p>
+                source:
+                <a href="https://www.w3.org/press-releases/2014/html5-rec/" target="_blank" rel="noopener noreferrer">
+                    W3C — HTML5 Recommendation
+                </a>
+            </p>
+        </article>
+        <article>
+            <h3>10. HTTP/3 Becomes an Internet Standard(2022)</h3>
+                <p>
+                HTTP/3 was published as an official Internet standard by the IETF. HTTP is one of the main
+                protocols used by Web browsers and Web servers to communicate. HTTP/3 uses QUIC to improve the
+                performance and reliability of Web connections, making it an important development in the modern
+                Web.
+                </p>
+            <p>
+                source:
+                <a href="https://www.rfc-editor.org/rfc/rfc9114.html" target="_blank" rel="noopener noreferrer">
+                    RFC Editor - RFC 9114 (HTTP/3)
+                </a>
+            </p>
+        </article>
     </section>
 
-    <section id="technologies">
+    <section>
         <h2>Three Key Technologies</h2>
 
         <article>
@@ -216,47 +247,51 @@
         </article>
     </section>
 
-    <section id="sources">
+    <section>
         <h2>Reliable Sources</h2>
 
-        <ul>
-            <li>
-                <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" rel="noopener noreferrer">
-                    CERN — The Birth of the Web
-                </a>
-            </li>
+<ul>
+    <li>
+        <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" rel="noopener noreferrer">
+            CERN — The Birth of the Web
+        </a>
+    </li>
 
-            <li>
-                <a href="https://www.w3.org/about/history/" target="_blank" rel="noopener noreferrer">
-                    W3C — History of the Web
-                </a>
-            </li>
+    <li>
+        <a href="https://www.w3.org/about/history/" target="_blank" rel="noopener noreferrer">
+            W3C — History of the Web
+        </a>
+    </li>
 
-            <li>
-                <a href="https://www.w3.org/standards/" target="_blank" rel="noopener noreferrer">
-                    W3C — Standards
-                </a>
-            </li>
+    <li>
+        <a href="https://www.w3.org/standards/" target="_blank" rel="noopener noreferrer">
+            W3C — Standards
+        </a>
+    </li>
 
-            <li>
-                <a href="https://www.ncsa.illinois.edu/about/history/" target="_blank" rel="noopener noreferrer">
-                    NCSA, University of Illinois — History
-                </a>
-            </li>
-        </ul>
+    <li>
+        <a href="https://www.ncsa.illinois.edu/about/history/" target="_blank" rel="noopener noreferrer">
+            NCSA, University of Illinois — History
+        </a>
+    </li>
+
+    <li>
+        <a href="https://www.computerhistory.org/timeline/networking-the-web/" target="_blank" rel="noopener noreferrer">
+            Computer History Museum — Networking the Web
+        </a>
+    </li>
+
+    <li>
+        <a href="https://www.w3.org/press-releases/2014/html5-rec/" target="_blank" rel="noopener noreferrer">
+            W3C — HTML5 Recommendation
+        </a>
+    </li>
+
+    <li>
+        <a href="https://www.rfc-editor.org/rfc/rfc9114.html" target="_blank" rel="noopener noreferrer">
+            RFC Editor — RFC 9114 (HTTP/3)
+        </a>
+    </li>
+</ul>
     </section>
-
-</main>
-
-<footer>
-    <p>Web Programming — built with Flask and deployed on Render.</p>
-
-    <p>
-        This website is created for educational purposes only, as part of the
-        GIN446 - Web Programming course, School of Engineering, USEK.
-        (Fall 2026-2027)
-    </p>
-</footer>
-
-</body>
-</html>
+{% endblock %}
