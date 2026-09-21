@@ -1,26 +1,112 @@
-{% extends "base.html" %} 
-{% block title %} Home {% endblock %} 
+{% extends "base.html" %}
 
+{% block title %}
+Home
+{% endblock %}
 
-    {% block header %}
+{% block header %}
 
-        <h1>Web Programming Portfolio — Michel Hajjar </h1>
-        <p>A live site that grows one page or feature every week.</p>
-    
-    {% endblock %}
+    <h1>Web Programming Portfolio — Michel Hajjar</h1>
+    <p>A live site that grows one page or feature every week.</p>
 
-    {% block content %}
-    
-        <section>
-            <h2>Weekly Work</h2>
-            <!-- Each week you add a link here to that week's page or feature. -->
-            <ul>
-                {% for item in weekly_work %}
-                    <li><a href="{{ item.url }}">Week {{ item.week }} — {{ item.title }}</a></li>
-                {% else %}
-                    <li>Week 1 — live site launched.</li>
-                {% endfor %}
-            </ul>
-        </section>
-    {% endblock %}
+{% endblock %}
 
+{% block content %}
+
+    <section>
+        <h2>Weekly Work</h2>
+
+        <div class="week-groups">
+
+            {# Groups the items by their week number, in order #}
+            {% for week, items in weekly_work | groupby("week") %}
+
+                <div class="week-group">
+                    <h3 class="week-heading">Week {{ week }}</h3>
+
+                    <ul>
+                        {% for item in items %}
+
+                            <li>
+                                <a href="{{ item.url }}">
+
+                                    {% if item.url == "/" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='home-icon.png') }}"
+                                            alt=""
+                                        >
+
+                                    {% elif item.url == "/internet-history" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='internet-history-icon.png') }}"
+                                            alt=""
+                                        >
+
+                                    {% elif item.url == "/web-history" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='web-history-icon.png') }}"
+                                            alt=""
+                                        >
+
+                                    {% elif item.url == "/internet-history-ai" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='internet-history-ai-icon.png') }}"
+                                            alt=""
+                                        >
+
+                                    {% elif item.url == "/web-history-ai" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='web-history-ai-icon.png') }}"
+                                            alt=""
+                                        >
+                                    {% endif %}
+
+                                    <span class="work-copy">
+                                        <span class="work-title">
+                                            {{ item.title }}
+                                        </span>
+                                    </span>
+
+                                </a>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            {% else %}
+
+                <div class="week-group">
+                    <h3 class="week-heading">Week 1</h3>
+
+                    <ul>
+                        <li>
+                            <a href="/">
+                                <img
+                                    class="work-icon"
+                                    src="{{ url_for('static', filename='home-icon.png') }}"
+                                    alt=""
+                                >
+
+                                <span class="work-copy">
+                                    <span class="work-title">
+                                        Live site launched
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+{% endblock %}
