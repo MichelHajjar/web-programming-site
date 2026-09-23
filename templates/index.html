@@ -66,8 +66,8 @@ Home
                                         >
                                     {% endif %}
 
-                                    <span class="work-copy">
-                                        <span class="work-title">
+                                    <span class="work-copy">{# This groups the text area of your work item #}
+                                        <span class="work-title">{# which contains the actual title. #}
                                             {{ item.title }}
                                         </span>
                                     </span>
@@ -79,7 +79,7 @@ Home
                     </ul>
                 </div>
 
-            {% else %}
+            {% else %} {# for fallback, if there are no items in the weekly_work list, display a default Week 1 item. #}
 
                 <div class="week-group">
                     <h3 class="week-heading">Week 1</h3>
