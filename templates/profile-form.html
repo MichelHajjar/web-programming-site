@@ -1,32 +1,37 @@
 {%extends "base.html"%}
 {% block title %}Engineering Student Profile{% endblock %}
+{% block head %}
+  <link rel="stylesheet" 
+        href="{{ url_for('static', filename='form_style.css') }}"/>
+{% endblock %}
 {% block content %}
-<h2>Engineering Student Profile</h2> 
+<h2>Engineering Student Profile</h2> <br><br>
 <p>Complete this form to provide information about your 
 academic background, technical skills, internship 
-experience, and Final Year Project preferences.</p>
-<form action="{{ url_for('submit-profile') }}" 
+experience, and Final Year Project preferences.</p><br><br>
+<form action="{{ url_for('submit_profile') }}" 
       method="post">
     <fieldset>
         <legend>1. Personal information </legend>
         <label for="studentID">Student ID</label><br>
-        <input type="text" id="studentID" name="student_id" placeholder="eg:202407643" pattern="[0-9]{9}" required><br>
+        <input type="text" id="studentID" name="student_id" placeholder="eg:202407643" pattern="[0-9]{9}" required><br><br>
         <label for="fullname">Full Name:</label><br>
-        <input type="text" id="fullname" name="fullname" placeholder="eg: First name and Last name" required><br>
+        <input type="text" id="fullname" name="fullname" placeholder="eg: First name and Last name" required><br><br>
         <label for="email">USEK Email:</label><br>
-        <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb$" required><br>
-        <label for="phone">Mobile Number:</label><br>
+        <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb$" required><br><br>
+        <label for="phone">Mobile Number:</label>
         <div> 
             <span>+961</span>
-        <input type="tel" id="phone" name="phone" placeholder="eg: 70/123456" pattern="(03|70|71|76|78|79|81)/[0-9]{6}$" required><br>
+        <input type="tel" id="phone" name="phone" placeholder="eg: 70/123456" pattern="(03|70|71|76|78|79|81)/[0-9]{6}$" required><br><br>
         </div>
         <label for="DateOfBirth">Date of Birth:</label><br>
-        <input type="date" id="DateOfBirth" name="birthdate" required><br>
+        <input type="date" id="DateOfBirth" name="birthdate" required><br><br>
         <label for="github">Github:</label><br>
-        <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?$"><br>
+        <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?$"><br><br>
         <label for="WebWebsite">GIN446 Website:</label><br>
-        <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com/?$"><br>
+        <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com/?$"><br><br>
     </fieldset>
+    <br><br>
     <fieldset>
         <legend>2. Academic Information</legend>
         <label for="major">Engineering Major:</label><br>
@@ -39,11 +44,11 @@ experience, and Final Year Project preferences.</p>
             <option value="Civil Engineering">Civil Engineering</option>
             <option value="Industrial Engineering">Industrial Engineering</option>
             <option value="Biomedical Engineering">Biomedical Engineering</option>
-        </select><br>
-        <label for="GPA">Current GPA/100:</label><br>
-        <input type="number" id="GPA" name="gpa" placeholder="eg: 85" min="40" max="100" step="0.01" required><br>
-        <label for="credits">Credits Completed:</label><br>
-        <input type="number" id="credits" name="credits" placeholder="eg: 60" min="0" max="146" step="1" required><br>
+        </select><br><br>
+        <label for="GPA">Current GPA/100:</label>
+        <input type="number" id="GPA" name="gpa" placeholder="eg: 85" min="40" max="100" step="0.01" required><br><br>
+        <label for="credits">Credits Completed:</label>
+        <input type="number" id="credits" name="credits" placeholder="eg: 60" min="0" max="146" step="1" required><br><br>
     
          <fieldset>
               <legend>Expected Graduation</legend>
@@ -57,8 +62,9 @@ experience, and Final Year Project preferences.</p>
                 <input type="radio" id="Summer" name="graduation" value="Summer">
                 <label for="Summer">Summer</label>
         </fieldset>
+        <br><br>
             <label for="GradDate">Expected Graduation Month &amp; Year:</label>
-            <input type="month" id="GradDate" name="graduation_month" >
+            <input type="month" id="GradDate" name="graduation_month" ><br><br>
         <fieldset>
         <legend>Engineering Internship</legend>
 
@@ -68,6 +74,7 @@ experience, and Final Year Project preferences.</p>
         <input type="radio" id="No" name="internship_completed" value="no">
         <label for="No">No</label>
         </fieldset>
+        <br><br>
     </fieldset>
     <fieldset>
         <legend>3. Technical Background</Legend>
@@ -88,6 +95,7 @@ experience, and Final Year Project preferences.</p>
         <label for="skill7">Artificial Intelligence / Machine Learning</label>
         <input type="checkbox" id="skill8" name="skills" value="Signal Processing">
         <label for="skill8">Signal Processing</label>
+        <br><br><br>
         <label for="ProgLang">Primary Programming Language:</label>
         <input type="text" id="ProgLang" name="language" list="languages">
         <datalist id="languages">
@@ -96,7 +104,7 @@ experience, and Final Year Project preferences.</p>
             <option value="Python">
             <option value="Java">
             <option value="JavaScript">
-        </datalist>
+        </datalist><br><br><br>
         <label for="Software">Engineering software Used:</label>
         <select id="Software" name="software" multiple>
             <option value="MATLAB">MATLAB</option>
@@ -107,13 +115,14 @@ experience, and Final Year Project preferences.</p>
             <option value="SolidWorks">SolidWorks</option>
             <option value="Proteus">Proteus</option>
             <option value="Multisim">Multisim</option>
-        </select>
+        </select><br><br>
         <p>Hold Ctrl (Windows) or Command (Mac) to select several options.</p>
     </fieldset>
+    <br><br>
     <fieldset>
         <legend>4. Final Year Project</legend>
         <label for="ProjectTitle">Proposed Project Title:</label>
-        <input type="text" id="ProjectTitle" name="project_title" placeholder="Enter a tentative project title">
+        <input type="text" id="ProjectTitle" name="project_title" placeholder="Enter a tentative project title"><br><br>
         <label for="ProjectArea">Preferred Project Area:</label>
         <select id="ProjectArea" name="project_area">
             <optgroup label="Computer Engineering">
@@ -164,6 +173,7 @@ experience, and Final Year Project preferences.</p>
         <label for="meeting-time">Preferred Meeting Time</label>
         <input type="time" id="meeting-time" name="meeting_time">
     </fieldset>
+    <br><br>
 
     <input type="checkbox" id="confirmation" name="confirmation" required>
     <label for="confirmation">
