@@ -64,6 +64,19 @@ Home
                                             src="{{ url_for('static', filename='web-history-ai-icon.png') }}"
                                             alt=""
                                         >
+                                    {% elif item.url == "/week1-work" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='work-icon.png') }}"
+                                            alt=""
+                                        >
+
+                                    {% elif item.url == "/submit-profile" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='Eng-profile-icon.png') }}"
+                                            alt=""
+                                        >
                                     {% endif %}
 
                                     <span class="work-copy">{# This groups the text area of your work item #}

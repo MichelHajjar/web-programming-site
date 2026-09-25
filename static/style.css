@@ -55,7 +55,7 @@
     ========================================= */
 
     --content-width: 1050px;
-    --header-height: 210px;
+    --header-height: 160px;
 
     /* Home page */
     --home-content-width: 100%;
@@ -149,7 +149,7 @@ img {
 header {
     position: relative;/*Makes the header a positioning reference for absolutely positioned children or pseudo-elements.*/
 
-    min-height: 210px;
+    min-height: 160px;
 
     display: flex;
     flex-direction: column;
@@ -1192,7 +1192,7 @@ body:has(nav) main > h2:first-child + p::before {
     body:has(nav) main > section::before,
     body:has(nav) main > h2:first-child + p::before {
         animation: tl-fill linear both;
-        animation-timeline: view(block 50% 49.5%);
+        animation-timeline: view(block 0% 0%);
     }
 
     body:has(nav) main > h2:first-child::before,

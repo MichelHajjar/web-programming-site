@@ -45,6 +45,7 @@ app = Flask(__name__)
 def home():
     """Serve the portfolio home page."""
     weekly_work = [
+        {"week": 1, "title": "Week 1 - Launching My Live Site", "url": "/week1-work"},
         {"week": 2, "title": "History of the Internet", "url": "/internet-history"},
         {"week": 2, "title": "History of the Web", "url": "/web-history"},
         {"week": 2, "title": "History of the Internet (AI)", "url": "/internet-history-ai"},
@@ -52,6 +53,11 @@ def home():
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
     ]
     return render_template("index.html", weekly_work=weekly_work)
+
+
+@app.route("/week1-work")
+def week1_work():
+    return render_template("week1-work.html")
 
 
 @app.route("/internet-history")

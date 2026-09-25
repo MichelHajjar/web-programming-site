@@ -11,6 +11,15 @@
         <span>Home</span>
     </a><br>
 
+    <a href="/week1-work" {% if request.path == "/week1-work" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='work-icon.png') }}"
+            alt=""
+        >
+        <span>Week 1 Work</span>
+    </a><br>
+
     <a href="/internet-history" {% if request.path == "/internet-history" %}aria-current="page"{% endif %}>
         <img
             class="nav-icon"
@@ -45,6 +54,15 @@
             alt=""
         >
         <span>Web History (AI)</span>
+    </a><br>
+
+    <a href="/submit-profile" {% if request.path == "/submit-profile" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='Eng-profile-icon.png') }}"
+            alt=""
+        >
+        <span>Engineering Student Profile</span>
     </a><br>
 
 </nav>
