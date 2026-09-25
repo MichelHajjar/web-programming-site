@@ -1192,7 +1192,7 @@ body:has(nav) main > h2:first-child + p::before {
     body:has(nav) main > section::before,
     body:has(nav) main > h2:first-child + p::before {
         animation: tl-fill linear both;
-        animation-timeline: view(block 0% 0%);
+        animation-timeline: view(block 50% 49.5%);
     }
 
     body:has(nav) main > h2:first-child::before,

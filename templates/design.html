@@ -1,0 +1,271 @@
+{% extends "nav-base.html" %}
+
+{% block title %}CSS Design{% endblock %}
+
+{% block header %}
+    <h1>CSS Design</h1>
+{% endblock %}
+
+{% block content %}
+
+<section>
+    <h2>Introduction</h2>
+
+    <p>
+        In Week 3, we focused on giving the website a consistent visual design.
+        After organizing the pages with Jinja template inheritance, the next step
+        was to create a shared stylesheet and define the design decisions that
+        would be reused across the whole website.
+    </p>
+
+    <p>
+        The main idea was to define the site's visual identity once and then
+        reuse it on every page. This makes the website more consistent, easier
+        to modify, and easier to maintain.
+    </p>
+</section>
+
+<section>
+    <h2>What We Did</h2>
+
+    <article>
+        <h3>1. Created a Shared Stylesheet</h3>
+
+        <p>
+            Instead of styling every HTML page separately, we created one
+            stylesheet named <code>style.css</code> inside the
+            <code>static/</code> folder. The stylesheet is linked once from
+            the shared <code>base.html</code> template, so every page that
+            inherits from it automatically receives the same visual design.
+        </p>
+    </article>
+
+    <article>
+        <h3>2. Defined Design Tokens with CSS Variables</h3>
+
+        <p>
+            We used CSS custom properties inside <code>:root</code> to store
+            repeated design decisions such as colors, spacing, typography,
+            and corner radius.
+        </p>
+
+        <pre><code>:root {
+    --primary: #2563eb;
+    --secondary: #64748b;
+    --text: #0f172a;
+    --background: #ffffff;
+    --spacing: 1rem;
+    --radius: 8px;
+}</code></pre>
+
+        <p>
+            These variables can then be reused throughout the stylesheet with
+            <code>var(...)</code>. This means that changing one value in
+            <code>:root</code> can update the design in many places.
+        </p>
+    </article>
+
+    <article>
+        <h3>3. Styled the Shared Page Structure</h3>
+
+        <p>
+            The CSS was used to style the elements defined by the shared
+            template, including the header, logo and title, navigation menu,
+            main content area, headings, links, lists, page sections, and
+            footer.
+        </p>
+
+        <p>
+            Because all pages use the same template structure, styling these
+            common elements once gives the entire portfolio the same visual
+            identity.
+        </p>
+    </article>
+</section>
+
+<section>
+    <h2>Design Principles</h2>
+
+    <article>
+        <h3>Colors</h3>
+
+        <p>
+            A consistent color palette was selected for the website. The colors
+            were stored as CSS variables so they could be reused throughout
+            the different pages.
+        </p>
+    </article>
+
+    <article>
+        <h3>Typography</h3>
+
+        <p>
+            Typography was kept consistent by defining shared font choices,
+            heading sizes, text sizes, and spacing. This helps the content
+            remain readable and gives the website a coherent appearance.
+        </p>
+    </article>
+
+    <article>
+        <h3>Spacing and Corners</h3>
+
+        <p>
+            Shared spacing values and border-radius values were used to create
+            consistent gaps, padding, and rounded corners throughout the site.
+        </p>
+    </article>
+</section>
+
+<section>
+    <h2>Layout with Flexbox and Grid</h2>
+
+    <article>
+        <h3>Navigation with Flexbox</h3>
+
+        <p>
+            The navigation menu was improved using CSS Flexbox. The navigation
+            items can be arranged in a row, spaced consistently, and vertically
+            aligned. On smaller screens, the items can wrap instead of causing
+            horizontal overflow.
+        </p>
+    </article>
+
+    <article>
+        <h3>Weekly Work with CSS Grid</h3>
+
+        <p>
+            The Weekly Work list was designed as a responsive grid. CSS Grid
+            allows the items to automatically move between columns depending
+            on the available screen width.
+        </p>
+
+        <pre><code>.weekly-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}</code></pre>
+    </article>
+</section>
+
+<section>
+    <h2>Responsive and Mobile-First Design</h2>
+
+    <p>
+        The stylesheet was designed using a mobile-first approach. The default
+        CSS rules target smaller screens first, and media queries are then used
+        to adapt the layout for wider screens.
+    </p>
+
+    <ul>
+        <li>Text remains readable on small screens.</li>
+        <li>The navigation can wrap instead of overflowing.</li>
+        <li>The main container becomes wider on larger screens.</li>
+        <li>The Weekly Work grid adapts to the available space.</li>
+        <li>The website should not create unwanted horizontal scrolling.</li>
+    </ul>
+
+    <p>
+        One of the important checks was making sure the website still works on
+        a 375px-wide mobile screen.
+    </p>
+</section>
+
+<section>
+    <h2>How AI Was Used</h2>
+
+    <p>
+        AI was used as an implementation assistant rather than as the designer.
+        The design decisions were defined first, and then AI was instructed to
+        generate the CSS according to those decisions and the existing HTML.
+    </p>
+
+    <p>
+        The stylesheet was required to use vanilla CSS only. AI was instructed
+        not to rewrite the HTML or invent new classes, attributes, or wrapper
+        elements. If an HTML change was genuinely necessary, it had to be
+        identified first so that the change could be made deliberately.
+    </p>
+</section>
+
+<section>
+    <h2>Testing and Verification</h2>
+
+    <p>
+        After generating the stylesheet, the Flask application was tested in
+        the browser to verify that the design worked correctly across the
+        website.
+    </p>
+
+    <ul>
+        <li>Checked that the layout matches the shared template.</li>
+        <li>Checked that the chosen colors and fonts are applied.</li>
+        <li>Checked that all pages use the same design.</li>
+        <li>Tested the navigation at different screen widths.</li>
+        <li>Tested the Weekly Work grid as the browser width changes.</li>
+        <li>Checked the mobile layout for horizontal overflow.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Important Week 3 Concepts</h2>
+
+    <article>
+        <h3>One Structure, One Style</h3>
+
+        <p>
+            Jinja template inheritance allows the common HTML structure to be
+            written once, while one shared stylesheet controls the common
+            appearance of the pages.
+        </p>
+    </article>
+
+    <article>
+        <h3>CSS Variables</h3>
+
+        <p>
+            CSS variables allow design values to be defined once and reused
+            throughout the stylesheet. This is the basic idea behind design
+            tokens in larger design systems.
+        </p>
+    </article>
+
+    <article>
+        <h3>AI-Assisted Development</h3>
+
+        <p>
+            The important skill is not simply generating CSS with AI. The goal
+            is to give the AI clear constraints, review its output, test it in
+            the browser, and understand the final code.
+        </p>
+    </article>
+</section>
+
+<section>
+    <h2>Week 3 Checklist</h2>
+
+    <ul>
+        <li>The shared stylesheet is linked from the base template.</li>
+        <li>Colors, fonts, spacing, and radii are defined in <code>:root</code>.</li>
+        <li>The navigation uses Flexbox.</li>
+        <li>The Weekly Work list uses CSS Grid.</li>
+        <li>The site follows a mobile-first responsive design.</li>
+        <li>Every page shares the same visual design.</li>
+        <li>HTML changes are made deliberately by the student.</li>
+        <li>The final CSS is tested and understood.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Key Takeaway</h2>
+
+    <p>
+        Week 3 showed how a website can move from a collection of separate
+        HTML pages to a consistent design system. Jinja provides the shared
+        structure, while CSS variables and one stylesheet provide the shared
+        visual identity. AI can help implement the design, but the developer
+        remains responsible for directing, checking, and understanding the
+        result.
+    </p>
+</section>
+
+{% endblock %}
