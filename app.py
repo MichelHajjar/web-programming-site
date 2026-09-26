@@ -45,12 +45,12 @@ app = Flask(__name__)
 def home():
     """Serve the portfolio home page."""
     weekly_work = [
-        {"week": 1, "title": "Week 1 - Launching My Live Site", "url": "/week1-work"},
+        {"week": 1, "title": "Launching My Live Site", "url": "/week1-work"},
         {"week": 2, "title": "History of the Internet", "url": "/internet-history"},
         {"week": 2, "title": "History of the Web", "url": "/web-history"},
         {"week": 2, "title": "History of the Internet (AI)", "url": "/internet-history-ai"},
         {"week": 2, "title": "History of the Web (AI)", "url": "/web-history-ai"},
-        {"week": 3, "title": "CSS Design — Week 3", "url": "/design"},
+        {"week": 3, "title": "CSS Design", "url": "/design"},
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
     ]
     return render_template("index.html", weekly_work=weekly_work)

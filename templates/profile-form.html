@@ -1,190 +1,304 @@
 {%extends "nav-base.html"%}
 {% block title %}Engineering Student Profile{% endblock %}
+{% block header %}
+    <h1>Engineering Student Profile</h1> 
+    <p>Complete this form to provide information about your 
+    academic background, technical skills, internship 
+    experience, and Final Year Project preferences.</p>
+{% endblock %}
+
 {% block head %}
   <link rel="stylesheet" 
         href="{{ url_for('static', filename='form_style.css') }}"/>
 {% endblock %}
 {% block content %}
-<h2>Engineering Student Profile</h2> <br><br>
-<p>Complete this form to provide information about your 
-academic background, technical skills, internship 
-experience, and Final Year Project preferences.</p><br><br>
+
 <form action="{{ url_for('submit_profile') }}" 
-      method="post">
-    <fieldset>
+      method="post" class="wizard-form">
+
+
+<input type="radio" name="wizard_step" id="step1" class="step-radio" checked tabindex="-1">
+<input type="radio" name="wizard_step" id="step2" class="step-radio" tabindex="-1">
+<input type="radio" name="wizard_step" id="step3" class="step-radio" tabindex="-1">
+<input type="radio" name="wizard_step" id="step4" class="step-radio" tabindex="-1">
+
+<div class="wizard-progress">
+    <div class="wizard-progress-track">
+        <div class="wizard-progress-bar"></div>
+    </div>
+    <span class="wizard-progress-label">
+        <span class="label-step1">Step 1 of 4 — Personal information</span>
+        <span class="label-step2">Step 2 of 4 — Academic Information</span>
+        <span class="label-step3">Step 3 of 4 — Technical Background</span>
+        <span class="label-step4">Step 4 of 4 — Final Year Project</span>
+    </span>
+</div>
+
+
+    <fieldset class="form-step" data-step="1">
         <legend>1. Personal information </legend>
-        <label for="studentID">Student ID</label><br>
-        <input type="text" id="studentID" name="student_id" placeholder="eg:202407643" pattern="[0-9]{9}" required><br><br>
-        <label for="fullname">Full Name:</label><br>
-        <input type="text" id="fullname" name="fullname" placeholder="eg: First name and Last name" required><br><br>
-        <label for="email">USEK Email:</label><br>
-        <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb$" required><br><br>
-        <label for="phone">Mobile Number:</label>
-        <div> 
-            <span>+961</span>
-        <input type="tel" id="phone" name="phone" placeholder="eg: 70/123456" pattern="(03|70|71|76|78|79|81)/[0-9]{6}$" required><br><br>
+
+        <div class="field">
+            <label for="studentID">Student ID</label>
+            <input type="text" id="studentID" name="student_id" placeholder="eg:202407643" pattern="[0-9]{9}" required>
         </div>
-        <label for="DateOfBirth">Date of Birth:</label><br>
-        <input type="date" id="DateOfBirth" name="birthdate" required><br><br>
-        <label for="github">Github:</label><br>
-        <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?$"><br><br>
-        <label for="WebWebsite">GIN446 Website:</label><br>
-        <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com/?$"><br><br>
+
+        <div class="field">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" placeholder="eg: First name and Last name" required>
+        </div>
+
+        <div class="field">
+            <label for="email">USEK Email:</label>
+            <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb$" required>
+        </div>
+
+        <div class="field">
+            <label for="phone">Mobile Number:</label>
+            <div class="phone-group">
+                <span>+961</span>
+                <input type="tel" id="phone" name="phone" placeholder="eg: 70/123456" pattern="(03|70|71|76|78|79|81)/[0-9]{6}$" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="DateOfBirth">Date of Birth:</label>
+            <input type="date" id="DateOfBirth" name="birthdate" required>
+        </div>
+
+        <div class="field">
+            <label for="github">Github:</label>
+            <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?$">
+        </div>
+
+        <div class="field">
+            <label for="WebWebsite">GIN446 Website:</label>
+            <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com/?$">
+        </div>
+
+        <p class="step-warning">Please fill in all required fields correctly before continuing.</p>
+        <div class="wizard-nav">
+            <span></span>
+            <label for="step2" class="wizard-btn next">Next</label>
+        </div>
     </fieldset>
-    <br><br>
-    <fieldset>
+
+    <fieldset class="form-step" data-step="2">
         <legend>2. Academic Information</legend>
-        <label for="major">Engineering Major:</label><br>
-        <select id="major" name="major" required>
-            <option value="">Select your major</option>
-            <option value="Computer Engineering">Computer Engineering</option>
-            <option value="Electrical Engineering">Electrical Engineering</option>
-            <option value="Mechanical Engineering">Mechanical Engineering</option>
-            <option value="Telecommunication Engineering">Telecommunication Engineering</option>
-            <option value="Civil Engineering">Civil Engineering</option>
-            <option value="Industrial Engineering">Industrial Engineering</option>
-            <option value="Biomedical Engineering">Biomedical Engineering</option>
-        </select><br><br>
-        <label for="GPA">Current GPA/100:</label>
-        <input type="number" id="GPA" name="gpa" placeholder="eg: 85" min="40" max="100" step="0.01" required><br><br>
-        <label for="credits">Credits Completed:</label>
-        <input type="number" id="credits" name="credits" placeholder="eg: 60" min="0" max="146" step="1" required><br><br>
-    
-         <fieldset>
-              <legend>Expected Graduation</legend>
 
-                <input type="radio" id="Fall" name="graduation" value="Fall">
-                <label for="Fall">Fall</label><br>
+        <div class="field field--full">
+            <label for="major">Engineering Major:</label>
+            <select id="major" name="major" required>
+                <option value="">Select your major</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Telecommunication Engineering">Telecommunication Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Industrial Engineering">Industrial Engineering</option>
+                <option value="Biomedical Engineering">Biomedical Engineering</option>
+            </select>
+        </div>
 
-                <input type="radio" id="Spring" name="graduation" value="Spring">
-                <label for="Spring">Spring</label><br>
+        <div class="field">
+            <label for="GPA">Current GPA/100:</label>
+            <input type="number" id="GPA" name="gpa" placeholder="eg: 85" min="40" max="100" step="0.01" required>
+        </div>
 
-                <input type="radio" id="Summer" name="graduation" value="Summer">
-                <label for="Summer">Summer</label>
+        <div class="field">
+            <label for="credits">Credits Completed:</label>
+            <input type="number" id="credits" name="credits" placeholder="eg: 60" min="0" max="146" step="1" required>
+        </div>
+
+        <fieldset class="field field--full">
+            <legend>Expected Graduation</legend>
+
+            <input type="radio" id="Fall" name="graduation" value="Fall">
+            <label for="Fall">Fall</label>
+
+            <input type="radio" id="Spring" name="graduation" value="Spring">
+            <label for="Spring">Spring</label>
+
+            <input type="radio" id="Summer" name="graduation" value="Summer">
+            <label for="Summer">Summer</label>
         </fieldset>
-        <br><br>
+
+        <div class="field">
             <label for="GradDate">Expected Graduation Month &amp; Year:</label>
-            <input type="month" id="GradDate" name="graduation_month" ><br><br>
-        <fieldset>
-        <legend>Engineering Internship</legend>
+            <input type="month" id="GradDate" name="graduation_month">
+        </div>
 
-        <input type="radio" id="Yes" name="internship_completed" value="yes">
-        <label for="Yes">Yes</label>
+        <fieldset class="field">
+            <legend>Engineering Internship</legend>
 
-        <input type="radio" id="No" name="internship_completed" value="no">
-        <label for="No">No</label>
+            <input type="radio" id="Yes" name="internship_completed" value="yes">
+            <label for="Yes">Yes</label>
+
+            <input type="radio" id="No" name="internship_completed" value="no">
+            <label for="No">No</label>
         </fieldset>
+
+        <p class="step-warning">Please fill in all required fields correctly before continuing.</p>
+        <div class="wizard-nav">
+            <label for="step1" class="wizard-btn prev">Previous</label>
+            <label for="step3" class="wizard-btn next">Next</label>
+        </div>
     </fieldset>
-    <br><br>
-    <fieldset>
-        <legend>3. Technical Background</Legend>
-        <p>Select all areas in which you have experience:</p><br>
-        <input type="checkbox" id="skill1" name="skills" value="Programming">
-        <label for="skill1">Programming</label>
-        <input type="checkbox" id="skill2" name="skills" value="Embedded Systems">
-        <label for="skill2">Embedded Systems</label>
-        <input type="checkbox" id="skill3" name="skills" value="Electronics">
-        <label for="skill3">Electronics</label><br>
-        <input type="checkbox" id="skill4" name="skills" value="Computer Networks">
-        <label for="skill4">Computer Networks</label>
-        <input type="checkbox" id="skill5" name="skills" value="Telecommunications">
-        <label for="skill5">Telecommunications</label>
-        <input type="checkbox" id="skill6" name="skills" value="Biomedical instrumentation">
-        <label for="skill6">Biomedical instrumentation </label><br>
-        <input type="checkbox" id="skill7" name="skills" value="Artificial Intelligence / Machine Learning">
-        <label for="skill7">Artificial Intelligence / Machine Learning</label>
-        <input type="checkbox" id="skill8" name="skills" value="Signal Processing">
-        <label for="skill8">Signal Processing</label>
-        <br><br><br>
-        <label for="ProgLang">Primary Programming Language:</label>
-        <input type="text" id="ProgLang" name="language" list="languages">
-        <datalist id="languages">
-            <option value="C">
-            <option value="C++">
-            <option value="Python">
-            <option value="Java">
-            <option value="JavaScript">
-        </datalist><br><br><br>
-        <label for="Software">Engineering software Used:</label>
-        <select id="Software" name="software" multiple>
-            <option value="MATLAB">MATLAB</option>
-            <option value="Simulink">Simulink</option>
-            <option value="LabVIEW">LabVIEW</option>
-            <option value="LTspice">LTspice</option>
-            <option value="Vivado">Vivado</option>
-            <option value="SolidWorks">SolidWorks</option>
-            <option value="Proteus">Proteus</option>
-            <option value="Multisim">Multisim</option>
-        </select><br><br>
-        <p>Hold Ctrl (Windows) or Command (Mac) to select several options.</p>
+
+    <fieldset class="form-step" data-step="3">
+        <legend>3. Technical Background</legend>
+
+        <p class="field-note field--full">Select all areas in which you have experience:</p>
+
+        <div class="field field--full skills-group">
+            <input type="checkbox" id="skill1" name="skills" value="Programming">
+            <label for="skill1">Programming</label>
+
+            <input type="checkbox" id="skill2" name="skills" value="Embedded Systems">
+            <label for="skill2">Embedded Systems</label>
+
+            <input type="checkbox" id="skill3" name="skills" value="Electronics">
+            <label for="skill3">Electronics</label>
+
+            <input type="checkbox" id="skill4" name="skills" value="Computer Networks">
+            <label for="skill4">Computer Networks</label>
+
+            <input type="checkbox" id="skill5" name="skills" value="Telecommunications">
+            <label for="skill5">Telecommunications</label>
+
+            <input type="checkbox" id="skill6" name="skills" value="Biomedical instrumentation">
+            <label for="skill6">Biomedical instrumentation</label>
+
+            <input type="checkbox" id="skill7" name="skills" value="Artificial Intelligence / Machine Learning">
+            <label for="skill7">Artificial Intelligence / Machine Learning</label>
+
+            <input type="checkbox" id="skill8" name="skills" value="Signal Processing">
+            <label for="skill8">Signal Processing</label>
+        </div>
+
+        <div class="field">
+            <label for="ProgLang">Primary Programming Language:</label>
+            <input type="text" id="ProgLang" name="language" list="languages">
+            <datalist id="languages">
+                <option value="C">
+                <option value="C++">
+                <option value="Python">
+                <option value="Java">
+                <option value="JavaScript">
+            </datalist>
+        </div>
+
+        <div class="field">
+            <label for="Software">Engineering software Used:</label>
+            <select id="Software" name="software" multiple>
+                <option value="MATLAB">MATLAB</option>
+                <option value="Simulink">Simulink</option>
+                <option value="LabVIEW">LabVIEW</option>
+                <option value="LTspice">LTspice</option>
+                <option value="Vivado">Vivado</option>
+                <option value="SolidWorks">SolidWorks</option>
+                <option value="Proteus">Proteus</option>
+                <option value="Multisim">Multisim</option>
+            </select>
+        </div>
+
+        <p class="field-note field--full">Hold Ctrl (Windows) or Command (Mac) to select several options.</p>
+
+        <p class="step-warning">Please fill in all required fields correctly before continuing.</p>
+        <div class="wizard-nav">
+            <label for="step2" class="wizard-btn prev">Previous</label>
+            <label for="step4" class="wizard-btn next">Next</label>
+        </div>
     </fieldset>
-    <br><br>
-    <fieldset>
+
+    <fieldset class="form-step" data-step="4">
         <legend>4. Final Year Project</legend>
-        <label for="ProjectTitle">Proposed Project Title:</label>
-        <input type="text" id="ProjectTitle" name="project_title" placeholder="Enter a tentative project title"><br><br>
-        <label for="ProjectArea">Preferred Project Area:</label>
-        <select id="ProjectArea" name="project_area">
-            <optgroup label="Computer Engineering">
-                <option value="Artificial Intelligence">Artificial Intelligence</option>
-                <option value="Web Applications">Web Applications</option>
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="Internet of Things">Internet of Things</option>
-            </optgroup>
-            <optgroup label="Electrical Engineering">
-                <option value="Power Systems">Power Systems</option>
-                <option value="Renewable Energy">Renewable Energy</option>
-                <option value="Control Systems">Control Systems</option>
-            </optgroup>
-            <optgroup label="Biomedical Engineering">
-                <option value="Medical Imaging">Medical Imaging</option>
-                <option value="Biosensors">Biosensors</option>
-                <option value="Medical Devices">Medical Devices</option>
-            </optgroup>
-            <optgroup label="Telecommunication Engineering">
-                <option value="Wireless Communications">Wireless Communications</option>
-                <option value="5G/6G Networks">5G/6G Networks</option>
-                <option value="Optical Fiber Communications">Optical Fiber Communications</option>
-            </optgroup>
-            <optgroup label="Mechanical Engineering">
-                <option value="Thermal Engineering">Thermal Engineering</option>
-                <option value="Manufacturing">Manufacturing</option>
-                <option value="Robotics">Robotics</option>
-            </optgroup>
-            <optgroup label="Industrial Engineering">
-                <option value="Operations Research">Operations Research</option>
-                <option value="Production Systems">Production Systems</option>
-                <option value="Supply Chain Management">Supply Chain Management</option>
-            </optgroup>
-        </select>
-        <br><br>
-        <label for="Desc">Brief Project Description</label><br>
-        <textarea id="Desc" name="description" rows="6" cols="45" placeholder="Describe the problem, propose a solution, and expected outcome..."></textarea>
-        <br><br>
-        <label for="Team-size">Preferred Team Size:</label>
-        <input type="number" id="Team-size" name="team_size" value="2" min="1">
-        <br><br>
-        <label for="project_color">Choose a color for your project dashboard:</label>
-        <input type="color" id="project_color" name="project_color">
-        <br><br>
-        <label for="meeting-date">Preferred Meeting Date</label>
-        <input type="date" id="meeting-date" name="meeting_date">
-        <br><br>
-        <label for="meeting-time">Preferred Meeting Time</label>
-        <input type="time" id="meeting-time" name="meeting_time">
+
+        <div class="field field--full">
+            <label for="ProjectTitle">Proposed Project Title:</label>
+            <input type="text" id="ProjectTitle" name="project_title" placeholder="Enter a tentative project title">
+        </div>
+
+        <div class="field field--full">
+            <label for="ProjectArea">Preferred Project Area:</label>
+            <select id="ProjectArea" name="project_area">
+                <optgroup label="Computer Engineering">
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Web Applications">Web Applications</option>
+                    <option value="Cybersecurity">Cybersecurity</option>
+                    <option value="Internet of Things">Internet of Things</option>
+                </optgroup>
+                <optgroup label="Electrical Engineering">
+                    <option value="Power Systems">Power Systems</option>
+                    <option value="Renewable Energy">Renewable Energy</option>
+                    <option value="Control Systems">Control Systems</option>
+                </optgroup>
+                <optgroup label="Biomedical Engineering">
+                    <option value="Medical Imaging">Medical Imaging</option>
+                    <option value="Biosensors">Biosensors</option>
+                    <option value="Medical Devices">Medical Devices</option>
+                </optgroup>
+                <optgroup label="Telecommunication Engineering">
+                    <option value="Wireless Communications">Wireless Communications</option>
+                    <option value="5G/6G Networks">5G/6G Networks</option>
+                    <option value="Optical Fiber Communications">Optical Fiber Communications</option>
+                </optgroup>
+                <optgroup label="Mechanical Engineering">
+                    <option value="Thermal Engineering">Thermal Engineering</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Robotics">Robotics</option>
+                </optgroup>
+                <optgroup label="Industrial Engineering">
+                    <option value="Operations Research">Operations Research</option>
+                    <option value="Production Systems">Production Systems</option>
+                    <option value="Supply Chain Management">Supply Chain Management</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="field field--full">
+            <label for="Desc">Brief Project Description</label>
+            <textarea id="Desc" name="description" rows="6" cols="45" placeholder="Describe the problem, propose a solution, and expected outcome..."></textarea>
+        </div>
+
+        <div class="field">
+            <label for="Team-size">Preferred Team Size:</label>
+            <input type="number" id="Team-size" name="team_size" value="2" min="1" max="5">
+        </div>
+
+        <div class="field">
+            <label for="project_color">Choose a color for your project dashboard:</label>
+            <input type="color" id="project_color" name="project_color">
+        </div>
+
+        <div class="field">
+            <label for="meeting-date">Preferred Meeting Date</label>
+            <input type="date" id="meeting-date" name="meeting_date">
+        </div>
+
+        <div class="field">
+            <label for="meeting-time">Preferred Meeting Time</label>
+            <input type="time" id="meeting-time" name="meeting_time">
+        </div>
+
+        <div class="wizard-nav">
+            <label for="step3" class="wizard-btn prev">Previous</label>
+            <span></span>
+        </div>
+
+        <div class="final-actions">
+            <input type="checkbox" id="confirmation" name="confirmation" required>
+            <label for="confirmation">
+                I confirm that the information provided is accurate.
+            </label>
+
+            <br><br>
+
+            <input type="submit" value="Submit Profile">
+            <input type="reset" value="Clear Form">
+            <input type="hidden" name="form_version" value="2026-2027">
+        </div>
     </fieldset>
-    <br><br>
-
-    <input type="checkbox" id="confirmation" name="confirmation" required>
-    <label for="confirmation">
-    I confirm that the information provided is accurate.
-    </label>
-
-    <br><br>
-
-    <input type="submit" value="Submit Profile">
-    <input type="reset" value="Clear Form">
-    <input type="hidden" name="form_version" value="2026-2027">
 
 </form>
 {%endblock%}

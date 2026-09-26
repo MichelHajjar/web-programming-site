@@ -77,6 +77,13 @@ Home
                                             src="{{ url_for('static', filename='Eng-profile-icon.png') }}"
                                             alt=""
                                         >
+                                    {% elif item.url == "/design" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='css-design-icon.png') }}"
+                                            alt=""
+                                        >
+
                                     {% endif %}
 
                                     <span class="work-copy">{# This groups the text area of your work item #}

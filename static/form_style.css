@@ -1,0 +1,615 @@
+/* ==========================================================
+   Engineering Student Profile — Form Styling (Light)
+   Pure CSS multi-step wizard: no JavaScript.
+   Uses the design tokens already defined in style.css, so
+   make sure style.css is linked BEFORE this file in <head>.
+   ========================================================== */
+
+/* ---------- Card that holds the whole wizard ---------- */
+.wizard-form {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Hidden radios that drive the whole wizard -----------
+   These are the only "engine" of the stepper. They live as direct
+   children of the form, before the fieldsets, so the general
+   sibling combinator (~) below can react to :checked. tabindex="-1"
+   keeps keyboard users from jumping steps with arrow keys; the
+   visible Previous/Next labels remain the intended way to move. */
+.step-radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- Progress bar + label ---------- */
+.wizard-progress {
+    max-width: 100%;
+    margin: 0 0 var(--space-5);
+}
+
+.wizard-progress-track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-border);
+    overflow: hidden;
+}
+
+.wizard-progress-bar {
+    height: 100%;
+    width: 25%;
+    background: linear-gradient(90deg, var(--color-teal), var(--color-teal-dark));
+    border-radius: 999px;
+    transition: width 0.45s ease;
+}
+
+.wizard-progress-label {
+    display: block;
+    margin-top: var(--space-2);
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-teal-text);
+    text-align: center;
+}
+
+.wizard-progress-label span {
+    display: none;
+}
+
+#step2:checked ~ .wizard-progress .wizard-progress-bar { width: 50%; }
+#step3:checked ~ .wizard-progress .wizard-progress-bar { width: 75%; }
+#step4:checked ~ .wizard-progress .wizard-progress-bar { width: 100%; }
+
+#step1:checked ~ .wizard-progress .label-step1,
+#step2:checked ~ .wizard-progress .label-step2,
+#step3:checked ~ .wizard-progress .label-step3,
+#step4:checked ~ .wizard-progress .label-step4 {
+    display: inline;
+}
+
+/* ---------- Steps ----------
+   Each active step is laid out as a 2-column grid so related
+   fields sit side by side instead of stacking the whole way down
+   the page. Individual fields opt into spanning both columns with
+   .field--full (long text, textareas, nested fieldsets, notes). */
+fieldset.form-step {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+    row-gap: var(--space-4);
+
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-teal);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-surface-soft);
+}
+
+@keyframes stepIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+#step1:checked ~ fieldset.form-step[data-step="1"],
+#step2:checked ~ fieldset.form-step[data-step="2"],
+#step3:checked ~ fieldset.form-step[data-step="3"],
+#step4:checked ~ fieldset.form-step[data-step="4"] {
+    display: grid;
+    animation: stepIn 0.5s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
+
+/* The legend is never a grid item (browsers always lay it out as
+   its own full-width heading above the grid), so this only
+   controls how wide the teal underline is: auto = hugs the text
+   instead of stretching edge to edge across the whole card. */
+fieldset.form-step legend {
+    width: auto;
+    padding: 0 0 0.4rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--color-teal);
+    color: var(--color-navy);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+}
+
+/* ---------- Field wrapper: one label + one control ---------- */
+.field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Spans both grid columns: long text, textareas, nested fieldsets,
+   helper notes — anything that shouldn't be squeezed into half
+   the card's width. */
+.field--full {
+    grid-column: 1 / -1;
+}
+
+.field-note {
+    grid-column: 1 / -1;
+    margin: -0.25rem 0 0;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+}
+
+/* Nested fieldsets (Expected Graduation, Engineering Internship)
+   are grid items in their own right, no extra wrapper div needed. */
+fieldset.form-step fieldset {
+    grid-column: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin: 0;
+    background: var(--color-surface);
+}
+
+fieldset.form-step fieldset legend {
+    border-bottom: 0;
+    padding: 0 0.4rem;
+    margin: 0;
+    width: auto;
+    font-size: 0.9rem;
+    color: var(--color-teal-text);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Keep Expected Graduation and Engineering Internship choices inline. */
+fieldset.form-step fieldset:not(.form-step) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+}
+
+fieldset.form-step fieldset:not(.form-step) legend {
+    flex-basis: 100%;
+}
+
+fieldset.form-step fieldset:not(.form-step) input[type="radio"] + label {
+    flex: 0 0 auto;
+}
+
+/* ---------- Inline validation warning (pure CSS) ---------- */
+.step-warning {
+    grid-column: 1 / -1;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    color: #b3271f;
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-semibold);
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+fieldset.form-step:has(:invalid) .step-warning {
+    max-height: 60px;
+    opacity: 1;
+    margin-top: var(--space-2);
+}
+
+/* ---------- Labels ----------
+   Always block-level and above their control — this is what fixes
+   the cramped "label squeezed beside a tall multi-select" look. */
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.92rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+}
+
+/* ---------- Inputs ----------
+   No fixed max-width anymore: a field's actual width now comes
+   from its grid column (half the card) or .field--full (the whole
+   card), so short fields and long fields size themselves sensibly
+   automatically instead of everything defaulting to one width. */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-soft) 100%);
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.92rem;
+    box-shadow: inset 0 1px 2px rgba(7, 29, 45, 0.05);
+    box-sizing: border-box;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="url"]:hover,
+input[type="number"]:hover,
+input[type="date"]:hover,
+input[type="month"]:hover,
+input[type="time"]:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--color-teal-dark);
+}
+
+/* Short, fixed-length values: don't let these stretch across half
+   the card just because their grid column is wide. */
+#studentID,
+#GPA,
+#credits,
+#Team-size,
+#meeting-time {
+    max-width: 180px;
+}
+
+/* Long free text: benefits from the full width of its column/row. */
+#fullname,
+#email,
+#github,
+#WebWebsite,
+#ProjectTitle,
+#ProjectArea {
+    width: 100%;
+}
+
+/* Description grows with what people actually write, within limits. */
+textarea#Desc {
+    width: 100%;
+    min-height: 140px;
+    max-height: 340px;
+    resize: vertical;
+}
+
+select[multiple] {
+    height: 150px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-text-soft);
+    opacity: 0.75;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-teal);
+    box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.28);
+}
+
+input:user-invalid,
+select:user-invalid {
+    border-color: #d64545;
+}
+
+/* ---------- Phone number group ---------- */
+.phone-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.phone-group span {
+    color: var(--color-teal-text);
+    font-weight: 700;
+}
+
+.phone-group input {
+    flex: 1;
+}
+
+/* ---------- Color picker ---------- */
+input[type="color"] {
+    width: 70px;
+    height: 42px;
+    padding: 3px;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ---------- Checkboxes & radios ----------
+   The real controls stay in the HTML for accessibility/form submission.
+   The labels become the visible, clickable controls for a cleaner UI. */
+input[type="checkbox"]:not(#confirmation),
+input[type="radio"]:not(.step-radio) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Visible control + text */
+input[type="checkbox"]:not(#confirmation) + label,
+input[type="radio"]:not(.step-radio) + label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+    font-weight: 400;
+    color: var(--color-text);
+    cursor: pointer;
+    line-height: 1.35;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Checkbox */
+input[type="checkbox"]:not(#confirmation) + label::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 5px;
+    background: var(--color-surface);
+    box-shadow: inset 0 1px 2px rgba(7, 29, 45, 0.05);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+input[type="checkbox"]:not(#confirmation):checked + label::before {
+    background: var(--color-teal);
+    border-color: var(--color-teal-dark);
+    box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.18);
+}
+
+input[type="checkbox"]:not(#confirmation):checked + label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid var(--color-navy);
+    border-bottom: 2px solid var(--color-navy);
+    transform: translateY(-62%) rotate(45deg);
+}
+
+/* Radio */
+input[type="radio"]:not(.step-radio) + label::before {
+    content: "";
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-surface);
+    box-shadow: inset 0 1px 2px rgba(7, 29, 45, 0.05);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+/* Checked radio: stays the same size and uses a clean teal center. */
+input[type="radio"]:not(.step-radio):checked + label::before {
+    background:
+        radial-gradient(circle at center, var(--color-teal) 0 5px, var(--color-surface) 5.5px 100%);
+    border-color: var(--color-teal-dark);
+    box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.18);
+}
+
+/* Keyboard focus */
+input[type="checkbox"]:not(#confirmation):focus-visible + label::before,
+input[type="radio"]:not(.step-radio):focus-visible + label::before {
+    border-color: var(--color-teal);
+    box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.28);
+}
+
+input[type="checkbox"]:not(#confirmation) + label:hover,
+input[type="radio"]:not(.step-radio) + label:hover {
+    color: var(--color-teal-text);
+}
+
+/* ---------- Skills checklist ----------
+   Each checkbox + label pair becomes one grid item:
+   maximum 3 choices per row on larger screens. */
+.skills-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 0.8rem 1.4rem;
+}
+
+.skills-group input[type="checkbox"] + label {
+    min-width: 0;
+    margin: 0;
+}
+
+/* ---------- Previous / Next (labels styled as buttons) ---------- */
+.wizard-nav {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-2);
+    gap: var(--space-3);
+}
+
+.wizard-btn {
+    display: inline-block;
+    padding: 0.65rem 1.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font-size: 0.92rem;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    user-select: none;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast), opacity var(--transition-fast);
+}
+
+.wizard-btn.next {
+    background: var(--color-teal);
+    color: var(--color-navy);
+    margin-left: auto;
+}
+
+.wizard-btn.next:hover {
+    background: var(--color-teal-dark);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+fieldset.form-step:has(:invalid) .wizard-btn.next {
+    pointer-events: none;
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.wizard-btn.prev {
+    background: transparent;
+    color: var(--color-teal-text);
+    border-color: var(--color-border);
+}
+
+.wizard-btn.prev:hover {
+    border-color: var(--color-teal);
+    background: var(--color-teal-soft);
+}
+
+/* ---------- Final actions (confirmation + submit + reset) ---------- */
+.final-actions {
+    grid-column: 1 / -1;
+    margin-top: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+}
+
+input[type="submit"],
+input[type="reset"] {
+    padding: 0.7rem 1.8rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 0.92rem;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    margin-top: var(--space-3);
+    margin-right: var(--space-3);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast), opacity var(--transition-fast);
+}
+
+input[type="submit"] {
+    background: var(--color-teal);
+    color: var(--color-navy);
+}
+
+input[type="submit"]:hover {
+    background: var(--color-teal-dark);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+fieldset.form-step:has(:invalid) input[type="submit"] {
+    pointer-events: none;
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Confirmation checkbox keeps its existing simple inline layout. */
+#confirmation {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0.4rem 0 0;
+    padding: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+#confirmation + label {
+    display: inline;
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+input[type="reset"] {
+    background: transparent;
+    color: var(--color-text-soft);
+    border: 1px solid var(--color-border);
+}
+
+input[type="reset"]:hover {
+    border-color: var(--color-teal);
+    color: var(--color-teal-text);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+    fieldset.form-step {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-group {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem 1rem;
+    }
+
+    .wizard-form {
+        padding: var(--space-4);
+    }
+
+    fieldset.form-step {
+        padding: var(--space-4);
+    }
+
+    .wizard-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wizard-btn.next {
+        margin-left: 0;
+    }
+
+    .wizard-btn {
+        text-align: center;
+    }
+}
+
+/* Very small phones: keep long technical-skill labels readable. */
+@media (max-width: 430px) {
+    .skills-group {
+        grid-template-columns: 1fr;
+    }
+}
