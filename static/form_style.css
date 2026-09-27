@@ -5,6 +5,28 @@
    make sure style.css is linked BEFORE this file in <head>.
    ========================================================== */
 
+/* ---------- Header background ----------
+   style.css already styles <header> globally with this same
+   gradient. Reinforced here as well since form_style.css loads
+   after style.css on this page. */
+header {
+    background:
+        radial-gradient(
+            circle at 78% 45%,
+            rgba(86, 216, 202, 0.11),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #061823 0%,
+            var(--color-navy) 50%,
+            #12364a 100%
+        );
+    color: var(--color-white);
+    border-bottom: 4px solid var(--color-teal);
+    box-shadow: 0 7px 20px rgba(7, 29, 45, 0.12);
+}
+
 /* ---------- Card that holds the whole wizard ---------- */
 .wizard-form {
     max-width: 860px;
@@ -167,19 +189,26 @@ fieldset.form-step fieldset legend {
 }
 
 /* Keep Expected Graduation and Engineering Internship choices inline. */
+/* Keep radio choices on the same row */
 fieldset.form-step fieldset:not(.form-step) {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid !important;
+    grid-template-columns: repeat(3, max-content);
     align-items: center;
-    gap: 0.75rem 1.25rem;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
 }
 
 fieldset.form-step fieldset:not(.form-step) legend {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
+    width: max-content;
+    margin: 0 0 0.5rem;
 }
 
 fieldset.form-step fieldset:not(.form-step) input[type="radio"] + label {
-    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    margin: 0;
 }
 
 /* ---------- Inline validation warning (pure CSS) ---------- */
@@ -435,18 +464,37 @@ input[type="radio"]:not(.step-radio) + label:hover {
 }
 
 /* ---------- Skills checklist ----------
-   Each checkbox + label pair becomes one grid item:
-   maximum 3 choices per row on larger screens. */
+   Styled as bordered "card" pills, 2 per row, matching the
+   reference layout — instead of a plain compact chip list. */
 .skills-group {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: center;
-    gap: 0.8rem 1.4rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0.9rem 1.4rem;
 }
 
 .skills-group input[type="checkbox"] + label {
     min-width: 0;
+    width: 100%;
     margin: 0;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: inset 0 1px 2px rgba(7, 29, 45, 0.03);
+    box-sizing: border-box;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.skills-group input[type="checkbox"] + label:hover {
+    border-color: var(--color-teal-dark);
+}
+
+.skills-group input[type="checkbox"]:checked + label {
+    border-color: var(--color-teal);
+    background: var(--color-teal-soft);
 }
 
 /* ---------- Previous / Next (labels styled as buttons) ---------- */
@@ -581,8 +629,7 @@ input[type="reset"]:hover {
     }
 
     .skills-group {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.7rem 1rem;
+        grid-template-columns: 1fr;
     }
 
     .wizard-form {
@@ -604,12 +651,5 @@ input[type="reset"]:hover {
 
     .wizard-btn {
         text-align: center;
-    }
-}
-
-/* Very small phones: keep long technical-skill labels readable. */
-@media (max-width: 430px) {
-    .skills-group {
-        grid-template-columns: 1fr;
     }
 }

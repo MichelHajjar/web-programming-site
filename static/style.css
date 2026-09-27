@@ -1836,14 +1836,7 @@ th {
    display:none, because <nav> technically lives inside it in base.html;
    nav keeps rendering normally (fixed on desktop, its own dark bar on
    mobile) since it doesn't depend on the header's box to be visible. */
-body:has(nav a[href="/submit-profile"][aria-current="page"]) > header {
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    background: none;
-    border-bottom: 0;
-    box-shadow: none;
-}
+
 
 .profile {
     max-width: 860px;
@@ -2089,5 +2082,36 @@ body:has(nav) .profile dl {
     body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header .profile-contact {
         margin-left: 0;
         margin-right: 0;
+    }
+}
+/* ==================================================
+   SUBMITTED PROFILE PAGE — REMOVE EMPTY TOP HEADER
+================================================== */
+
+@media (min-width: 701px) {
+
+    /* Remove the empty site masthead on the profile page.
+       The sidebar stays visible because nav is fixed. */
+    body:has(.profile) > header {
+        min-height: 0 !important;
+        height: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: none !important;
+        border-bottom: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Make the profile header begin at the very top,
+       immediately beside the sidebar. */
+    body:has(.profile) main {
+        padding-top: 0 !important;
+    }
+
+    body:has(.profile) .profile-header {
+        margin-top: 0 !important;
+        border-radius: 0 !important;
     }
 }
