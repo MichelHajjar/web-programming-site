@@ -1812,3 +1812,282 @@ th {
     color: var(--color-heading);
     font-weight: var(--font-weight-bold);
 }
+
+/* ==================================================
+   ENGINEERING STUDENT PROFILE PAGE
+   profile.html is provided by the instructor and can't be
+   edited, so everything below targets the classes it already
+   outputs (.profile, .profile-header, .chips, dl/dt/dd, ...)
+   and adds to the rules above without changing any of them.
+
+   NOTE: profile.html uses a real <header class="profile-header">
+   tag nested inside <main>. The site's generic `header { ... }`
+   rule above (dark navy gradient, big padding, centred text)
+   matches ANY <header> element, so it was already styling this
+   nested one too — that's the dark hero band you see on the
+   submitted page. The rules below refine that instead of
+   fighting it, and style the info cards, contact row, and chips
+   underneath it.
+================================================== */
+
+/* Hide the site's own empty top masthead on this page only — it never
+   gets a title/subtitle here, so it was just a blank dark bar. This
+   collapses its own box (background/padding/border) without using
+   display:none, because <nav> technically lives inside it in base.html;
+   nav keeps rendering normally (fixed on desktop, its own dark bar on
+   mobile) since it doesn't depend on the header's box to be visible. */
+body:has(nav a[href="/submit-profile"][aria-current="page"]) > header {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border-bottom: 0;
+    box-shadow: none;
+}
+
+.profile {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+/* ----- Hero header: refine the inherited dark masthead into
+   a rounded profile card instead of a full-bleed bar ----- */
+
+.profile-header {
+    min-height: 0;
+    margin-bottom: var(--space-6) !important;
+    padding: 2.25rem 2rem !important;
+
+    border-radius: 18px;
+    border-bottom: 0 !important;
+
+    box-shadow: 0 14px 34px rgba(7, 29, 45, 0.22);
+
+    /* Left-align the whole hero instead of the inherited centred layout */
+    align-items: flex-start;
+    text-align: left;
+}
+
+.profile-header h1 {
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    color: #f7fbfa;
+}
+
+.profile-title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); /* keeps it legible whatever colour the student picked */
+}
+
+/* Contact / links rows: turn the plain emoji + text runs into
+   small pill chips instead of loosely wrapped inline text. */
+.profile-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.7rem 0 0 !important;
+}
+
+.profile-contact + .profile-contact {
+    margin-top: 0.6rem !important;
+}
+
+body:has(nav) .profile-contact span {
+    margin-right: 0 !important;
+    white-space: normal;
+}
+
+.profile-contact span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.35rem 0.75rem;
+
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+
+    color: #dce9e7;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+.profile-header a {
+    color: var(--color-teal);
+    font-weight: var(--font-weight-semibold);
+    text-decoration-color: rgba(86, 216, 202, 0.5);
+}
+
+.profile-header a:hover,
+.profile-header a:focus-visible {
+    color: #ffffff;
+    text-decoration-color: currentColor;
+}
+
+/* ----- Content sections -----
+   The site's generic `section {}` rule above gives every section a
+   white card box (background, teal left border, shadow, radius).
+   These sections drop that box for a flatter, container-free layout:
+   just the heading underline and plain content, stacked with space
+   between them. */
+
+.profile section {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 4rem 0 0 8rem;
+}
+.profile > p:last-child {
+    padding-left: 8rem;
+}
+
+.profile section::before {
+    content: none; /* remove the decorative corner glow that came with the card */
+}
+
+body:has(nav) .profile section {
+    margin-bottom: var(--space-7) !important;
+}
+
+.profile h2 {
+    font-size: 1.4rem;
+    margin-bottom: var(--space-4);
+}
+
+.profile section p strong {
+    color: var(--color-heading);
+}
+
+/* ----- Definition lists (Academic Information, Final Year Project) ----- */
+
+body:has(nav) .profile dl {
+    row-gap: 0.65rem !important;
+    column-gap: 1.5rem !important;
+    align-items: baseline;
+}
+
+.profile dt {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.profile dd {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+}
+
+.profile dt:last-of-type,
+.profile dd:last-of-type {
+    border-bottom: 0;
+}
+
+/* ----- Skill / software chips ----- */
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+
+    background: var(--color-teal-soft);
+    color: var(--color-teal-text);
+    font-weight: var(--font-weight-semibold);
+
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.chip:hover {
+    background: #c3ede7;
+    transform: translateY(-1px);
+}
+
+.swatch {
+    box-shadow: 0 0 0 1px rgba(7, 29, 45, 0.08) inset;
+}
+
+/* ----- Small screens: stack the label/value grid ----- */
+
+@media (max-width: 560px) {
+    body:has(nav) .profile dl {
+        grid-template-columns: 1fr !important;
+    }
+
+    .profile dt {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .profile dd {
+        padding-top: 0;
+    }
+
+    .profile-header {
+        padding: 1.85rem 1.4rem !important;
+    }
+}
+/* ==================================================
+   SUBMITTED PROFILE PAGE — FINAL HEADER ALIGNMENT
+   Only affects the page shown after submitting the form.
+================================================== */
+
+@media (min-width: 701px) {
+
+    /* Start the profile content immediately beside the sidebar. */
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) main {
+        width: calc(100% - var(--sidebar-width));
+        max-width: none;
+
+        margin-left: var(--sidebar-width);
+        margin-right: 0;
+
+        padding: 0;
+    }
+
+    /* Let the profile use the complete available width. */
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    /* Full-width rectangular profile header. */
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header {
+        width: 100%;
+        margin: 0 !important;
+
+        /* 1rem from the left edge of the profile area. */
+        padding: 2.25rem 1rem !important;
+
+        display: block;
+        text-align: left;
+
+        align-items: initial;
+        justify-content: flex-start;
+
+        border-radius: 0 !important;
+
+        border-left: 0;
+        border-right: 0;
+    }
+
+    /* Keep every item inside the header aligned to the left. */
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header h1,
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header .profile-title,
+    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header .profile-contact {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
