@@ -2115,3 +2115,45 @@ body:has(nav) .profile dl {
         border-radius: 0 !important;
     }
 }
+/* ==================================================
+   FIXES: timeline, footer centering, source dots
+================================================== */
+
+/* 1. Timeline fix.
+   html AND body both have overflow-x: hidden, which turns body into its own
+   scroll container that never scrolls. The scroll-driven timeline animations
+   were tied to that body, so they never progressed.
+   "clip" hides horizontal overflow without creating a scroll container. */
+body {
+    overflow-x: clip;
+}
+
+/* Small connector pieces through the h3/h4 dots were always teal, so they
+   showed up ahead of the fill. Make them follow the scroll like the dots. */
+@keyframes tl-seg {
+    from { background: var(--tl-track); }
+    to   { background: var(--color-teal); }
+}
+
+@supports (animation-timeline: view()) {
+    body:has(nav) main > section :is(h3, h4)::after {
+        animation: tl-seg linear both;
+        animation-timeline: view(block 50% 49.5%);
+    }
+}
+
+/* 2. Footer: center the text in the area beside the sidebar.
+   The footer spans the full page width, but the fixed sidebar covers its left
+   part, so the text looked shifted left. */
+@media (min-width: 701px) {
+    body:has(nav) footer {
+        padding-left: calc(var(--sidebar-width) + 2rem);
+    }
+}
+
+/* 3. Remove the dot before each source link in the last (Sources) section. */
+body:has(nav) main > section:last-of-type > ul > li:has(a)::before {
+    content: none !important;
+    display: none !important;
+}
+
