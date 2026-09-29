@@ -1,0 +1,372 @@
+{% extends "nav-base.html" %} 
+{% block title %} Research {% endblock %} 
+
+{% block header %}
+    <h1>Research</h1>
+
+{% endblock %}
+
+{% block content %}
+<h2>1. CSS At-Rules</h2>
+    <h3>What is CSS at-rules?</h3>
+    <p>An at-rule is a CSS statement that begins with the at sign (@), followed by an identifier such as media, 
+        supports, import, or keyframes. At-rules give instructions to the CSS processor rather than directly selecting 
+        an HTML element in the same way that an ordinary CSS rule does.
+    </p>
+    <br>
+
+    <h3>Major CSS at-rules</h3>
+        <table>
+    <thead>
+        <tr>
+            <th>At-rule</th>
+            <th>Main purpose</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td><code>@media</code></td>
+            <td>Responsive and conditional styling based on the device/environment</td>
+            <td rowspan="3">Conditional at-rules</td>
+        </tr>
+
+        <tr>
+            <td><code>@supports</code></td>
+            <td>Apply styles only when a browser supports a CSS feature</td>
+        </tr>
+
+        <tr>
+            <td><code>@container</code></td>
+            <td>Apply styles according to the size/state of a containing element</td>
+        </tr>
+
+        <tr>
+            <td><code>@import</code></td>
+            <td>Import another CSS stylesheet</td>
+            <td rowspan="2">Resource/import and descriptive at-rules</td>
+        </tr>
+
+        <tr>
+            <td><code>@font-face</code></td>
+            <td>Define a custom web font</td>
+        </tr>
+
+        <tr>
+            <td><code>@keyframes</code></td>
+            <td>Define the stages of a CSS animation</td>
+            <td>Animation and visual behavior</td>
+        </tr>
+
+        <tr>
+            <td><code>@layer</code></td>
+            <td>Organize CSS into cascade layers</td>
+            <td rowspan="2">Cascade and organization</td>
+        </tr>
+
+        <tr>
+            <td><code>@scope</code></td>
+            <td>Restrict CSS rules to a specific DOM subtree</td>
+        </tr>
+
+        <tr>
+            <td><code>@page</code></td>
+            <td>Control the appearance of printed pages</td>
+            <td>Printing</td>
+        </tr>
+
+        <tr>
+            <td><code>@property</code></td>
+            <td>Register and define a typed CSS custom property</td>
+            <td>Advanced CSS / custom properties</td>
+        </tr>
+    </tbody>
+</table>
+<br><br>
+<section>
+    <h2>2. Regular Expressions</h2>
+        <article>
+            <h3>What is a Regular Expression?</h3>
+                <p>A regular expression, often shortened to regex or regexp, is a pattern used to describe and match 
+                    specific combinations of characters in text. Developers can use these patterns to determine whether 
+                    text follows a particular format, find parts of a string, extract information, replace text, or split text.
+                </p>
+        </article>
+        <br>
+        <article>
+            <h3>Common Regex Symbols</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>.</code></td>
+                        <td>Any character except newline in the default mode</td>
+                        <td><code>a.c</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>^</code></td>
+                        <td>Beginning of a string/line</td>
+                        <td><code>^Hello</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>$</code></td>
+                        <td>End of a string/line</td>
+                        <td><code>world$</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>[abc]</code></td>
+                        <td>One character from the set</td>
+                        <td><code>[abc]</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>[^abc]</code></td>
+                        <td>One character not in the set</td>
+                        <td><code>[^abc]</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\d</code></td>
+                        <td>A digit</td>
+                        <td><code>\d</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\D</code></td>
+                        <td>A non-digit</td>
+                        <td><code>\D</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\w</code></td>
+                        <td>A word character</td>
+                        <td><code>\w</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\W</code></td>
+                        <td>A non-word character</td>
+                        <td><code>\W</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\s</code></td>
+                        <td>Whitespace</td>
+                        <td><code>\s</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>\S</code></td>
+                        <td>Non-whitespace</td>
+                        <td><code>\S</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Zero or more repetitions</td>
+                        <td><code>a*</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>+</code></td>
+                        <td>One or more repetitions</td>
+                        <td><code>a+</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>?</code></td>
+                        <td>Zero or one repetition</td>
+                        <td><code>a?</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>{n}</code></td>
+                        <td>Exactly <code>n</code> repetitions</td>
+                        <td><code>\d{4}</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>{n,m}</code></td>
+                        <td>Between <code>n</code> and <code>m</code> repetitions</td>
+                        <td><code>\d{2,4}</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>|</code></td>
+                        <td>OR</td>
+                        <td><code>cat|dog</code></td>
+                    </tr>
+
+                    <tr>
+                        <td><code>( )</code></td>
+                        <td>Grouping/capturing</td>
+                        <td><code>(abc)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+<br>
+<article>
+
+    <h3>Why Are Regular Expressions Useful?</h3>
+
+    <p>Regular expressions are useful because they can:</p>
+
+    <ul>
+        <li>Describe complex text formats concisely.</li>
+        <li>Validate structured input.</li>
+        <li>Search large amounts of text.</li>
+        <li>Extract information.</li>
+        <li>Replace repeated patterns.</li>
+        <li>Process strings efficiently in many situations.</li>
+    </ul>
+
+    <p>
+        They are especially valuable when the structure of the data can be
+        described clearly as a pattern. Python's documentation also notes that
+        regular expressions can become difficult to understand when the task
+        becomes too complicated.
+    </p>
+</article>
+</section>
+
+<section>
+    <h2>3. <code>&lt;button&gt;</code> vs <code>&lt;input type="button"&gt;</code></h2>
+
+    <article>
+        <h3>What is the difference?</h3>
+        <p>
+            Both elements can create a clickable button, but they are different HTML elements with different capabilities.
+        </p>
+    </article>
+
+    <article>
+        <h3>The <code>&lt;button&gt;</code> element</h3>
+        <p>
+            The <code>&lt;button&gt;</code> is a dedicated HTML button element and it is a general-purpose interactive element.
+        </p>
+
+        <p>
+            <code>&lt;button type="button"&gt;Click Me&lt;/button&gt;</code>
+        </p>
+
+        <p>
+            The text Click Me is placed between the opening and closing tags.
+            One of its biggest advantages is that its content can contain HTML and with
+            <code>&lt;button&gt;</code>, it is easier to style and can contain HTML content such as images.
+        </p>
+    </article>
+
+    <article>
+        <h3>The <code>&lt;input type="button"&gt;</code> element</h3>
+        <p>
+            With <code>&lt;input type="button"&gt;</code>, the button's visible label comes from the value attribute.
+        </p>
+
+        <p>
+            <code>&lt;input type="button" value="Click Me"&gt;</code>
+        </p>
+
+        <p>
+            The <code>&lt;input&gt;</code> element is a void element, meaning it does not have a closing tag and cannot contain child HTML.
+        </p>
+    </article>
+
+    <article>
+        <h3>Summary</h3>
+        <p>
+            <code>&lt;button&gt;</code> is more flexible because it can contain text, images, and other permitted HTML content.
+            <code>&lt;input type="button"&gt;</code> is simpler and uses its value attribute as its label. Both can be styled with CSS
+            and controlled with JavaScript, but <code>&lt;button&gt;</code> is generally preferred for modern web development.
+        </p>
+    </article>
+</section>
+
+<section>
+    <h2>4. <code>&lt;datalist&gt;</code> vs. <code>&lt;select&gt;</code></h2>
+
+    <article>
+        <h3> What is <code>&lt;datalist&gt;</code>?</h3>
+
+        <p>
+            <code>&lt;datalist&gt;</code> provides a set of suggested values for another form control,
+            usually an <code>&lt;input&gt;</code>. It does not create the input field itself.
+            The input remains editable, and the user can normally enter a value that is not included in the suggestions.
+        </p>
+    </article>
+
+    <article>
+        <h3> What is <code>&lt;select&gt;</code>?</h3>
+
+        <p>
+            <code>&lt;select&gt;</code> creates an actual selection control containing predefined options.
+            The user selects from the available <code>&lt;option&gt;</code> elements rather than using the control as a free-text input.
+        </p>
+    </article>
+
+    <article>
+        <h3>Conclusion</h3>
+
+        <p>
+            <code>&lt;select&gt;</code> and <code>&lt;datalist&gt;</code> both provide predefined options, but they serve different purposes.
+            <code>&lt;select&gt;</code> is a form control used when the user must choose from a defined list of options.
+            <code>&lt;datalist&gt;</code> provides suggestions for an associated input while still allowing the user to enter another value.
+            Therefore, <code>&lt;select&gt;</code> is more appropriate for fixed choices, while <code>&lt;datalist&gt;</code> is useful
+            when suggestions can help the user without restricting their input.
+        </p>
+    </article>
+</section>
+
+
+<section>
+    <h2>5. Sources</h2>
+        <ul>
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Syntax/At-rules" target="_blank" >MDN Web Docs — CSS At-rules</a>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <a href="https://docs.python.org/3/howto/regex.html" target="_blank" >Python Documentation — Regular Expression HOWTO</a>
+                </p>
+            </li>
+              <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button" target="_blank" >MDN — <code>&lt;button&gt;</code>element</a>
+                </p>
+            </li>
+              <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/button" target="_blank" >MDN — <code>&lt;input type="button"&gt;</code></a>
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/datalist" target="_blank"> MDN — <code>&lt;datalist&gt;</code></a>
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select" target="_blank">MDN — <code>&lt;select&gt;</code> </a>
+                </p>
+            </li>
+        </ul>
+</section>
+{% endblock%}
+
+            

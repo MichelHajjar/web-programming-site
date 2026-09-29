@@ -65,13 +65,22 @@
         <span>CSS Design</span>
     </a><br>
 
+    <a href="/research" {% if request.path == "/research" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='research-icon.png') }}"
+            alt=""
+        >
+        <span>Research</span>
+    </a><br>
+
     <a href="/submit-profile" {% if request.path == "/submit-profile" %}aria-current="page"{% endif %}>
         <img
             class="nav-icon"
             src="{{ url_for('static', filename='Eng-profile-icon.png') }}"
             alt=""
         >
-        <span>Engineering Student Profile</span>
+        <span>Profile</span>
     </a><br>
 
 </nav>

@@ -51,7 +51,8 @@ def home():
         {"week": 2, "title": "History of the Internet (AI)", "url": "/internet-history-ai"},
         {"week": 2, "title": "History of the Web (AI)", "url": "/web-history-ai"},
         {"week": 3, "title": "CSS Design", "url": "/design"},
-        {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
+        {"week": 3, "title": "Research", "url": "/research"},
+        {"week": 4, "title": "Profile", "url": "/submit-profile"},
     ]
     return render_template("index.html", weekly_work=weekly_work)
 
@@ -84,6 +85,11 @@ def web_history_ai():
 @app.route("/design")
 def design():
     return render_template("design.html")
+
+
+@app.route("/research")
+def css_at_rules():
+    return render_template("research.html")
 
 
 @app.route("/submit-profile", methods=["GET", "POST"])

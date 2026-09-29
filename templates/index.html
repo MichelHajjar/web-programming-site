@@ -83,6 +83,12 @@ Home
                                             src="{{ url_for('static', filename='css-design-icon.png') }}"
                                             alt=""
                                         >
+                                    {% elif item.url == "/research" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='research-icon.png') }}"
+                                            alt=""
+                                        >
 
                                     {% endif %}
 
