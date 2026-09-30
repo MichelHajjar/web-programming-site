@@ -83,5 +83,14 @@
         <span>Profile</span>
     </a><br>
 
+    <a href="/quiz" {% if request.path == "/quiz" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='quiz-icon.png') }}"
+            alt=""
+        >
+        <span>Quiz</span>
+    </a><br>
+
 </nav>
 {% endblock %}

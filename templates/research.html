@@ -335,7 +335,221 @@
 
 
 <section>
-    <h2>5. Sources</h2>
+    <h2>5. JavaScript vs. JScript vs. ECMAScript</h2>
+
+    <article>
+        <h3>1. What is JavaScript?</h3>
+
+        <p>
+            JavaScript (JS) is a programming language widely used to make web pages interactive and dynamic.
+            It can respond to user actions, manipulate HTML through the DOM, communicate with servers, create animations,
+            and much more. It is also used outside browsers, for example with Node.js.
+        </p>
+
+        <p>For example:</p>
+
+        <pre><code>const button = document.querySelector("#myButton");
+
+button.addEventListener("click", function () {
+    alert("Hello!");
+});</code></pre>
+
+        <p>
+            This JavaScript waits for a button click and then displays a message.
+        </p>
+    </article>
+
+    <article>
+        <h3>2. What is ECMAScript?</h3>
+
+        <p>
+            ECMAScript is the standardized specification for the language.
+        </p>
+
+        <p>The specification defines things such as:</p>
+
+        <ul>
+            <li>syntax;</li>
+            <li>variables;</li>
+            <li>data types;</li>
+            <li>operators;</li>
+            <li>functions;</li>
+            <li>objects;</li>
+            <li>control structures;</li>
+            <li>modules;</li>
+            <li>built-in objects and functions;</li>
+            <li>error handling;</li>
+            <li>language semantics.</li>
+        </ul>
+
+        <p>
+            The standard is maintained by Ecma International's Technical Committee 39 (TC39).The official standard is called ECMA-262.
+            The current published edition is ECMAScript 2026, 17th edition, published in June 2026.
+        </p>
+    </article>
+
+    <article>
+        <h3>3. What is JScript?</h3>
+
+        <p>
+            JScript was Microsoft's implementation/dialect of ECMAScript.
+        </p>
+
+        <p>
+            Microsoft's documentation explicitly describes JScript 5.x as a dialect of ECMAScript and says that it was
+            based on the ECMAScript specification.
+        </p>
+
+        <p>
+            JScript was strongly associated with Microsoft Internet Explorer.
+        </p>
+    </article>
+
+    <article>
+        <h3>4. Why was JScript created?</h3>
+
+        <p>
+            JavaScript was developed at Netscape, while Microsoft developed its own implementation for
+            Internet Explorer. Microsoft called its implementation JScript rather than JavaScript.
+            As different browser vendors implemented scripting languages, there was a need for a common standard.
+            That led to the standardization work that became ECMAScript.
+        </p>
+
+        <p>
+            According to Ecma's history and the ECMAScript specification:
+        </p>
+
+        <ul>
+            <li>JavaScript was created at Netscape;</li>
+            <li>JScript was Microsoft's scripting language;</li>
+            <li>standardization began in 1996;</li>
+            <li>the first ECMAScript edition was adopted in June 1997;</li>
+            <li>the standard was subsequently approved by ISO as ISO/IEC 16262.</li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>5. Comparison</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>JavaScript</th>
+                    <th>JScript</th>
+                    <th>ECMAScript</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>What is it?</td>
+                    <td>Programming language / common name for JavaScript implementations</td>
+                    <td>Microsoft's ECMAScript dialect/implementation</td>
+                    <td>Formal language specification</td>
+                </tr>
+
+                <tr>
+                    <td>Main association</td>
+                    <td>Web and many other runtimes</td>
+                    <td>Microsoft Internet Explorer and legacy Microsoft environments</td>
+                    <td>Ecma standard</td>
+                </tr>
+
+                <tr>
+                    <td>Organization</td>
+                    <td>Historically Netscape/then broader ecosystem</td>
+                    <td>Microsoft</td>
+                    <td>Ecma International / TC39</td>
+                </tr>
+
+                <tr>
+                    <td>Standardized by</td>
+                    <td>Uses ECMAScript standard</td>
+                    <td>Based on ECMAScript</td>
+                    <td>Yes</td>
+                </tr>
+
+                <tr>
+                    <td>Current relevance</td>
+                    <td>Widely used</td>
+                    <td>Historical/legacy</td>
+                    <td>Current standard</td>
+                </tr>
+
+                <tr>
+                    <td>Browser association</td>
+                    <td>Modern browsers</td>
+                    <td>Internet Explorer</td>
+                    <td>Defines language behavior</td>
+                </tr>
+
+                <tr>
+                    <td>DOM included?</td>
+                    <td>No, provided by browser APIs</td>
+                    <td>No, provided by host environment</td>
+                    <td>No</td>
+                </tr>
+
+                <tr>
+                    <td>Example</td>
+                    <td><code>let x = 10;</code></td>
+                    <td>Legacy Microsoft scripting</td>
+                    <td>Defines what the language syntax/semantics mean</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+
+    <article>
+        <h3>6. Conclusion</h3>
+
+            <p>
+                    JavaScript, JScript, and ECMAScript are related but have different meanings.
+                    ECMAScript is the standardized specification that defines the core scripting language.
+                    JavaScript is the name commonly used for the language and its implementations, especially on the Web.
+                    JScript was Microsoft's implementation/dialect of ECMAScript and was historically used with Internet Explorer.
+                    Modern web development primarily uses JavaScript implementations that follow current ECMAScript standards.
+            </p>
+    </article>
+</section>
+
+<section>
+    <h2>6. Automatic Function Invocation</h2>
+
+    <article>
+        <h3>What is Automatic Function Invocation?</h3>
+
+        <p>
+            In JavaScript, a function normally runs when it is called. However, a function can also be invoked automatically
+            when a specific event or condition occurs, such as when a web page finishes loading or when the user clicks a button.
+            This is commonly done by passing the function to an event listener.
+        </p>
+
+        <p><strong>Example:</strong></p>
+
+        <pre><code>function sayHello() {
+    alert("Hello!");
+}
+
+document.addEventListener("DOMContentLoaded", sayHello);</code></pre>
+
+        <p>
+            In this example, <code>sayHello</code> is not called directly with <code>sayHello()</code>.
+            Instead, it is given to the <code>DOMContentLoaded</code> event. The browser automatically invokes the function
+            when the HTML document has finished loading.
+        </p>
+
+        <p>
+            This approach is useful for initializing a webpage and responding to user actions.
+        </p>
+    </article>
+</section>
+
+
+
+<section>
+    <h2>6. Sources</h2>
         <ul>
             <li>
                 <p>
@@ -367,6 +581,36 @@
             <li>
                 <p>
                     <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select" target="_blank">MDN — <code>&lt;select&gt;</code> </a>
+                </p>
+            </li>
+
+            <li>   
+                <p>
+                    <a href="https://262.ecma-international.org/" target="_blank">ECMAScript 2026 — official specification </a>
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction" target="_blank">MDN — JavaScript </a>
+                </p>
+            </li>
+
+            <li>  
+                <p>
+                    <a href="https://learn.microsoft.com/en-us/openspecs/ie_standards/ms-es3/940eb5a7-43a3-44dc-82c7-44188eb8ef9e" target="_blank">Microsoft — JScript </a>
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/JavaScript_technologies_overview" target="_blank">MDN — JavaScript technologies overview </a>
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions" target="_blank">MDN — Functions </a>
                 </p>
             </li>
         </ul>

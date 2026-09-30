@@ -1,0 +1,309 @@
+/* =========================================================
+   quiz.css  (loaded only on the quiz page)
+   Colors: navy #0a1f33 · teal #2ec4b6 · deep teal #0f7f75
+   ========================================================= */
+
+@keyframes gradientMove {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.container {
+    max-width: 820px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+/* ---------- 1. Remove the timeline (this page only) ----------
+   The line and dots come from pseudo-elements in the base styles.
+   Since quiz.css is only loaded here, we switch them off here. */
+.container::before,
+.container::after,
+#quizPanel::before,
+#quizPanel::after,
+#resultsPanel::before,
+#resultsPanel::after,
+#resultsPanel h2::before,
+#resultsPanel h2::after,
+#resultsPanel h3::before,
+#resultsPanel h3::after,
+.container h1::before,
+.container h1::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ---------- 2. New page style: no container/card ---------- */
+.container h1 {
+    text-align: left;
+    color: #0a1f33;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin: 0 0 32px;
+    padding: 10px 18px;
+    border: 0;
+    border-left: 8px solid #2ec4b6;
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(90deg, rgba(46, 196, 182, 0.2), rgba(46, 196, 182, 0) 75%);
+}
+
+#quizPanel,
+#resultsPanel {
+    background: #ffffff;
+    border: 2px solid #0a1f33;
+    border-radius: 4px;
+    box-shadow: 10px 10px 0 #2ec4b6;
+    padding: 32px 36px;
+    margin: 0 10px 10px 0;
+}
+
+/* Progress + question */
+#progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0f7f75;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin: 0 0 16px;
+    padding: 6px 14px;
+    background: rgba(46, 196, 182, 0.16);
+    border: 1px solid rgba(46, 196, 182, 0.45);
+    border-radius: 999px;
+}
+
+#progress::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2ec4b6;
+    box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.25);
+}
+
+#questionText {
+    color: #0a1f33;
+    font-size: 1.45rem;
+    line-height: 1.4;
+    margin: 0 0 24px;
+}
+
+#choices {
+    position: relative;
+}
+
+
+/* Answer choices: soft lifted rows */
+.choice {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 18px;
+    margin-bottom: 10px;
+    background: #f3f9f9;
+    border: 1px solid rgba(10, 31, 51, 0.09);
+    border-left: 5px solid rgba(46, 196, 182, 0.35);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(10, 31, 51, 0.06);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.choice:hover {
+    transform: translateX(6px);
+    background: #e6f6f4;
+    border-color: rgba(46, 196, 182, 0.6);
+    border-left-color: #2ec4b6;
+    box-shadow: 0 8px 20px rgba(46, 196, 182, 0.22);
+}
+
+.choice.selected {
+    background: linear-gradient(90deg, rgba(46, 196, 182, 0.28), rgba(255, 255, 255, 0.85));
+    border-color: #0f7f75;
+    border-left-color: #0f7f75;
+    font-weight: bold;
+}
+
+/* Custom radio: ring that fills with teal */
+.choice input {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    border: 2px solid #8fa3ad;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.choice:hover input {
+    border-color: #2ec4b6;
+}
+
+.choice input:checked {
+    border-color: #0f7f75;
+    background: radial-gradient(circle, #0f7f75 0 45%, #ffffff 50%);
+    box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.3);
+}
+
+/* ---------- 3. Navigation buttons: gradient move ---------- */
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 26px 0 22px;
+}
+
+.navigation button {
+    padding: 10px 22px;
+    font-weight: bold;
+    color: #0a1f33;
+    background: #2ec4b6;
+    background-size: 200% 100%;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.25s, box-shadow 0.25s, transform 0.15s;
+}
+
+.navigation button:hover:not(:disabled) {
+    /* first and last colors are identical so the loop has no jump */
+    background-image: linear-gradient(
+        90deg,
+        #2ec4b6, #2a9fd6, #0a1f33, #2a9fd6, #2ec4b6
+    );
+    color: #ffffff;
+    animation: gradientMove 2s linear infinite;
+    box-shadow: 0 6px 16px rgba(42, 159, 214, 0.35);
+    transform: translateY(-1px);
+}
+
+.navigation button:disabled {
+    color: #8b989f;
+    background: #e3e8ea;
+    cursor: not-allowed;
+}
+
+/* ---------- 4. Submit: side fill ---------- */
+.submit {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0f7f75;
+    background: transparent;
+    border: 2px solid #0f7f75;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.35s;
+}
+
+.submit::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    background: linear-gradient(90deg, #0f7f75, #2ec4b6);
+    transition: width 0.4s ease;
+    z-index: -1;
+}
+
+.submit:hover {
+    color: #ffffff;
+}
+
+.submit:hover::before {
+    width: 100%;
+}
+
+/* ---------- Results ---------- */
+#resultsPanel h2 {
+    font-size: 2.2rem;
+    margin: 0 0 20px;
+    padding: 0;
+    border: 0;
+    color: #0a1f33;
+    background: linear-gradient(90deg, #0a1f33, #0f7f75 70%, #2ec4b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Score / percentage / result as three stat pills */
+#scoreText,
+#percentageText,
+#performanceText {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    padding: 10px 18px;
+    font-size: 1.05rem;
+    color: #ffffff;
+    background: linear-gradient(120deg, #0a1f33, #15445e);
+    border-radius: 10px;
+}
+
+#scoreText:empty,
+#percentageText:empty,
+#performanceText:empty {
+    display: none;
+}
+
+#performanceText {
+    font-weight: bold;
+    color: #2ec4b6;
+}
+
+#resultsPanel h3 {
+    display: block;
+    width: fit-content;
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin: 28px 0 18px;
+    padding: 8px 20px;
+    background: #0a1f33;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 5px 5px 0 #2ec4b6;
+}
+
+/* Correction: styled text box (CSS only) */
+#correction {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #22303c;
+    margin: 0;
+    padding: 30px 32px 26px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background:
+        linear-gradient(90deg, #0a1f33, #0f7f75 55%, #2ec4b6) top / 100% 8px no-repeat,
+        linear-gradient(180deg, #f3f9f9, #e9f5f4);
+    border: 1px solid rgba(10, 31, 51, 0.1);
+    border-radius: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #2ec4b6 transparent;
+}
+
+#correction::selection {
+    background: rgba(46, 196, 182, 0.35);
+}
+
+/* ---------- Accessibility ---------- */
+.navigation button:focus-visible,
+.submit:focus-visible {
+    outline: 3px solid #2ec4b6;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navigation button:hover:not(:disabled) { animation: none; }
+    .submit::before { transition: none; }
+}
