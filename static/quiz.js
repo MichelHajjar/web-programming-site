@@ -1,5 +1,8 @@
+// ======================================================
+// QUESTIONS
+// ======================================================
 const questions = [
-    {
+  {
         question: "Which keyword is used when a JavaScript variable can change its value?",
         choices: ["const", "let", "function", "return"],
         answer: 1,
@@ -76,97 +79,55 @@ const questions = [
     }
 ];
 
+// ======================================================
+// APPLICATION STATE
+// ======================================================
 let currentQuestion = 0;
 const userAnswers = new Array(questions.length);
 
-const letters = ["A", "B", "C", "D"];
-
-// Disable First/Previous on the first question and Next/Last on the last one
-function updateButtons() {
-    let atStart = currentQuestion === 0;
-    let atEnd = currentQuestion === questions.length - 1;
-
-    document.getElementById("firstBtn").disabled = atStart;
-    document.getElementById("previousBtn").disabled = atStart;
-    document.getElementById("nextBtn").disabled = atEnd;
-    document.getElementById("lastBtn").disabled = atEnd;
-}
-
-// Display the current question
-function displayQuestion() {
-    let question = questions[currentQuestion];
-
-    document.getElementById("progress").textContent =
-        "Question " + (currentQuestion + 1) + " of " + questions.length;
-
-    document.getElementById("questionText").textContent =
-        question.question;
-
-    let choices = document.getElementById("choices");
-    choices.innerHTML = "";
-
-    for (let i = 0; i < question.choices.length; i++) {
-        // The whole card is a <label>, so clicking anywhere on it selects the radio
-        let card = document.createElement("label");
-        card.className = "choice";
-
-        let radio = document.createElement("input");
-        radio.type = "radio";
-        radio.name = "choice";
-        radio.value = i;
-
-        // Re-select the choice the user already picked for this question
-        if (userAnswers[currentQuestion] === i) {
-            radio.checked = true;
-            card.classList.add("selected");
-        }
-
-        radio.onchange = function () {
-            saveAnswer(i);
-            displayQuestion();
-        };
-
-        let text = document.createElement("span");
-        text.textContent = letters[i] + ". " + question.choices[i];
-
-        card.appendChild(radio);
-        card.appendChild(text);
-        choices.appendChild(card);
-    }
-
-    updateButtons();
-}
-
+// ======================================================
+// SAVE AN ANSWER
+// ======================================================
 function saveAnswer(choiceIndex) {
     userAnswers[currentQuestion] = choiceIndex;
 }
 
+// ======================================================
+// NAVIGATION
+// ======================================================
 function goNext() {
-    if (currentQuestion < questions.length - 1) {
+  //   Move to the next question if not at the last question.
+  if (currentQuestion < questions.length - 1) {
         currentQuestion = currentQuestion + 1;
-        displayQuestion();
+        renderQuestion();
     }
 }
 
 function goPrevious() {
-    if (currentQuestion > 0) {
+  //   Move to the previous question if not at the first question.
+  if (currentQuestion > 0) {
         currentQuestion = currentQuestion - 1;
-        displayQuestion();
+        renderQuestion();
     }
 }
 
 function goFirst() {
-    currentQuestion = 0;
-    displayQuestion();
+  //   Move to the first question.
+  currentQuestion = 0;
+    renderQuestion();
 }
-
 function goLast() {
-    currentQuestion = questions.length - 1;
-    displayQuestion();
+  //   Move to the last question.
+  currentQuestion = questions.length - 1;
+  renderQuestion();
 }
 
+// ======================================================
+// CALCULATE SCORE
+// ======================================================
 function calculateScore() {
-    let score = 0;
+  //   Calculate the user's score based on their answers.
+  let score = 0;
 
     for (let i = 0; i < questions.length; i++) {
         if (userAnswers[i] !== undefined) {
@@ -178,8 +139,12 @@ function calculateScore() {
     return score;
 }
 
+// ======================================================
+// CALCULATE PERCENTAGE
+// ======================================================
 function calculatePercentage(score) {
-    let percentage = (score / questions.length) * 100;
+  //   Calculate the percentage score based on the total number of questions.
+  let percentage = (score / questions.length) * 100;
     let remainder = percentage % 1;
 
     if (remainder >= 0.5) {
@@ -191,8 +156,12 @@ function calculatePercentage(score) {
     return percentage;
 }
 
+// ======================================================
+// PERFORMANCE MESSAGE
+// ======================================================
 function getPerformanceMessage(percentage) {
-    if (percentage >= 80) {
+  //   Return a performance message based on the percentage score.
+  if (percentage >= 80) {
         return "Excellent";
     } else if (percentage >= 60) {
         return "Good";
@@ -203,10 +172,15 @@ function getPerformanceMessage(percentage) {
     }
 }
 
+// ======================================================
+// BUILD CORRECTION
+// ======================================================
 function buildCorrection() {
-    let correction = "";
+  let correction = "";
 
-    for (let i = 0; i < questions.length; i++) {
+  //   Build a correction string that includes the question, the user's answer,
+  //   the correct answer, and an explanation for each question.
+  for (let i = 0; i < questions.length; i++) {
 
         let userAnswer = "Not Answered";
         let result = "Incorrect";
@@ -228,41 +202,95 @@ Result: ${result}
 Explanation: ${questions[i].explanation}
 
 ------------------------------
-
 `;
     }
-
-    return correction;
+  return correction;
 }
 
-// Show the results on the page (this function was missing before)
-function showResults(score, percentage, message, correction) {
-    document.getElementById("scoreText").textContent =
-        "Score: " + score + " / " + questions.length;
+// ======================================================
+// PROVIDED INTERFACE CODE
+//
+// DOM manipulation and events will be studied later.
+// ======================================================
 
-    document.getElementById("percentageText").textContent =
-        "Percentage: " + percentage + "%";
-
-    document.getElementById("performanceText").textContent =
-        "Result: " + message;
-
-    document.getElementById("correction").textContent = correction;
-
-    document.getElementById("quizPanel").style.display = "none";
-    document.getElementById("resultsPanel").style.display = "block";
-}
-
+// ======================================================
+// SUBMIT QUIZ
+// ======================================================
 function submitQuiz() {
-    let score = calculateScore();
-    let percentage = calculatePercentage(score);
-    let message = getPerformanceMessage(percentage);
-    let correction = buildCorrection();
-
-    showResults(score, percentage, message, correction);
+  const score = calculateScore();
+  const percentage = calculatePercentage(score);
+  const message = getPerformanceMessage(percentage);
+  const correction = buildCorrection();
+  showResults(score, percentage, message, correction);
 }
 
-// Show the first question as soon as the page is ready
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("resultsPanel").style.display = "none";
-    displayQuestion();
-});
+function renderQuestion() {
+  const q = questions[currentQuestion];
+
+  // --------------------------------------------------
+  // QUESTION NUMBER
+  // --------------------------------------------------
+  document.getElementById("progress").textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  // --------------------------------------------------
+  // QUESTION
+  // --------------------------------------------------
+  document.getElementById("questionText").textContent = q.question;
+
+  // --------------------------------------------------
+  // CHOICES
+  // --------------------------------------------------
+  const choicesContainer = document.getElementById("choices");
+  choicesContainer.innerHTML = "";
+  for (let i = 0; i < q.choices.length; i++) {
+    const label = document.createElement("label");
+    label.className = "choice";
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "answer";
+    radio.value = i;
+    // Restore an answer previously selected
+    // by the user.
+    if (userAnswers[currentQuestion] === i) {
+      radio.checked = true;
+    }
+    // When the user selects this answer,
+    // save its index.
+    radio.onclick = function () {
+      saveAnswer(i);
+    };
+    label.appendChild(radio);
+    label.appendChild(document.createTextNode(" " + q.choices[i]));
+    choicesContainer.appendChild(label);
+  }
+
+  // --------------------------------------------------
+  // NAVIGATION BUTTONS
+  // --------------------------------------------------
+  document.getElementById("firstBtn").disabled = currentQuestion === 0;
+  document.getElementById("previousBtn").disabled = currentQuestion === 0;
+  document.getElementById("nextBtn").disabled =
+    currentQuestion === questions.length - 1;
+  document.getElementById("lastBtn").disabled =
+    currentQuestion === questions.length - 1;
+}
+
+// ======================================================
+// DISPLAY RESULTS
+// ======================================================
+function showResults(score, percentage, message, correction) {
+  document.getElementById("quizPanel").style.display = "none";
+  document.getElementById("resultsPanel").style.display = "block";
+  document.getElementById("scoreText").textContent =
+    `Score: ${score} / ${questions.length}`;
+  document.getElementById("percentageText").textContent =
+    `Percentage: ${percentage}%`;
+  document.getElementById("performanceText").textContent = message;
+  document.getElementById("correction").textContent = correction;
+}
+
+// ======================================================
+// START APPLICATION
+// ======================================================
+renderQuestion();

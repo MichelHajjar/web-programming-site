@@ -55,7 +55,9 @@
     padding: 32px 36px;
     margin: 0 10px 10px 0;
 }
-
+#resultsPanel {
+    display: none;
+}
 /* Progress + question */
 #progress {
     display: inline-flex;
