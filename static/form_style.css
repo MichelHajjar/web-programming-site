@@ -1,10 +1,3 @@
-/* ==========================================================
-   Engineering Student Profile — Form Styling (Light)
-   Pure CSS multi-step wizard: no JavaScript.
-   Uses the design tokens already defined in style.css, so
-   make sure style.css is linked BEFORE this file in <head>.
-   ========================================================== */
-
 /* ---------- Header background ----------
    style.css already styles <header> globally with this same
    gradient. Reinforced here as well since form_style.css loads
@@ -28,7 +21,7 @@ header {
 }
 
 /* ---------- Card that holds the whole wizard ---------- */
-.wizard-form {
+main > form {
     max-width: 860px;
     margin: 0 auto;
     background: var(--color-surface);
@@ -39,12 +32,12 @@ header {
 }
 
 /* ---------- Hidden radios that drive the whole wizard -----------
-   These are the only "engine" of the stepper. They live as direct
-   children of the form, before the fieldsets, so the general
-   sibling combinator (~) below can react to :checked. tabindex="-1"
+   These are the only radios that are direct children of the form,
+   and they come before the fieldsets, so the general sibling
+   combinator (~) below can react to :checked. tabindex="-1"
    keeps keyboard users from jumping steps with arrow keys; the
    visible Previous/Next labels remain the intended way to move. */
-.step-radio {
+form > input[type="radio"] {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -56,20 +49,21 @@ header {
     border: 0;
 }
 
-/* ---------- Progress bar + label ---------- */
-.wizard-progress {
-    max-width: 100%;
-    margin: 0 0 var(--space-5);
-}
-
-.wizard-progress-track {
+/* ---------- Progress bar + label ----------
+   The track is an empty <hr aria-hidden="true">; its ::before is the
+   bar. The default hr margin and border are reset. */
+form > hr {
     height: 6px;
+    margin: 0;
+    border: 0;
     border-radius: 999px;
     background: var(--color-border);
     overflow: hidden;
 }
 
-.wizard-progress-bar {
+form > hr::before {
+    content: "";
+    display: block;
     height: 100%;
     width: 25%;
     background: linear-gradient(90deg, var(--color-teal), var(--color-teal-dark));
@@ -77,40 +71,38 @@ header {
     transition: width 0.45s ease;
 }
 
-.wizard-progress-label {
-    display: block;
-    margin-top: var(--space-2);
+#step2:checked ~ hr::before { width: 50%; }
+#step3:checked ~ hr::before { width: 75%; }
+#step4:checked ~ hr::before { width: 100%; }
+
+form > p {
+    margin: var(--space-2) 0 var(--space-5);
     font-size: 0.85rem;
     font-weight: var(--font-weight-semibold);
     color: var(--color-teal-text);
     text-align: center;
 }
 
-.wizard-progress-label span {
+form > p span {
     display: none;
 }
 
-#step2:checked ~ .wizard-progress .wizard-progress-bar { width: 50%; }
-#step3:checked ~ .wizard-progress .wizard-progress-bar { width: 75%; }
-#step4:checked ~ .wizard-progress .wizard-progress-bar { width: 100%; }
-
-#step1:checked ~ .wizard-progress .label-step1,
-#step2:checked ~ .wizard-progress .label-step2,
-#step3:checked ~ .wizard-progress .label-step3,
-#step4:checked ~ .wizard-progress .label-step4 {
+#step1:checked ~ p span:nth-child(1),
+#step2:checked ~ p span:nth-child(2),
+#step3:checked ~ p span:nth-child(3),
+#step4:checked ~ p span:nth-child(4) {
     display: inline;
 }
 
 /* ---------- Steps ----------
-   Each active step is laid out as a 2-column grid so related
-   fields sit side by side instead of stacking the whole way down
-   the page. Individual fields opt into spanning both columns with
-   .field--full (long text, textareas, nested fieldsets, notes). */
-fieldset.form-step {
+   The new HTML keeps labels and controls on separate lines. To keep
+   the exact same 2-column visual layout as before, each label/control
+   pair is placed into the same grid column using explicit grid rows. */
+form > fieldset {
     display: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--space-5);
-    row-gap: var(--space-4);
+    row-gap: 0.4rem;
 
     border: 1px solid var(--color-border);
     border-left: 4px solid var(--color-teal);
@@ -124,19 +116,15 @@ fieldset.form-step {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-#step1:checked ~ fieldset.form-step[data-step="1"],
-#step2:checked ~ fieldset.form-step[data-step="2"],
-#step3:checked ~ fieldset.form-step[data-step="3"],
-#step4:checked ~ fieldset.form-step[data-step="4"] {
+#step1:checked ~ fieldset:nth-of-type(1),
+#step2:checked ~ fieldset:nth-of-type(2),
+#step3:checked ~ fieldset:nth-of-type(3),
+#step4:checked ~ fieldset:nth-of-type(4) {
     display: grid;
     animation: stepIn 0.5s cubic-bezier(0.22, 0.9, 0.32, 1) both;
 }
 
-/* The legend is never a grid item (browsers always lay it out as
-   its own full-width heading above the grid), so this only
-   controls how wide the teal underline is: auto = hugs the text
-   instead of stretching edge to edge across the whole card. */
-fieldset.form-step legend {
+form > fieldset > legend {
     width: auto;
     padding: 0 0 0.4rem;
     margin-bottom: var(--space-4);
@@ -146,31 +134,74 @@ fieldset.form-step legend {
     font-weight: var(--font-weight-bold);
 }
 
-/* ---------- Field wrapper: one label + one control ---------- */
-.field {
-    display: flex;
-    flex-direction: column;
+/* All top-level labels stay above their controls. */
+form > fieldset > label:not([for^="step"]) {
+    display: block;
     min-width: 0;
+    margin: 0;
 }
 
-/* Spans both grid columns: long text, textareas, nested fieldsets,
-   helper notes — anything that shouldn't be squeezed into half
-   the card's width. */
-.field--full {
-    grid-column: 1 / -1;
+/* Keep the same spacing that existed inside the old label-wrapped
+   fields: a small label/control gap and the normal field-to-field gap. */
+form > fieldset > label:not([for^="step"]) + input,
+form > fieldset > label:not([for^="step"]) + select,
+form > fieldset > label:not([for^="step"]) + textarea,
+form > fieldset > label[for="phone"] + div {
+    margin-bottom: calc(var(--space-4) - 0.4rem);
 }
 
-.field-note {
-    grid-column: 1 / -1;
-    margin: -0.25rem 0 0;
-    color: var(--color-text-soft);
-    font-size: 0.85rem;
+/* ---------- Step 1 placement ----------
+   Row 1/2: Student ID | Full Name
+   Row 3/4: Email      | Mobile Number
+   Row 5/6: Birth Date | Github
+   Row 7/8: GIN446 Website | empty
+   Row 9: warning
+   Row 10: Next */
+form > fieldset:nth-of-type(1) > label[for="studentID"] { grid-column: 1; grid-row: 1; }
+form > fieldset:nth-of-type(1) > #studentID { grid-column: 1; grid-row: 2; }
+
+form > fieldset:nth-of-type(1) > label[for="fullname"] { grid-column: 2; grid-row: 1; }
+form > fieldset:nth-of-type(1) > #fullname { grid-column: 2; grid-row: 2; }
+
+form > fieldset:nth-of-type(1) > label[for="email"] { grid-column: 1; grid-row: 3; }
+form > fieldset:nth-of-type(1) > #email { grid-column: 1; grid-row: 4; }
+
+form > fieldset:nth-of-type(1) > label[for="phone"] { grid-column: 2; grid-row: 3; }
+form > fieldset:nth-of-type(1) > div:has(> #phone) { grid-column: 2; grid-row: 4; }
+
+form > fieldset:nth-of-type(1) > label[for="DateOfBirth"] { grid-column: 1; grid-row: 5; }
+form > fieldset:nth-of-type(1) > #DateOfBirth { grid-column: 1; grid-row: 6; }
+
+form > fieldset:nth-of-type(1) > label[for="github"] { grid-column: 2; grid-row: 5; }
+form > fieldset:nth-of-type(1) > #github { grid-column: 2; grid-row: 6; }
+
+form > fieldset:nth-of-type(1) > label[for="WebWebsite"] { grid-column: 1 / -1; grid-row: 7; }
+form > fieldset:nth-of-type(1) > #WebWebsite { grid-column: 1 / -1; grid-row: 8; }
+
+/* ---------- Step 2 placement ---------- */
+form > fieldset:nth-of-type(2) > label[for="major"] { grid-column: 1; grid-row: 1; }
+form > fieldset:nth-of-type(2) > #major { grid-column: 1; grid-row: 2; }
+
+form > fieldset:nth-of-type(2) > label[for="GPA"] { grid-column: 2; grid-row: 1; }
+form > fieldset:nth-of-type(2) > #GPA { grid-column: 2; grid-row: 2; }
+
+form > fieldset:nth-of-type(2) > label[for="credits"] { grid-column: 1; grid-row: 3; }
+form > fieldset:nth-of-type(2) > #credits { grid-column: 1; grid-row: 4; }
+
+form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 3 / span 2;
 }
 
-/* Nested fieldsets (Expected Graduation, Engineering Internship)
-   are grid items in their own right, no extra wrapper div needed. */
-fieldset.form-step fieldset {
-    grid-column: auto;
+/* Expected Graduation / Engineering Internship */
+form > fieldset > fieldset:has(input[type="radio"]) {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    align-items: center;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+
+    min-width: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     padding: var(--space-3) var(--space-4);
@@ -178,41 +209,118 @@ fieldset.form-step fieldset {
     background: var(--color-surface);
 }
 
-fieldset.form-step fieldset legend {
+form > fieldset > fieldset:has(input[type="radio"]) > legend {
+    grid-column: 1 / -1;
+    width: max-content;
     border-bottom: 0;
     padding: 0 0.4rem;
-    margin: 0;
-    width: auto;
+    margin: 0 0 0.5rem;
     font-size: 0.9rem;
     color: var(--color-teal-text);
     font-weight: var(--font-weight-semibold);
 }
 
-/* Keep Expected Graduation and Engineering Internship choices inline. */
-/* Keep radio choices on the same row */
-fieldset.form-step fieldset:not(.form-step) {
-    display: grid !important;
-    grid-template-columns: repeat(3, max-content);
-    align-items: center;
-    column-gap: 1.5rem;
-    row-gap: 0.5rem;
+/* Expected Graduation */
+form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(1) {
+    grid-column: 2;
+    grid-row: 3 / span 2;
 }
 
-fieldset.form-step fieldset:not(.form-step) legend {
+form > fieldset:nth-of-type(2) > label[for="GradDate"] { grid-column: 1; grid-row: 5; }
+form > fieldset:nth-of-type(2) > #GradDate { grid-column: 1; grid-row: 6; }
+
+form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(2) {
+    grid-column: 2;
+    grid-row: 5 / span 2;
+}
+
+
+form > fieldset:nth-of-type(1) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 9; }
+form > fieldset:nth-of-type(1) > label.next { grid-column: 2; grid-row: 10; }
+
+form > fieldset:nth-of-type(2) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 7; }
+form > fieldset:nth-of-type(2) > label.prev { grid-column: 1; grid-row: 8; }
+form > fieldset:nth-of-type(2) > label.next { grid-column: 2; grid-row: 8; }
+
+/* ---------- Step 3 placement ---------- */
+form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"]) {
     grid-column: 1 / -1;
-    width: max-content;
-    margin: 0 0 0.5rem;
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0.9rem 1.4rem;
+    min-width: 0;
+    margin: -0.25rem 0 0;
+    padding: 0;
+    border: 0;
 }
 
-fieldset.form-step fieldset:not(.form-step) input[type="radio"] + label {
-    display: inline-flex;
-    align-items: center;
+form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"]) > legend {
+    grid-column: 1 / -1;
     width: auto;
-    margin: 0;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+    font-weight: 400;
 }
 
+form > fieldset:nth-of-type(3) > label[for="ProgLang"] { grid-column: 1; grid-row: 3; }
+form > fieldset:nth-of-type(3) > #ProgLang { grid-column: 1; grid-row: 4; }
+
+form > fieldset:nth-of-type(3) > label[for="Software"] { grid-column: 2; grid-row: 3; }
+form > fieldset:nth-of-type(3) > #Software { grid-column: 2; grid-row: 4; }
+
+form > fieldset:nth-of-type(3) > small {
+    grid-column: 2;
+    grid-row: 5;
+    margin: -0.25rem 0 0;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+}
+
+
+form > fieldset:nth-of-type(3) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 6; }
+form > fieldset:nth-of-type(3) > label.prev { grid-column: 1; grid-row: 7; }
+form > fieldset:nth-of-type(3) > label.next { grid-column: 2; grid-row: 7; }
+
+/* ---------- Step 4 placement ---------- */
+form > fieldset:nth-of-type(4) > label[for="ProjectTitle"] { grid-column: 1 / -1; grid-row: 1; }
+form > fieldset:nth-of-type(4) > #ProjectTitle { grid-column: 1 / -1; grid-row: 2; }
+
+form > fieldset:nth-of-type(4) > label[for="ProjectArea"] { grid-column: 1 / -1; grid-row: 3; }
+form > fieldset:nth-of-type(4) > #ProjectArea { grid-column: 1 / -1; grid-row: 4; }
+
+form > fieldset:nth-of-type(4) > label[for="Desc"] { grid-column: 1 / -1; grid-row: 5; }
+form > fieldset:nth-of-type(4) > #Desc { grid-column: 1 / -1; grid-row: 6; }
+
+form > fieldset:nth-of-type(4) > label[for="Team-size"] { grid-column: 1; grid-row: 7; }
+form > fieldset:nth-of-type(4) > #Team-size { grid-column: 1; grid-row: 8; }
+
+form > fieldset:nth-of-type(4) > label[for="project_color"] { grid-column: 2; grid-row: 7; }
+form > fieldset:nth-of-type(4) > #project_color { grid-column: 2; grid-row: 8; }
+
+form > fieldset:nth-of-type(4) > label[for="meeting-date"] { grid-column: 1; grid-row: 9; }
+form > fieldset:nth-of-type(4) > #meeting-date { grid-column: 1; grid-row: 10; }
+
+form > fieldset:nth-of-type(4) > label[for="meeting-time"] { grid-column: 2; grid-row: 9; }
+form > fieldset:nth-of-type(4) > #meeting-time { grid-column: 2; grid-row: 10; }
+
+form > fieldset:nth-of-type(4) > label.prev {
+    grid-column: 1;
+    grid-row: 11;
+}
+
+form > fieldset:nth-of-type(4) > p:has(> #confirmation) {
+    grid-row: 12;
+}
+
+form > fieldset:nth-of-type(4) > p:has(> button[type="submit"]) {
+    grid-row: 13;
+}
 /* ---------- Inline validation warning (pure CSS) ---------- */
-.step-warning {
+form > fieldset > p:not(:has(input, button)) {
     grid-column: 1 / -1;
     max-height: 0;
     opacity: 0;
@@ -224,15 +332,15 @@ fieldset.form-step fieldset:not(.form-step) input[type="radio"] + label {
     transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
 
-fieldset.form-step:has(:invalid) .step-warning {
+form > fieldset:has(:invalid) > p:not(:has(input, button)) {
     max-height: 60px;
     opacity: 1;
     margin-top: var(--space-2);
 }
 
 /* ---------- Labels ----------
-   Always block-level and above their control — this is what fixes
-   the cramped "label squeezed beside a tall multi-select" look. */
+   Labels are on their own line, with their associated controls on
+   the next line. */
 label {
     display: block;
     margin-bottom: 0.4rem;
@@ -242,10 +350,7 @@ label {
 }
 
 /* ---------- Inputs ----------
-   No fixed max-width anymore: a field's actual width now comes
-   from its grid column (half the card) or .field--full (the whole
-   card), so short fields and long fields size themselves sensibly
-   automatically instead of everything defaulting to one width. */
+   Same sizing and appearance as before. */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -282,8 +387,6 @@ textarea:hover {
     border-color: var(--color-teal-dark);
 }
 
-/* Short, fixed-length values: don't let these stretch across half
-   the card just because their grid column is wide. */
 #studentID,
 #GPA,
 #credits,
@@ -292,7 +395,6 @@ textarea:hover {
     max-width: 180px;
 }
 
-/* Long free text: benefits from the full width of its column/row. */
 #fullname,
 #email,
 #github,
@@ -302,7 +404,16 @@ textarea:hover {
     width: 100%;
 }
 
-/* Description grows with what people actually write, within limits. */
+/* Keep the programming-language field compact.
+   The software multi-select is tall, so without this rule the grid
+   can stretch the ProgLang input to the same height. */
+#ProgLang {
+    width: 180px;
+    max-width: 180px;
+    height: auto;
+    align-self: start;
+}
+
 textarea#Desc {
     width: 100%;
     min-height: 140px;
@@ -333,20 +444,31 @@ select:user-invalid {
     border-color: #d64545;
 }
 
-/* ---------- Phone number group ---------- */
-.phone-group {
+/* ---------- Phone number ----------
+   Label remains on its own line; the prefix and phone input stay
+   together on the following line. */
+form > fieldset > label[for="phone"] {
+    margin-bottom: 0;
+}
+
+form > fieldset > div:has(> #phone) {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-width: 0;
 }
 
-.phone-group span {
+form > fieldset > div:has(> #phone) > span {
+    flex: 0 0 auto;
+    font-size: 1rem;
     color: var(--color-teal-text);
     font-weight: 700;
 }
 
-.phone-group input {
-    flex: 1;
+form > fieldset > div:has(> #phone) > #phone {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
 }
 
 /* ---------- Color picker ---------- */
@@ -362,9 +484,12 @@ input[type="color"] {
 
 /* ---------- Checkboxes & radios ----------
    The real controls stay in the HTML for accessibility/form submission.
-   The labels become the visible, clickable controls for a cleaner UI. */
-input[type="checkbox"]:not(#confirmation),
-input[type="radio"]:not(.step-radio) {
+   The labels become the visible, clickable controls for a cleaner UI.
+   Only the ones inside a nested fieldset are restyled; the wizard
+   radios (direct children of the form) and the confirmation
+   checkbox are handled separately. */
+form > fieldset > fieldset input[type="checkbox"],
+form > fieldset > fieldset input[type="radio"] {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -377,8 +502,8 @@ input[type="radio"]:not(.step-radio) {
 }
 
 /* Visible control + text */
-input[type="checkbox"]:not(#confirmation) + label,
-input[type="radio"]:not(.step-radio) + label {
+form > fieldset > fieldset input[type="checkbox"] + label,
+form > fieldset > fieldset input[type="radio"] + label {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -392,7 +517,7 @@ input[type="radio"]:not(.step-radio) + label {
 }
 
 /* Checkbox */
-input[type="checkbox"]:not(#confirmation) + label::before {
+form > fieldset > fieldset input[type="checkbox"] + label::before {
     content: "";
     width: 18px;
     height: 18px;
@@ -408,13 +533,13 @@ input[type="checkbox"]:not(#confirmation) + label::before {
         transform var(--transition-fast);
 }
 
-input[type="checkbox"]:not(#confirmation):checked + label::before {
+form > fieldset > fieldset input[type="checkbox"]:checked + label::before {
     background: var(--color-teal);
     border-color: var(--color-teal-dark);
     box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.18);
 }
 
-input[type="checkbox"]:not(#confirmation):checked + label::after {
+form > fieldset > fieldset input[type="checkbox"]:checked + label::after {
     content: "";
     position: absolute;
     left: 6px;
@@ -427,7 +552,7 @@ input[type="checkbox"]:not(#confirmation):checked + label::after {
 }
 
 /* Radio */
-input[type="radio"]:not(.step-radio) + label::before {
+form > fieldset > fieldset input[type="radio"] + label::before {
     content: "";
     width: 19px;
     height: 19px;
@@ -444,7 +569,7 @@ input[type="radio"]:not(.step-radio) + label::before {
 }
 
 /* Checked radio: stays the same size and uses a clean teal center. */
-input[type="radio"]:not(.step-radio):checked + label::before {
+form > fieldset > fieldset input[type="radio"]:checked + label::before {
     background:
         radial-gradient(circle at center, var(--color-teal) 0 5px, var(--color-surface) 5.5px 100%);
     border-color: var(--color-teal-dark);
@@ -452,28 +577,45 @@ input[type="radio"]:not(.step-radio):checked + label::before {
 }
 
 /* Keyboard focus */
-input[type="checkbox"]:not(#confirmation):focus-visible + label::before,
-input[type="radio"]:not(.step-radio):focus-visible + label::before {
+form > fieldset > fieldset input[type="checkbox"]:focus-visible + label::before,
+form > fieldset > fieldset input[type="radio"]:focus-visible + label::before {
     border-color: var(--color-teal);
     box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.28);
 }
 
-input[type="checkbox"]:not(#confirmation) + label:hover,
-input[type="radio"]:not(.step-radio) + label:hover {
+form > fieldset > fieldset input[type="checkbox"] + label:hover,
+form > fieldset > fieldset input[type="radio"] + label:hover {
     color: var(--color-teal-text);
 }
 
 /* ---------- Skills checklist ----------
-   Styled as bordered "card" pills, 2 per row, matching the
-   reference layout — instead of a plain compact chip list. */
-.skills-group {
+   The nested fieldset that holds the checkboxes. Styled as bordered
+   "card" pills, 2 per row, matching the reference layout — instead
+   of a plain compact chip list. Its legend plays the role of a
+   helper note above the pills. */
+form > fieldset > fieldset:has(input[type="checkbox"]) {
+    grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
     gap: 0.9rem 1.4rem;
+    min-width: 0;
+    margin: -0.25rem 0 0;
+    padding: 0;
+    border: 0;
 }
 
-.skills-group input[type="checkbox"] + label {
+form > fieldset > fieldset:has(input[type="checkbox"]) > legend {
+    grid-column: 1 / -1;
+    width: auto;
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+form > fieldset > fieldset input[type="checkbox"] + label {
     min-width: 0;
     width: 100%;
     margin: 0;
@@ -483,32 +625,25 @@ input[type="radio"]:not(.step-radio) + label:hover {
     background: var(--color-surface);
     box-shadow: inset 0 1px 2px rgba(7, 29, 45, 0.03);
     box-sizing: border-box;
-    transition:
-        border-color var(--transition-fast),
-        background-color var(--transition-fast);
 }
 
-.skills-group input[type="checkbox"] + label:hover {
+form > fieldset > fieldset input[type="checkbox"] + label:hover {
     border-color: var(--color-teal-dark);
 }
 
-.skills-group input[type="checkbox"]:checked + label {
+form > fieldset > fieldset input[type="checkbox"]:checked + label {
     border-color: var(--color-teal);
     background: var(--color-teal-soft);
 }
 
-/* ---------- Previous / Next (labels styled as buttons) ---------- */
-.wizard-nav {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: var(--space-2);
-    gap: var(--space-3);
-}
-
-.wizard-btn {
+/* ---------- Previous / Next (labels styled as buttons) ----------
+   They sit directly in the step's 2-column grid: Previous in the
+   left column, Next in the right column. */
+label.prev,
+label.next {
     display: inline-block;
+    align-self: center;
+    margin-top: var(--space-2);
     padding: 0.65rem 1.6rem;
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
@@ -520,19 +655,20 @@ input[type="radio"]:not(.step-radio) + label:hover {
         background var(--transition-fast), opacity var(--transition-fast);
 }
 
-.wizard-btn.next {
+label.next {
     background: var(--color-teal);
     color: var(--color-navy);
-    margin-left: auto;
+    grid-column: 2;
+    justify-self: end;
 }
 
-.wizard-btn.next:hover {
+label.next:hover {
     background: var(--color-teal-dark);
     box-shadow: var(--shadow-sm);
     transform: translateY(-1px);
 }
 
-fieldset.form-step:has(:invalid) .wizard-btn.next {
+form > fieldset:has(:invalid) label.next {
     pointer-events: none;
     opacity: 0.45;
     cursor: not-allowed;
@@ -540,27 +676,36 @@ fieldset.form-step:has(:invalid) .wizard-btn.next {
     box-shadow: none;
 }
 
-.wizard-btn.prev {
+label.prev {
+    justify-self: start;
     background: transparent;
     color: var(--color-teal-text);
     border-color: var(--color-border);
 }
 
-.wizard-btn.prev:hover {
+label.prev:hover {
     border-color: var(--color-teal);
     background: var(--color-teal-soft);
 }
 
-/* ---------- Final actions (confirmation + submit + reset) ---------- */
-.final-actions {
+/* ---------- Final actions (confirmation + submit + reset) ----------
+   Two paragraphs: the confirmation line (it draws the divider above
+   the group) and the line with the buttons. The bottom margin of the
+   first is one empty line of text, minus the grid's row gap. */
+form > fieldset > p:has(> #confirmation) {
     grid-column: 1 / -1;
-    margin-top: var(--space-3);
+    margin: var(--space-3) 0 calc(1em * var(--line-height-base) - var(--space-4));
     padding-top: var(--space-4);
     border-top: 1px solid var(--color-border);
 }
 
-input[type="submit"],
-input[type="reset"] {
+form > fieldset > p:has(> button[type="submit"]) {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+button[type="submit"],
+button[type="reset"] {
     padding: 0.7rem 1.8rem;
     border-radius: var(--radius-sm);
     border: none;
@@ -573,18 +718,18 @@ input[type="reset"] {
         background var(--transition-fast), opacity var(--transition-fast);
 }
 
-input[type="submit"] {
+button[type="submit"] {
     background: var(--color-teal);
     color: var(--color-navy);
 }
 
-input[type="submit"]:hover {
+button[type="submit"]:hover {
     background: var(--color-teal-dark);
     box-shadow: var(--shadow-sm);
     transform: translateY(-1px);
 }
 
-fieldset.form-step:has(:invalid) input[type="submit"] {
+form > fieldset:has(:invalid) button[type="submit"] {
     pointer-events: none;
     opacity: 0.45;
     cursor: not-allowed;
@@ -611,45 +756,75 @@ fieldset.form-step:has(:invalid) input[type="submit"] {
     cursor: pointer;
 }
 
-input[type="reset"] {
+button[type="reset"] {
     background: transparent;
     color: var(--color-text-soft);
     border: 1px solid var(--color-border);
 }
 
-input[type="reset"]:hover {
+button[type="reset"]:hover {
     border-color: var(--color-teal);
     color: var(--color-teal-text);
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
-    fieldset.form-step {
+    form > fieldset {
         grid-template-columns: 1fr;
     }
 
-    .skills-group {
+    form > fieldset > fieldset:has(input[type="checkbox"]) {
         grid-template-columns: 1fr;
     }
 
-    .wizard-form {
+    main > form {
         padding: var(--space-4);
     }
 
-    fieldset.form-step {
+    form > fieldset {
         padding: var(--space-4);
     }
 
-    .wizard-nav {
-        flex-direction: column;
-        align-items: stretch;
+    /* On mobile, labels and controls return to normal document flow. */
+    form > fieldset > label:not([for^="step"]),
+    form > fieldset > input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]),
+    form > fieldset > select,
+    form > fieldset > textarea,
+    form > fieldset > div:has(> #phone),
+    form > fieldset > small,
+    form > fieldset > fieldset {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: stretch;
     }
 
-    .wizard-btn.next {
-        margin-left: 0;
+    /* Keep the programming-language field usable on small screens. */
+    #ProgLang {
+        width: 100%;
+        max-width: none;
+        align-self: stretch;
     }
 
-    .wizard-btn {
+    /* Buttons stack and fill the width. */
+    label.prev,
+    label.next {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: stretch;
         text-align: center;
+    }
+
+    /* Next right under Previous: 0.75rem apart (the grid adds 1rem). */
+    label.prev + label.next {
+        margin-top: calc(var(--space-3) - var(--space-4));
+    }
+
+    /* A lone Next (step 1) or a lone Previous (step 4) gets extra space. */
+    form > fieldset > p + label.next {
+        margin-top: calc(var(--space-2) + var(--space-3));
+    }
+
+    label.prev:has(+ p) {
+        margin-bottom: calc(0.4rem + var(--space-3));
     }
 }
