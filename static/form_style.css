@@ -828,3 +828,285 @@ button[type="reset"]:hover {
         margin-bottom: calc(0.4rem + var(--space-3));
     }
 }
+/* =========================================================
+   REVIEW PANEL (CSS only)
+   ========================================================= */
+
+/* ---------- 1. Show the panel alone ---------- */
+.review-panel { display: none; }
+.review-panel.open { display: block; }
+
+body:has(.review-panel.open) main > form { display: none; }
+
+/* ---------- 2. Remove the old timeline ---------- */
+.review-panel.open::before,
+.review-panel.open::after { content: none; }
+
+.review-panel.open,
+.review-panel.open > h2,
+.review-panel.open p {
+    left: auto;
+}
+
+/* ---------- 3. The sheet: white + soft teal glow ---------- */
+.review-panel.open {
+    position: relative;
+    max-width: 760px;
+    margin: var(--space-6) auto;
+    padding: 0 0 var(--space-6);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(86, 216, 202, 0.16), transparent 45%),
+        radial-gradient(circle at 0% 100%, rgba(86, 216, 202, 0.10), transparent 40%),
+        var(--color-white);
+    border: 2px solid var(--color-navy);
+    border-radius: 6px;
+    box-shadow: 8px 8px 0 var(--color-teal);
+    overflow: hidden;
+    animation: dsIn 0.45s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
+
+@keyframes dsIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 4. Title bar + shield icon + VERIFIED stamp ---------- */
+.review-panel.open > h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-navy);
+    color: var(--color-white);
+    border-bottom: 4px solid var(--color-teal);
+    font-size: 1.6rem;
+    line-height: 1.2;
+}
+
+.review-panel.open > h2::before {
+    content: "";
+    position: static;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 0;
+    background: var(--color-teal);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z'/%3E%3Cpath d='M8.5 12.2l2.4 2.4 4.6-5'/%3E%3C/svg%3E") center / contain no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z'/%3E%3Cpath d='M8.5 12.2l2.4 2.4 4.6-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.review-panel.open > h2::after {
+    content: "VERIFIED";
+    position: absolute;
+    right: var(--space-6);
+    top: 50%;
+    padding: 0.3rem 0.8rem;
+    border: 3px double var(--color-teal);
+    border-radius: 6px;
+    color: var(--color-teal);
+    font: 700 0.72rem ui-monospace, Consolas, monospace;
+    letter-spacing: 0.18em;
+    transform: translateY(-50%) rotate(-8deg);
+    animation: stampIn 0.5s 0.35s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+@keyframes stampIn {
+    from { opacity: 0; transform: translateY(-50%) rotate(-8deg) scale(2.2); }
+    to   { opacity: 1; transform: translateY(-50%) rotate(-8deg) scale(1); }
+}
+
+/* ---------- 5. Content: clean lines, no boxes, no numbers ---------- */
+.review-panel.open p {
+    position: relative;
+    margin: 0 var(--space-6);
+    padding: 0.8rem 0;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid rgba(7, 29, 45, 0.10);
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+    color: var(--color-navy);
+    font-size: 1.08rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.005em;
+    overflow-wrap: anywhere;
+}
+
+.review-panel.open p::before,
+.review-panel.open p::after { content: none; }
+
+.review-panel.open p:hover {
+    background: none;
+    transform: none;
+    box-shadow: none;
+    color: var(--color-teal-text);
+}
+
+/* ---------- 6. Skills: soft pills ---------- */
+.review-panel.open ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 var(--space-6);
+    padding: 0.2rem 0 0.9rem;
+    list-style: none;
+    border-bottom: 1px solid rgba(7, 29, 45, 0.10);
+}
+
+.review-panel.open li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0.35rem 0.85rem;
+    background: rgba(86, 216, 202, 0.20);
+    border: 0;
+    border-radius: 999px;
+    color: var(--color-navy);
+    font: 600 0.78rem ui-monospace, Consolas, monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.review-panel.open li::before {
+    content: "✓";
+    color: var(--color-teal-text);
+    font-weight: 700;
+}
+
+/* ---------- 7. Buttons (Edit + Confirm & Submit) ---------- */
+.review-panel :is(button, input[type="button"], input[type="submit"], input[type="reset"], a[role="button"]) {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    display: inline-block !important;
+    margin: var(--space-5) 0 0 var(--space-6) !important;
+    padding: 0.85rem 1.6rem 0.85rem 3.1rem !important;
+    border: 2px solid var(--color-navy) !important;
+    border-radius: 8px !important;
+    font-family: inherit !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-decoration: none;
+    background-repeat: no-repeat !important;
+    background-position: 1.1rem center !important;
+    background-size: 18px 18px !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease,
+        background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Edit = first button */
+.review-panel :is(button, input[type="button"], a[role="button"]):first-of-type {
+    background-color: var(--color-white) !important;
+    color: var(--color-navy) !important;
+    box-shadow: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d2d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z'/%3E%3C/svg%3E") !important;
+}
+
+.review-panel :is(button, input[type="button"], a[role="button"]):first-of-type:hover {
+    background-color: var(--color-navy) !important;
+    color: var(--color-white) !important;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--color-teal) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z'/%3E%3C/svg%3E") !important;
+}
+
+/* Confirm & Submit = last button */
+.review-panel :is(button, input[type="button"], a[role="button"]):last-of-type,
+.review-panel input[type="submit"] {
+    margin-left: var(--space-3) !important;
+    background-color: var(--color-teal) !important;
+    color: var(--color-navy) !important;
+    box-shadow: 4px 4px 0 var(--color-navy) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d2d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E") !important;
+}
+
+.review-panel :is(button, input[type="button"], a[role="button"]):last-of-type:hover,
+.review-panel input[type="submit"]:hover {
+    background-color: var(--color-teal-dark) !important;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--color-navy) !important;
+}
+
+.review-panel :is(button, input[type="button"], input[type="submit"], a[role="button"]):active {
+    transform: translate(4px, 4px);
+    box-shadow: none !important;
+}
+
+.review-panel :is(button, input[type="button"], input[type="submit"], a[role="button"]):focus-visible {
+    outline: 3px solid var(--color-teal);
+    outline-offset: 3px;
+}
+
+/* ---------- 8. Mobile ---------- */
+@media (max-width: 700px) {
+    .review-panel.open { margin: var(--space-4) 0; }
+
+    .review-panel.open > h2 {
+        padding-right: var(--space-4);
+        font-size: 1.25rem;
+    }
+
+    .review-panel.open > h2::after { display: none; }
+
+    .review-panel.open p,
+    .review-panel.open ul { margin-inline: var(--space-4); }
+
+    .review-panel :is(button, input[type="button"], input[type="submit"], a[role="button"]) {
+        display: block !important;
+        width: calc(100% - 2 * var(--space-4));
+        margin: var(--space-3) var(--space-4) 0 !important;
+        text-align: center;
+    }
+}
+
+/* ---------- 9. Print ---------- */
+@media print {
+    header,
+    .review-panel :is(button, input, a[role="button"]) { display: none !important; }
+    .review-panel.open { box-shadow: none; }
+}
+/* ---- Result page: full width, everything left-aligned ---- */
+main article.profile {
+    --pad: 2.5rem;            /* one left edge for the header AND the sections */
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+}
+
+/* Header: from the sidebar's right edge to the end of the page */
+main article.profile > .profile-header {
+    margin: 0 0 1.5rem;
+    padding: 2rem var(--pad);
+    border-radius: 0;
+    box-shadow: none;
+    text-align: left;
+}
+
+/* Sections line up with the header text */
+main article.profile > section,
+main article.profile > p {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+}
+
+/* The "Electrical Engineering" line is black on dark (it uses the project colour).
+   Make it readable: */
+main article.profile .profile-title {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+@media (max-width: 700px) {
+    main article.profile { --pad: 1.25rem; }
+    .profile dl { grid-template-columns: 1fr; }
+}

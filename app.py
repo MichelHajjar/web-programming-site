@@ -54,6 +54,7 @@ def home():
         {"week": 3, "title": "Research", "url": "/research"},
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
         {"week": 5, "title": "JavaScript app", "url": "/quiz"},
+        {"week": 6, "title": "Validating Student Profile", "url": "/submit-profile1"},
     ]
     return render_template("index.html", weekly_work=weekly_work)
 
@@ -110,6 +111,24 @@ def submit_profile():
 
     # First visit (GET): just show the empty form.
     return render_template("profile-form.html")
+
+@app.route("/submit-profile1", methods=["GET", "POST"])
+def submit_profile1():
+    """
+    GET  -> show the profile form (you build templates/profile_form1.html).
+    POST -> read the submitted fields and show the profile page
+            (templates/profile.html, which extends your base.html).
+    """
+    if request.method == "POST":
+        data = request.form.to_dict()                   # all single-value fields
+        skills = request.form.getlist("skills")         # checkboxes -> list
+        software = request.form.getlist("software")     # multiple <select> -> list
+        return render_template(
+            "profile.html", data=data, skills=skills, software=software
+        )
+
+    # First visit (GET): just show the empty form.
+    return render_template("profile-form1.html")
 
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():

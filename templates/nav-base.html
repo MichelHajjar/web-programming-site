@@ -92,5 +92,14 @@
         <span>Quiz</span>
     </a><br>
 
+    <a href="/submit-profile1" {% if request.path == "/submit-profile1" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='validate-profile-icon.png') }}"
+            alt=""
+        >
+        <span>Profile validation</span>
+    </a><br>
+
 </nav>
 {% endblock %}

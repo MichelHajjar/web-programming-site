@@ -341,12 +341,16 @@
             and much more. It is also used outside browsers, for example with Node.js.
         </p>
         <p>For example:</p>
-        <pre><code>const button = document.querySelector("#myButton");
-                    button.addEventListener("click", function () {
-                    alert("Hello!");
-                    });</code></pre>
+        <pre>
+            <code> 
+                let name = "Michel";
+                let message = "Hello, " + name + "!";
+                console.log(message);
+            </code>
+        </pre>
         <p>
-            This JavaScript waits for a button click and then displays a message.
+            This JavaScript stores values in variables, combines them into a message,
+            and prints the result in the console.
         </p>
     </article>
 
@@ -516,21 +520,16 @@
         </p>
 
         <p><strong>Example:</strong></p>
-
-        <pre><code>function sayHello() {
-    alert("Hello!");
-}
-
-document.addEventListener("DOMContentLoaded", sayHello);</code></pre>
-
-        <p>
-            In this example, <code>sayHello</code> is not called directly with <code>sayHello()</code>.
-            Instead, it is given to the <code>DOMContentLoaded</code> event. The browser automatically invokes the function
-            when the HTML document has finished loading.
-        </p>
+        <pre>
+            <code>
+            (function () {
+            console.log("Hello!");})();
+            </code>
+        </pre>
 
         <p>
-            This approach is useful for initializing a webpage and responding to user actions.
+            In this example, the function is created and immediately executed because of the final parentheses <code>()</code>.
+            This technique can be useful when a block of code needs to run immediately without creating a separate function call later.
         </p>
     </article>
 </section>

@@ -2,9 +2,8 @@
 
 {% block title %}Engineering Student Profile{% endblock %}
 
-{% block header %} <h1>Engineering Student Profile</h1> <p>Complete this form to provide information about your
-academic background, technical skills, internship
-experience, and Final Year Project preferences.</p>
+{% block header %} <h1>Engineering Student Profile</h1> 
+<p>Complete this form to provide information about your academic background, technical skills,internship experience, and Final Year Project preferences.</p>
 {% endblock %}
 
 {% block head %} <link rel="stylesheet" href="{{ url_for('static', filename='form_style.css') }}"/>
@@ -12,7 +11,7 @@ experience, and Final Year Project preferences.</p>
 
 {% block content %}
 
-<form action="{{ url_for('submit_profile') }}" method="post" aria-label="Engineering student profile">
+<form id="ProfileForm" action="{{ url_for('submit_profile') }}" method="post" aria-label="Engineering student profile">
 
 <input type="radio" name="wizard_step" id="step1" checked tabindex="-1">
 <input type="radio" name="wizard_step" id="step2" tabindex="-1">
@@ -33,7 +32,7 @@ experience, and Final Year Project preferences.</p>
     <label for="fullname">Full Name:</label>
     <input type="text" id="fullname" name="fullname" placeholder="First name and Last name" required>
     <label for="email">USEK Email:</label>
-    <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb$" required>
+    <input type="email" id="email" name="email" placeholder="eg: student@net.usek.edu.lb" pattern="[a-z]+\.[a-z]+@net\.usek\.edu\.lb" required>
     <label for="phone">Mobile Number:</label>
     <div>
         <span>+961</span>
@@ -42,9 +41,9 @@ experience, and Final Year Project preferences.</p>
     <label for="DateOfBirth">Date of Birth:</label>
     <input type="date" id="DateOfBirth" name="birthdate" required>
     <label for="github">Github:</label>
-    <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?$">
+    <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?">
     <label for="WebWebsite">GIN446 Website:</label>
-    <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com/?$">
+    <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9-]+\.onrender\.com">
     <p>Please fill in all required fields correctly before continuing.</p>
     <label for="step2" class="next">Next</label>
 </fieldset>
@@ -68,18 +67,18 @@ experience, and Final Year Project preferences.</p>
     <input type="number" id="credits" name="credits" placeholder="eg: 60" min="0" max="148" step="1" required>
     <fieldset>
         <legend>Expected Graduation</legend>
-        <input type="radio" id="Fall" name="graduation" value="Fall">
+        <input type="radio" id="Fall" name="graduation" value="Fall" required>
         <label for="Fall">Fall</label>
         <input type="radio" id="Spring" name="graduation" value="Spring">
         <label for="Spring">Spring</label>
         <input type="radio" id="Summer" name="graduation" value="Summer">
         <label for="Summer">Summer</label>
     </fieldset>
-    <label for="GradDate">Expected Graduation Month &amp; Year:</label>
-    <input type="month" id="GradDate" name="graduation_month">
+    <label for="GradDate">Expected Graduation Month & Year:</label>
+    <input type="month" id="GradDate" name="graduation_month" required>
     <fieldset>
-        <legend>Engineering Internship</legend>
-        <input type="radio" id="Yes" name="internship_completed" value="yes">
+        <legend>Have you completed an engineering internship?</legend>
+        <input type="radio" id="Yes" name="internship_completed" value="yes" required>
         <label for="Yes">Yes</label>
         <input type="radio" id="No" name="internship_completed" value="no">
         <label for="No">No</label>
@@ -111,16 +110,16 @@ experience, and Final Year Project preferences.</p>
         <label for="skill8">Signal Processing</label>
     </fieldset>
     <label for="ProgLang">Primary Programming Language:</label>
-    <input type="text" id="ProgLang" name="language" list="languages">
+    <input type="text" id="ProgLang" name="language" list="languages" required>
     <datalist id="languages">
-        <option value="C">
-        <option value="C++">
-        <option value="Python">
-        <option value="Java">
-        <option value="JavaScript">
+        <option value="C"></option>
+        <option value="C++"></option>
+        <option value="Python"></option>
+        <option value="Java"></option>
+        <option value="JavaScript"></option>
     </datalist>
     <label for="Software">Engineering software Used:</label>
-    <select id="Software" name="software" multiple aria-describedby="software-note">
+    <select id="Software" name="software" multiple size="8" required>
         <option value="MATLAB">MATLAB</option>
         <option value="Simulink">Simulink</option>
         <option value="LabVIEW">LabVIEW</option>
@@ -130,7 +129,7 @@ experience, and Final Year Project preferences.</p>
         <option value="Proteus">Proteus</option>
         <option value="Multisim">Multisim</option>
     </select>
-    <small id="software-note">Hold Ctrl (Windows) or Command (Mac) to select several options.</small>
+    <small>Hold Ctrl (Windows) or Command (Mac) to select several options.</small>
     <p>Please fill in all required fields correctly before continuing.</p>
     <label for="step2" class="prev">Previous</label>
     <label for="step4" class="next">Next</label>
@@ -179,11 +178,11 @@ experience, and Final Year Project preferences.</p>
     <label for="Team-size">Preferred Team Size:</label>
     <input type="number" id="Team-size" name="team_size" value="2" min="1" max="5">
     <label for="project_color">Choose a color for your project dashboard:</label>
-    <input type="color" id="project_color" name="project_color">
+    <input type="color" id="project_color" name="project_color" required>
     <label for="meeting-date">Preferred Meeting Date</label>
-    <input type="date" id="meeting-date" name="meeting_date">
+    <input type="date" id="meeting-date" name="meeting_date" required>
     <label for="meeting-time">Preferred Meeting Time</label>
-    <input type="time" id="meeting-time" name="meeting_time">
+    <input type="time" id="meeting-time" name="meeting_time" required>
     <label for="step3" class="prev">Previous</label>
     <p>
         <input type="checkbox" id="confirmation" name="confirmation" required>
