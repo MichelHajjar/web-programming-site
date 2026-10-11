@@ -25,7 +25,8 @@ Home
                     <h3 class="week-heading">Week {{ week }}</h3>
 
                     <ul>
-                        {% for item in items %}
+                        {#creates the individual work items under each week.#}
+                        {% for item in items %}  
 
                             <li>
                                 <a href="{{ item.url }}">

@@ -193,7 +193,8 @@ function buildCorrection() {
             }
         }
 
-        // += adds more text onto the existing correction string
+        // += :correction = correction + newText;
+        // the back ticks allows multiline strings and to Insert JavaScript values inside the string using ${...}
         correction += `Question ${i + 1}: ${questions[i].question}
 
 Your answer: ${userAnswer}
@@ -201,7 +202,7 @@ Correct answer: ${questions[i].choices[questions[i].answer]}
 Result: ${result}
 Explanation: ${questions[i].explanation}
 
-------------------------------
+
 `;
     }
   return correction;
