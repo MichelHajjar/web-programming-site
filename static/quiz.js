@@ -202,7 +202,6 @@ Correct answer: ${questions[i].choices[questions[i].answer]}
 Result: ${result}
 Explanation: ${questions[i].explanation}
 
-
 `;
     }
   return correction;
