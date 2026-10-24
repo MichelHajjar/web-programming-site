@@ -101,5 +101,14 @@
         <span>Profile validation</span>
     </a><br>
 
+    <a href="/live-quiz" {% if request.path == "/live-quiz" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='live-quiz-fetch-icon.png') }}"
+            alt=""
+        >
+        <span>Live Quiz</span>
+    </a><br>
+
 </nav>
 {% endblock %}

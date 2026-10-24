@@ -37,6 +37,7 @@ Example inside profile.html (which extends your base.html):
 """
 
 from flask import Flask, render_template, request
+# from validator import validate_profile 
 
 app = Flask(__name__)
 
@@ -57,6 +58,8 @@ def home():
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
         {"week": 5, "title": "JavaScript app", "url": "/quiz"},
         {"week": 6, "title": "Validating Student Profile", "url": "/submit-profile1"},
+        {"week": 7, "title": "Live Quiz With Fetch", "url": "/live-quiz"},
+        
     ]
     return render_template("index.html", weekly_work=weekly_work)
 

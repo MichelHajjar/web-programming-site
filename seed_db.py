@@ -17,7 +17,6 @@ import json
 from flask import Flask
 from quiz_api import db, Question, database_uri
 
-
 QUESTIONS = [
     {
         "question": "Which keyword is used when a JavaScript variable can change its value?",

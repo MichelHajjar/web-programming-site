@@ -102,6 +102,12 @@ Home
                                             src="{{ url_for('static', filename='validate-profile-icon.png') }}"
                                             alt=""
                                         >
+                                    {% elif item.url == "/live-quiz" %}
+                                        <img
+                                            class="work-icon"
+                                            src="{{ url_for('static', filename='live-quiz-fetch-icon.png') }}"
+                                            alt=""
+                                        >
 
                                     {% endif %}
 
