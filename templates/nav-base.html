@@ -110,5 +110,16 @@
         <span>Live Quiz</span>
     </a><br>
 
+    
+    <a href="/profile-validated" {% if request.path == "/profile-validated" %}aria-current="page"{% endif %}>
+        <img
+            class="nav-icon"
+            src="{{ url_for('static', filename='server-validation-icon.png') }}"
+            alt=""
+        >
+        <span>Server Validation</span>
+    </a><br>
+
+
 </nav>
 {% endblock %}

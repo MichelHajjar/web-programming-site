@@ -36,8 +36,8 @@ Example inside profile.html (which extends your base.html):
   <p>Software: {{ software | join(', ') }}</p>
 """
 
-from flask import Flask, render_template, request
-# from validator import validate_profile 
+from flask import Flask, render_template, request, jsonify
+from validators import validate_profile 
 
 app = Flask(__name__)
 
@@ -59,6 +59,7 @@ def home():
         {"week": 5, "title": "JavaScript app", "url": "/quiz"},
         {"week": 6, "title": "Validating Student Profile", "url": "/submit-profile1"},
         {"week": 7, "title": "Live Quiz With Fetch", "url": "/live-quiz"},
+        {"week": 8, "title": "Server-Side Profile Validation", "url": "/profile-validated"},
         
     ]
     return render_template("index.html", weekly_work=weekly_work)
@@ -139,6 +140,55 @@ def submit_profile1():
 def quiz():
     return render_template("quiz.html")
 
+
+@app.post("/profile-validated/check-step")
+def profile_validated_check_step():
+    """Week 8: validate only the current wizard step on the server."""
+    step_fields = {
+        "1": {"student_id", "fullname", "email", "phone", "birthdate", "portfolio", "gin446"},
+        "2": {"major", "gpa", "credits", "graduation", "graduation_month", "internship_completed"},
+        "3": {"skills", "language", "software"},
+    }
+    fields = step_fields.get(request.form.get("validate_step"))
+    if fields is None:
+        return jsonify({"errors": {"step": "Invalid step."}}), 400
+
+    all_errors, _ = validate_profile(request.form)
+    errors = {name: message for name, message in all_errors.items() if name in fields}
+    return jsonify({"errors": errors})
+
+
+@app.route("/profile-validated", methods=["GET", "POST"])
+def profile_validated():
+    if request.method == "POST":
+        errors, cleaned = validate_profile(request.form)
+
+        if errors:
+            # Invalid data -> show the form again with errors
+            return render_template(
+                "profile-form-validated.html",
+                errors=errors,
+                data=request.form,
+                sel_skills=request.form.getlist("skills"),
+                sel_software=request.form.getlist("software"),
+            )
+
+        # Valid data -> show the profile
+        return render_template(
+            "profile.html",
+            data=cleaned,
+            skills=cleaned.get("skills", []),
+            software=cleaned.get("software", [])
+        )
+
+    # GET -> display an empty form
+    return render_template(
+        "profile-form-validated.html",
+        errors={},
+        data={},
+        sel_skills=[],
+        sel_software=[]
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

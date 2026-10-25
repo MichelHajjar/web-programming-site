@@ -41,9 +41,9 @@
     <label for="DateOfBirth">Date of Birth:</label>
     <input type="date" id="DateOfBirth" name="birthdate" required>
     <label for="github">Github:</label>
-    <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github.com/[a-zA-Z0-9_-]+/?" >
+    <input type="url" id="github" name="portfolio" placeholder="eg: https://github.com/username" pattern="https://github\.com/[a-zA-Z0-9\-]+/?" >
     <label for="WebWebsite">GIN446 Website:</label>
-    <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9_-]+\.onrender\.com" >
+    <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9\-]+\.onrender\.com/?">
     <p>Please fill in all required fields correctly before continuing.</p>
     <label for="step2" class="next">Next</label>
 </fieldset>
@@ -119,7 +119,7 @@
         <option value="JavaScript"></option>
     </datalist>
     <label for="Software">Engineering software Used:</label>
-    <select id="Software" name="software" multiple size="8" required>
+    <select id="Software" name="software" multiple size="8">
         <option value="MATLAB">MATLAB</option>
         <option value="Simulink">Simulink</option>
         <option value="LabVIEW">LabVIEW</option>
@@ -178,7 +178,7 @@
     <label for="Team-size">Preferred Team Size:</label>
     <input type="number" id="Team-size" name="team_size" value="2" min="1" max="5">
     <label for="project_color">Choose a color for your project dashboard:</label>
-    <input type="color" id="project_color" name="project_color">
+    <input type="color" id="project_color" name="project_color" value="#336699">
     <label for="meeting-date">Preferred Meeting Date</label>
     <input type="date" id="meeting-date" name="meeting_date">
     <label for="meeting-time">Preferred Meeting Time</label>

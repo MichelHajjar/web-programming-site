@@ -95,9 +95,8 @@ form > p span {
 }
 
 /* ---------- Steps ----------
-   The new HTML keeps labels and controls on separate lines. To keep
-   the exact same 2-column visual layout as before, each label/control
-   pair is placed into the same grid column using explicit grid rows. */
+   Labels and controls are on separate lines. Each field owns
+   three grid rows on desktop: label / control / error. */
 form > fieldset {
     display: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -141,59 +140,7 @@ form > fieldset > label:not([for^="step"]) {
     margin: 0;
 }
 
-/* Keep the same spacing that existed inside the old label-wrapped
-   fields: a small label/control gap and the normal field-to-field gap. */
-form > fieldset > label:not([for^="step"]) + input,
-form > fieldset > label:not([for^="step"]) + select,
-form > fieldset > label:not([for^="step"]) + textarea,
-form > fieldset > label[for="phone"] + div {
-    margin-bottom: calc(var(--space-4) - 0.4rem);
-}
-
-/* ---------- Step 1 placement ----------
-   Row 1/2: Student ID | Full Name
-   Row 3/4: Email      | Mobile Number
-   Row 5/6: Birth Date | Github
-   Row 7/8: GIN446 Website | empty
-   Row 9: warning
-   Row 10: Next */
-form > fieldset:nth-of-type(1) > label[for="studentID"] { grid-column: 1; grid-row: 1; }
-form > fieldset:nth-of-type(1) > #studentID { grid-column: 1; grid-row: 2; }
-
-form > fieldset:nth-of-type(1) > label[for="fullname"] { grid-column: 2; grid-row: 1; }
-form > fieldset:nth-of-type(1) > #fullname { grid-column: 2; grid-row: 2; }
-
-form > fieldset:nth-of-type(1) > label[for="email"] { grid-column: 1; grid-row: 3; }
-form > fieldset:nth-of-type(1) > #email { grid-column: 1; grid-row: 4; }
-
-form > fieldset:nth-of-type(1) > label[for="phone"] { grid-column: 2; grid-row: 3; }
-form > fieldset:nth-of-type(1) > div:has(> #phone) { grid-column: 2; grid-row: 4; }
-
-form > fieldset:nth-of-type(1) > label[for="DateOfBirth"] { grid-column: 1; grid-row: 5; }
-form > fieldset:nth-of-type(1) > #DateOfBirth { grid-column: 1; grid-row: 6; }
-
-form > fieldset:nth-of-type(1) > label[for="github"] { grid-column: 2; grid-row: 5; }
-form > fieldset:nth-of-type(1) > #github { grid-column: 2; grid-row: 6; }
-
-form > fieldset:nth-of-type(1) > label[for="WebWebsite"] { grid-column: 1 / -1; grid-row: 7; }
-form > fieldset:nth-of-type(1) > #WebWebsite { grid-column: 1 / -1; grid-row: 8; }
-
-/* ---------- Step 2 placement ---------- */
-form > fieldset:nth-of-type(2) > label[for="major"] { grid-column: 1; grid-row: 1; }
-form > fieldset:nth-of-type(2) > #major { grid-column: 1; grid-row: 2; }
-
-form > fieldset:nth-of-type(2) > label[for="GPA"] { grid-column: 2; grid-row: 1; }
-form > fieldset:nth-of-type(2) > #GPA { grid-column: 2; grid-row: 2; }
-
-form > fieldset:nth-of-type(2) > label[for="credits"] { grid-column: 1; grid-row: 3; }
-form > fieldset:nth-of-type(2) > #credits { grid-column: 1; grid-row: 4; }
-
-form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 3 / span 2;
-}
-
-/* Expected Graduation / Engineering Internship */
+/* ---------- Radio-group boxes (Graduation / Internship) ---------- */
 form > fieldset > fieldset:has(input[type="radio"]) {
     display: grid;
     grid-template-columns: repeat(3, max-content);
@@ -220,105 +167,149 @@ form > fieldset > fieldset:has(input[type="radio"]) > legend {
     font-weight: var(--font-weight-semibold);
 }
 
-/* Expected Graduation */
-form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(1) {
-    grid-column: 2;
-    grid-row: 3 / span 2;
+/* ---------- Spacing: every field owns 3 rows (label / control / error) ----------
+   Without an error: control margin + 2 row gaps = normal field-to-field gap.
+   With an error: the control sits tight against its message. */
+form > fieldset > label:not([for^="step"]) + :is(input, select, textarea, div) {
+    margin-bottom: calc(var(--space-4) - 0.8rem);
 }
 
-form > fieldset:nth-of-type(2) > label[for="GradDate"] { grid-column: 1; grid-row: 5; }
-form > fieldset:nth-of-type(2) > #GradDate { grid-column: 1; grid-row: 6; }
-
-form > fieldset:nth-of-type(2) > fieldset:has(input[type="radio"]):nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 5 / span 2;
+form > fieldset > label:not([for^="step"]) + :is(input, select, textarea):has(+ .error),
+form > fieldset > label[for="phone"] + div:has(.error) {
+    margin-bottom: 0;
 }
 
+/* =========================================================
+   DESKTOP PLACEMENT  (mobile uses normal document flow)
+   Every field = label row, control row, error row
+   ========================================================= */
+@media (min-width: 701px) {
 
-form > fieldset:nth-of-type(1) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 9; }
-form > fieldset:nth-of-type(1) > label.next { grid-column: 2; grid-row: 10; }
+    /* ----- Step 1 ----- */
+    form > fieldset:nth-of-type(1) > label[for="studentID"] { grid-column: 1; grid-row: 1; }
+    form > fieldset:nth-of-type(1) > #studentID             { grid-column: 1; grid-row: 2; }
+    form > fieldset:nth-of-type(1) > #studentID + .error    { grid-column: 1; grid-row: 3; }
 
-form > fieldset:nth-of-type(2) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 7; }
-form > fieldset:nth-of-type(2) > label.prev { grid-column: 1; grid-row: 8; }
-form > fieldset:nth-of-type(2) > label.next { grid-column: 2; grid-row: 8; }
+    form > fieldset:nth-of-type(1) > label[for="fullname"]  { grid-column: 2; grid-row: 1; }
+    form > fieldset:nth-of-type(1) > #fullname              { grid-column: 2; grid-row: 2; }
+    form > fieldset:nth-of-type(1) > #fullname + .error     { grid-column: 2; grid-row: 3; }
 
-/* ---------- Step 3 placement ---------- */
-form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"]) {
-    grid-column: 1 / -1;
-    grid-row: 1 / span 2;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: stretch;
-    gap: 0.9rem 1.4rem;
-    min-width: 0;
-    margin: -0.25rem 0 0;
-    padding: 0;
-    border: 0;
+    form > fieldset:nth-of-type(1) > label[for="email"]     { grid-column: 1; grid-row: 4; }
+    form > fieldset:nth-of-type(1) > #email                 { grid-column: 1; grid-row: 5; }
+    form > fieldset:nth-of-type(1) > #email + .error        { grid-column: 1; grid-row: 6; }
+
+    /* phone: its error lives inside the div, so the div spans 2 rows */
+    form > fieldset:nth-of-type(1) > label[for="phone"]     { grid-column: 2; grid-row: 4; }
+    form > fieldset:nth-of-type(1) > div:has(> #phone)      { grid-column: 2; grid-row: 5 / span 2; align-self: start; }
+
+    form > fieldset:nth-of-type(1) > label[for="DateOfBirth"] { grid-column: 1; grid-row: 7; }
+    form > fieldset:nth-of-type(1) > #DateOfBirth             { grid-column: 1; grid-row: 8; }
+    form > fieldset:nth-of-type(1) > #DateOfBirth + .error    { grid-column: 1; grid-row: 9; }
+
+    form > fieldset:nth-of-type(1) > label[for="github"]    { grid-column: 2; grid-row: 7; }
+    form > fieldset:nth-of-type(1) > #github                { grid-column: 2; grid-row: 8; }
+    form > fieldset:nth-of-type(1) > #github + .error       { grid-column: 2; grid-row: 9; }
+
+    form > fieldset:nth-of-type(1) > label[for="WebWebsite"] { grid-column: 1 / -1; grid-row: 10; }
+    form > fieldset:nth-of-type(1) > #WebWebsite             { grid-column: 1 / -1; grid-row: 11; }
+    form > fieldset:nth-of-type(1) > #WebWebsite + .error    { grid-column: 1 / -1; grid-row: 12; }
+
+    form > fieldset:nth-of-type(1) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 13; }
+    form > fieldset:nth-of-type(1) > label.next                 { grid-column: 2; grid-row: 14; }
+
+    /* ----- Step 2 ----- */
+    form > fieldset:nth-of-type(2) > label[for="major"]  { grid-column: 1; grid-row: 1; }
+    form > fieldset:nth-of-type(2) > #major              { grid-column: 1; grid-row: 2; }
+    form > fieldset:nth-of-type(2) > #major + .error     { grid-column: 1; grid-row: 3; }
+
+    form > fieldset:nth-of-type(2) > label[for="GPA"]    { grid-column: 2; grid-row: 1; }
+    form > fieldset:nth-of-type(2) > #GPA                { grid-column: 2; grid-row: 2; }
+    form > fieldset:nth-of-type(2) > #GPA + .error       { grid-column: 2; grid-row: 3; }
+
+    form > fieldset:nth-of-type(2) > label[for="credits"] { grid-column: 1; grid-row: 4; }
+    form > fieldset:nth-of-type(2) > #credits             { grid-column: 1; grid-row: 5; }
+    form > fieldset:nth-of-type(2) > #credits + .error    { grid-column: 1; grid-row: 6; }
+
+    /* Expected Graduation box (+ its error underneath) */
+    form > fieldset:nth-of-type(2) > fieldset:nth-of-type(1)          { grid-column: 2; grid-row: 4 / span 2; }
+    form > fieldset:nth-of-type(2) > fieldset:nth-of-type(1) + .error { grid-column: 2; grid-row: 6; }
+
+    form > fieldset:nth-of-type(2) > label[for="GradDate"] { grid-column: 1; grid-row: 7; }
+    form > fieldset:nth-of-type(2) > #GradDate             { grid-column: 1; grid-row: 8; }
+    form > fieldset:nth-of-type(2) > #GradDate + .error    { grid-column: 1; grid-row: 9; }
+
+    /* Internship box (+ its error underneath) */
+    form > fieldset:nth-of-type(2) > fieldset:nth-of-type(2)          { grid-column: 2; grid-row: 7 / span 2; }
+    form > fieldset:nth-of-type(2) > fieldset:nth-of-type(2) + .error { grid-column: 2; grid-row: 9; }
+
+    form > fieldset:nth-of-type(2) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 10; }
+    form > fieldset:nth-of-type(2) > label.prev                 { grid-column: 1; grid-row: 11; }
+    form > fieldset:nth-of-type(2) > label.next                 { grid-column: 2; grid-row: 11; }
+
+        /* ----- Step 3 ----- */
+    /* Row 6 is a flexible spare row: the tall Software list spans rows 4-6,
+       so its extra height lands in row 6 and not between the field and its error. */
+    form > fieldset:nth-of-type(3) {
+        grid-template-rows: repeat(5, auto) minmax(0, 1fr);
+    }
+
+    form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"])          { grid-column: 1 / -1; grid-row: 1; }
+    form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"]) + .error { grid-column: 1 / -1; grid-row: 2; }
+
+    form > fieldset:nth-of-type(3) > label[for="ProgLang"] { grid-column: 1; grid-row: 3; }
+    form > fieldset:nth-of-type(3) > #ProgLang             { grid-column: 1; grid-row: 4; }
+    form > fieldset:nth-of-type(3) > #ProgLang + .error    { grid-column: 1; grid-row: 5; align-self: start; }
+
+    form > fieldset:nth-of-type(3) > label[for="Software"] { grid-column: 2; grid-row: 3; }
+    form > fieldset:nth-of-type(3) > #Software             { grid-column: 2; grid-row: 4 / span 3; }
+    form > fieldset:nth-of-type(3) > #Software + .error    { grid-column: 2; grid-row: 7; }
+
+    form > fieldset:nth-of-type(3) > small {
+        grid-column: 2;
+        grid-row: 8;
+        margin: -0.25rem 0 0;
+        color: var(--color-text-soft);
+        font-size: 0.85rem;
+    }
+
+    form > fieldset:nth-of-type(3) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 9; }
+    form > fieldset:nth-of-type(3) > label.prev                 { grid-column: 1; grid-row: 10; }
+    form > fieldset:nth-of-type(3) > label.next                 { grid-column: 2; grid-row: 10; }
+
+    /* ----- Step 4 ----- */
+    form > fieldset:nth-of-type(4) > label[for="ProjectTitle"] { grid-column: 1 / -1; grid-row: 1; }
+    form > fieldset:nth-of-type(4) > #ProjectTitle             { grid-column: 1 / -1; grid-row: 2; }
+    form > fieldset:nth-of-type(4) > #ProjectTitle + .error    { grid-column: 1 / -1; grid-row: 3; }
+
+    form > fieldset:nth-of-type(4) > label[for="ProjectArea"] { grid-column: 1 / -1; grid-row: 4; }
+    form > fieldset:nth-of-type(4) > #ProjectArea             { grid-column: 1 / -1; grid-row: 5; }
+    form > fieldset:nth-of-type(4) > #ProjectArea + .error    { grid-column: 1 / -1; grid-row: 6; }
+
+    form > fieldset:nth-of-type(4) > label[for="Desc"] { grid-column: 1 / -1; grid-row: 7; }
+    form > fieldset:nth-of-type(4) > #Desc             { grid-column: 1 / -1; grid-row: 8; }
+    form > fieldset:nth-of-type(4) > #Desc + .error    { grid-column: 1 / -1; grid-row: 9; }
+
+    form > fieldset:nth-of-type(4) > label[for="Team-size"] { grid-column: 1; grid-row: 10; }
+    form > fieldset:nth-of-type(4) > #Team-size             { grid-column: 1; grid-row: 11; }
+    form > fieldset:nth-of-type(4) > #Team-size + .error    { grid-column: 1; grid-row: 12; }
+
+    form > fieldset:nth-of-type(4) > label[for="project_color"] { grid-column: 2; grid-row: 10; }
+    form > fieldset:nth-of-type(4) > #project_color             { grid-column: 2; grid-row: 11; }
+    form > fieldset:nth-of-type(4) > #project_color + .error    { grid-column: 2; grid-row: 12; }
+
+    form > fieldset:nth-of-type(4) > label[for="meeting-date"] { grid-column: 1; grid-row: 13; }
+    form > fieldset:nth-of-type(4) > #meeting-date             { grid-column: 1; grid-row: 14; }
+    form > fieldset:nth-of-type(4) > #meeting-date + .error    { grid-column: 1; grid-row: 15; }
+
+    form > fieldset:nth-of-type(4) > label[for="meeting-time"] { grid-column: 2; grid-row: 13; }
+    form > fieldset:nth-of-type(4) > #meeting-time             { grid-column: 2; grid-row: 14; }
+    form > fieldset:nth-of-type(4) > #meeting-time + .error    { grid-column: 2; grid-row: 15; }
+
+    form > fieldset:nth-of-type(4) > label.prev                     { grid-column: 1; grid-row: 16; }
+    form > fieldset:nth-of-type(4) > p:has(> #confirmation)         { grid-row: 17; }
+    form > fieldset:nth-of-type(4) > p:has(> button[type="submit"]) { grid-row: 18; }
 }
 
-form > fieldset:nth-of-type(3) > fieldset:has(input[type="checkbox"]) > legend {
-    grid-column: 1 / -1;
-    width: auto;
-    margin: 0 0 var(--space-4);
-    padding: 0;
-    color: var(--color-text-soft);
-    font-size: 0.85rem;
-    font-weight: 400;
-}
-
-form > fieldset:nth-of-type(3) > label[for="ProgLang"] { grid-column: 1; grid-row: 3; }
-form > fieldset:nth-of-type(3) > #ProgLang { grid-column: 1; grid-row: 4; }
-
-form > fieldset:nth-of-type(3) > label[for="Software"] { grid-column: 2; grid-row: 3; }
-form > fieldset:nth-of-type(3) > #Software { grid-column: 2; grid-row: 4; }
-
-form > fieldset:nth-of-type(3) > small {
-    grid-column: 2;
-    grid-row: 5;
-    margin: -0.25rem 0 0;
-    color: var(--color-text-soft);
-    font-size: 0.85rem;
-}
-
-
-form > fieldset:nth-of-type(3) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 6; }
-form > fieldset:nth-of-type(3) > label.prev { grid-column: 1; grid-row: 7; }
-form > fieldset:nth-of-type(3) > label.next { grid-column: 2; grid-row: 7; }
-
-/* ---------- Step 4 placement ---------- */
-form > fieldset:nth-of-type(4) > label[for="ProjectTitle"] { grid-column: 1 / -1; grid-row: 1; }
-form > fieldset:nth-of-type(4) > #ProjectTitle { grid-column: 1 / -1; grid-row: 2; }
-
-form > fieldset:nth-of-type(4) > label[for="ProjectArea"] { grid-column: 1 / -1; grid-row: 3; }
-form > fieldset:nth-of-type(4) > #ProjectArea { grid-column: 1 / -1; grid-row: 4; }
-
-form > fieldset:nth-of-type(4) > label[for="Desc"] { grid-column: 1 / -1; grid-row: 5; }
-form > fieldset:nth-of-type(4) > #Desc { grid-column: 1 / -1; grid-row: 6; }
-
-form > fieldset:nth-of-type(4) > label[for="Team-size"] { grid-column: 1; grid-row: 7; }
-form > fieldset:nth-of-type(4) > #Team-size { grid-column: 1; grid-row: 8; }
-
-form > fieldset:nth-of-type(4) > label[for="project_color"] { grid-column: 2; grid-row: 7; }
-form > fieldset:nth-of-type(4) > #project_color { grid-column: 2; grid-row: 8; }
-
-form > fieldset:nth-of-type(4) > label[for="meeting-date"] { grid-column: 1; grid-row: 9; }
-form > fieldset:nth-of-type(4) > #meeting-date { grid-column: 1; grid-row: 10; }
-
-form > fieldset:nth-of-type(4) > label[for="meeting-time"] { grid-column: 2; grid-row: 9; }
-form > fieldset:nth-of-type(4) > #meeting-time { grid-column: 2; grid-row: 10; }
-
-form > fieldset:nth-of-type(4) > label.prev {
-    grid-column: 1;
-    grid-row: 11;
-}
-
-form > fieldset:nth-of-type(4) > p:has(> #confirmation) {
-    grid-row: 12;
-}
-
-form > fieldset:nth-of-type(4) > p:has(> button[type="submit"]) {
-    grid-row: 13;
-}
 /* ---------- Inline validation warning (pure CSS) ---------- */
 form > fieldset > p:not(:has(input, button)) {
     grid-column: 1 / -1;
@@ -446,19 +437,21 @@ select:user-invalid {
 
 /* ---------- Phone number ----------
    Label remains on its own line; the prefix and phone input stay
-   together on the following line. */
+   together on the following line. The server error (if any) wraps
+   onto its own line underneath, inside the same div. */
 form > fieldset > label[for="phone"] {
     margin-bottom: 0;
 }
 
 form > fieldset > div:has(> #phone) {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem 0.5rem;
     min-width: 0;
 }
 
-form > fieldset > div:has(> #phone) > span {
+form > fieldset > div:has(> #phone) > span:not(.error) {
     flex: 0 0 auto;
     font-size: 1rem;
     color: var(--color-teal-text);
@@ -469,6 +462,11 @@ form > fieldset > div:has(> #phone) > #phone {
     flex: 1 1 auto;
     min-width: 0;
     max-width: none;
+}
+
+form > fieldset > div:has(> #phone) > .error {
+    flex: 0 0 100%;
+    margin: 0;
 }
 
 /* ---------- Color picker ---------- */
@@ -765,6 +763,20 @@ button[type="reset"] {
 button[type="reset"]:hover {
     border-color: var(--color-teal);
     color: var(--color-teal-text);
+}
+
+/* ---------- Server validation errors ---------- */
+form .error {
+    display: block;
+    margin: 0 0 calc(var(--space-4) - 0.4rem);
+    color: #b3271f;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Confirmation checkbox error (inside its <p>, after the label) */
+form > fieldset > p > .error {
+    margin: 0.4rem 0 0;
 }
 
 /* ---------- Responsive ---------- */

@@ -2039,7 +2039,7 @@ body:has(nav) .profile dl {
 @media (min-width: 701px) {
 
     /* Start the profile content immediately beside the sidebar. */
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) main {
+    body:has(article.profile) main {
         width: calc(100% - var(--sidebar-width));
         max-width: none;
 
@@ -2050,14 +2050,14 @@ body:has(nav) .profile dl {
     }
 
     /* Let the profile use the complete available width. */
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile {
+    body:has(article.profile) .profile {
         width: 100%;
         max-width: none;
         margin: 0;
     }
 
     /* Full-width rectangular profile header. */
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header {
+    body:has(article.profile) .profile-header {
         width: 100%;
         margin: 0 !important;
 
@@ -2077,9 +2077,9 @@ body:has(nav) .profile dl {
     }
 
     /* Keep every item inside the header aligned to the left. */
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header h1,
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header .profile-title,
-    body:has(nav a[href="/submit-profile"][aria-current="page"]) .profile-header .profile-contact {
+    body:has(article.profile) .profile-header h1,
+    body:has(article.profile) .profile-header .profile-title,
+    body:has(article.profile) .profile-header .profile-contact {
         margin-left: 0;
         margin-right: 0;
     }
