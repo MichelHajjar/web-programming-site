@@ -13,10 +13,16 @@
 
 <form id="ProfileForm" action="{{ url_for('submit_profile1') }}" method="post" aria-label="Engineering student profile">
 
+
 <input type="radio" name="wizard_step" id="step1" checked tabindex="-1">
+<label for="step1" class="wizard-step-label">Step 1: Personal Information</label>
 <input type="radio" name="wizard_step" id="step2" tabindex="-1">
+<label for="step2" class="wizard-step-label">Step 2: Academic Information</label>
 <input type="radio" name="wizard_step" id="step3" tabindex="-1">
+<label for="step3" class="wizard-step-label">Step 3: Technical Background</label>
 <input type="radio" name="wizard_step" id="step4" tabindex="-1">
+<label for="step4" class="wizard-step-label">Step 4: Final Year Project</label>
+
 <hr aria-hidden="true">
 <p aria-live="polite">
     <span>Step 1 of 4 — Personal information</span>

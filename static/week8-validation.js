@@ -12,11 +12,28 @@ if (form) {
     // Get all the fieldsets (steps) inside the form.
     const steps = form.querySelectorAll(":scope > fieldset");
 
-    // Get all the Next buttons.
-    const nextButtons = form.querySelectorAll("label.next");
+    // Get all the Next and prev buttons.
+    const nextButtons = form.querySelectorAll("button.next");
+    const prevButtons = form.querySelectorAll("button.prev");
 
     // Prevent multiple validation requests at the same time.
     let checking = false;
+    
+function goToStep(index) {
+    // Activate the selected step.
+    const radio = document.getElementById(
+        "step" + (index + 1)
+    );
+    radio.checked = true;
+    // Move focus to the first input of the new step.
+    const firstInput = steps[index].querySelector(
+        "input, select, textarea"
+    );
+    if (firstInput) {
+        firstInput.focus();
+    }
+}
+
 
 
     // FUNCTION 1: Remove previous error messages.
@@ -127,8 +144,13 @@ if (form) {
         // Get the current fieldset using its index.
         const step = steps[index];
 
-        // Get the Next button corresponding to this step.
+        // Get the Next button of the current step.
         const nextButton = nextButtons[index];
+
+        // Show loading feedback while Flask validates.
+        nextButton.textContent = "Validating...";
+        nextButton.disabled = true;
+
 
         // Try to send the data and validate it.
         try {
@@ -206,22 +228,25 @@ if (form) {
                 return;
             }
 
-            // If there are no errors, get the next step's radio control.
-            // htmlFor contains the ID of the element the Next label targets.
-            // checked = true activates that step.
-            document.getElementById(nextButton.htmlFor).checked = true;
+            // If there are no errors, move to the next step.
+            goToStep(index + 1);
 
         } catch (error) {
 
             // If the request fails, display an alert to the user.
             alert("Unable to validate this step right now. Please try again.");
 
+        
         } finally {
 
-            // This always executes, whether validation succeeds or fails.
+            // Restore the Next button after validation.
+            nextButton.textContent = "Next";
+            nextButton.disabled = false;
+
             // Allow another validation request.
             checking = false;
         }
+
     }
 
 
@@ -240,5 +265,16 @@ if (form) {
             checkStep(index);
         });
     });
+
+    // Loop through all Previous buttons.
+    prevButtons.forEach(function (button, index) {
+
+        button.addEventListener("click", function () {
+
+            // Go back to the previous step.
+            goToStep(index);
+        });
+    });
+
 }
 

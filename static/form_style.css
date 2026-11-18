@@ -215,7 +215,7 @@ form > fieldset > label[for="phone"] + div:has(.error) {
     form > fieldset:nth-of-type(1) > #WebWebsite + .error    { grid-column: 1 / -1; grid-row: 12; }
 
     form > fieldset:nth-of-type(1) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 13; }
-    form > fieldset:nth-of-type(1) > label.next                 { grid-column: 2; grid-row: 14; }
+    form > fieldset:nth-of-type(1) > .next                 { grid-column: 2; grid-row: 14; }
 
     /* ----- Step 2 ----- */
     form > fieldset:nth-of-type(2) > label[for="major"]  { grid-column: 1; grid-row: 1; }
@@ -243,8 +243,8 @@ form > fieldset > label[for="phone"] + div:has(.error) {
     form > fieldset:nth-of-type(2) > fieldset:nth-of-type(2) + .error { grid-column: 2; grid-row: 9; }
 
     form > fieldset:nth-of-type(2) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 10; }
-    form > fieldset:nth-of-type(2) > label.prev                 { grid-column: 1; grid-row: 11; }
-    form > fieldset:nth-of-type(2) > label.next                 { grid-column: 2; grid-row: 11; }
+    form > fieldset:nth-of-type(2) > .prev                 { grid-column: 1; grid-row: 11; }
+    form > fieldset:nth-of-type(2) > .next                 { grid-column: 2; grid-row: 11; }
 
         /* ----- Step 3 ----- */
     /* Row 6 is a flexible spare row: the tall Software list spans rows 4-6,
@@ -273,8 +273,8 @@ form > fieldset > label[for="phone"] + div:has(.error) {
     }
 
     form > fieldset:nth-of-type(3) > p:not(:has(input, button)) { grid-column: 1 / -1; grid-row: 9; }
-    form > fieldset:nth-of-type(3) > label.prev                 { grid-column: 1; grid-row: 10; }
-    form > fieldset:nth-of-type(3) > label.next                 { grid-column: 2; grid-row: 10; }
+    form > fieldset:nth-of-type(3) > .prev                 { grid-column: 1; grid-row: 10; }
+    form > fieldset:nth-of-type(3) > .next                 { grid-column: 2; grid-row: 10; }
 
     /* ----- Step 4 ----- */
     form > fieldset:nth-of-type(4) > label[for="ProjectTitle"] { grid-column: 1 / -1; grid-row: 1; }
@@ -305,7 +305,7 @@ form > fieldset > label[for="phone"] + div:has(.error) {
     form > fieldset:nth-of-type(4) > #meeting-time             { grid-column: 2; grid-row: 14; }
     form > fieldset:nth-of-type(4) > #meeting-time + .error    { grid-column: 2; grid-row: 15; }
 
-    form > fieldset:nth-of-type(4) > label.prev                     { grid-column: 1; grid-row: 16; }
+    form > fieldset:nth-of-type(4) > .prev                     { grid-column: 1; grid-row: 16; }
     form > fieldset:nth-of-type(4) > p:has(> #confirmation)         { grid-row: 17; }
     form > fieldset:nth-of-type(4) > p:has(> button[type="submit"]) { grid-row: 18; }
 }
@@ -637,8 +637,10 @@ form > fieldset > fieldset input[type="checkbox"]:checked + label {
 /* ---------- Previous / Next (labels styled as buttons) ----------
    They sit directly in the step's 2-column grid: Previous in the
    left column, Next in the right column. */
-label.prev,
-label.next {
+.prev,
+.next {
+    font-family: inherit;
+    line-height: inherit;
     display: inline-block;
     align-self: center;
     margin-top: var(--space-2);
@@ -653,35 +655,39 @@ label.next {
         background var(--transition-fast), opacity var(--transition-fast);
 }
 
-label.next {
+.next {
     background: var(--color-teal);
     color: var(--color-navy);
     grid-column: 2;
     justify-self: end;
 }
 
-label.next:hover {
+.next:hover {
     background: var(--color-teal-dark);
     box-shadow: var(--shadow-sm);
     transform: translateY(-1px);
 }
 
-form > fieldset:has(:invalid) label.next {
+
+form > fieldset:has(:invalid) .next {
     pointer-events: none;
-    opacity: 0.45;
+    opacity: 1;
+    background: var(--color-teal-soft);
+    color: var(--color-navy);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
-label.prev {
+
+.prev {
     justify-self: start;
     background: transparent;
     color: var(--color-teal-text);
     border-color: var(--color-border);
 }
 
-label.prev:hover {
+.prev:hover {
     border-color: var(--color-teal);
     background: var(--color-teal-soft);
 }
@@ -818,8 +824,8 @@ form > fieldset > p > .error {
     }
 
     /* Buttons stack and fill the width. */
-    label.prev,
-    label.next {
+    .prev,
+    .next {
         grid-column: 1;
         grid-row: auto;
         justify-self: stretch;
@@ -827,16 +833,16 @@ form > fieldset > p > .error {
     }
 
     /* Next right under Previous: 0.75rem apart (the grid adds 1rem). */
-    label.prev + label.next {
+    .prev + .next {
         margin-top: calc(var(--space-3) - var(--space-4));
     }
 
     /* A lone Next (step 1) or a lone Previous (step 4) gets extra space. */
-    form > fieldset > p + label.next {
+    form > fieldset > p + .next {
         margin-top: calc(var(--space-2) + var(--space-3));
     }
 
-    label.prev:has(+ p) {
+    .prev:has(+ p) {
         margin-bottom: calc(0.4rem + var(--space-3));
     }
 }
@@ -1121,4 +1127,30 @@ main article.profile .profile-title {
 @media (max-width: 700px) {
     main article.profile { --pad: 1.25rem; }
     .profile dl { grid-template-columns: 1fr; }
+}
+
+
+/* Week 12 - Visible focus on wizard navigation */
+.prev:focus-visible,
+.next:focus-visible {
+    outline: 3px solid var(--color-teal-text);
+    outline-offset: 3px;
+}
+
+
+/* Week 12 - Disabled Next button during validation */
+#Week8ProfileForm button.next:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+
+/* Week 12 - Hide wizard labels visually */
+.wizard-step-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
 }

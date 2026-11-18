@@ -22,7 +22,7 @@
 {% block head %} <link rel="stylesheet" href="{{ url_for('static', filename='form_style.css') }}"/>
 <style>
     /* Week 8 only: keep Next clickable so errors can be shown after clicking. */
-    #Week8ProfileForm > fieldset:has(:invalid) label.next,
+    #Week8ProfileForm > fieldset:has(:invalid) button.next,
     #Week8ProfileForm > fieldset:has(:invalid) button[type="submit"] {
         pointer-events: auto;
         opacity: 1;
@@ -107,7 +107,7 @@
     {{ err('gin446') }}
 
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step2" class="next">Next</label>
+    <button type="button" class="next">Next</button>
 </fieldset>
 
 <fieldset>
@@ -189,8 +189,8 @@
 </fieldset>
 {{ err('internship_completed') }}
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step1" class="prev">Previous</label>
-    <label for="step3" class="next">Next</label>
+    <button type="button" class="prev">Previous</button>
+    <button type="button" class="next">Next</button>
 </fieldset>
 
 <fieldset>
@@ -293,8 +293,8 @@
 <small>Hold Ctrl (Windows) or Command (Mac) to select several options.</small>
 
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step2" class="prev">Previous</label>
-    <label for="step4" class="next">Next</label>
+    <button type="button" class="prev">Previous</button>
+    <button type="button" class="next">Next</button>
 </fieldset>
 
 <fieldset>
@@ -359,7 +359,7 @@
     <input type="time" id="meeting-time" name="meeting_time" value="{{ data.get('meeting_time', '') }}" required>
     {{ err('meeting_time')}}
 
-    <label for="step3" class="prev">Previous</label>
+    <button type="button" class="prev">Previous</button>
     <p>
         <input type="checkbox" id="confirmation" name="confirmation" {% if data.get('confirmation') =='on' %}checked{% endif%} required>
         <label for="confirmation">I confirm that the information provided is accurate.</label>
