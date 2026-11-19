@@ -49,7 +49,19 @@
     <label for="WebWebsite">GIN446 Website:</label>
     <input type="url" id="WebWebsite" name="gin446" placeholder="eg: https://web-programming-site-ic44.onrender.com" pattern="https://[a-zA-Z0-9\-]+\.onrender\.com/?">
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step2" class="next">Next</label>
+<button type="button" class="next"
+    onclick="
+        const currentStep = this.closest('fieldset');
+        const invalidField = currentStep.querySelector('input:invalid, select:invalid, textarea:invalid');
+
+        if (invalidField) {
+            invalidField.reportValidity();
+            invalidField.focus();
+        } else {
+            document.getElementById('step2').checked = true;
+            document.getElementById('major').focus();
+        }
+    ">Next</button>
 </fieldset>
 
 <fieldset>
@@ -88,8 +100,22 @@
         <label for="No">No</label>
     </fieldset>
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step1" class="prev">Previous</label>
-    <label for="step3" class="next">Next</label>
+    <button type="button" class="prev" onclick="document.getElementById('step1').checked = true; document.getElementById('studentID').focus();">Previous</button>
+    
+<button type="button" class="next"
+    onclick="
+        const currentStep = this.closest('fieldset');
+        const invalidField = currentStep.querySelector('input:invalid, select:invalid, textarea:invalid');
+
+        if (invalidField) {
+            invalidField.reportValidity();
+            invalidField.focus();
+        } else {
+            document.getElementById('step3').checked = true;
+            document.getElementById('skill1').focus();
+        }
+    ">Next</button>
+
 </fieldset>
 
 <fieldset>
@@ -135,8 +161,27 @@
     </select>
     <small>Hold Ctrl (Windows) or Command (Mac) to select several options.</small>
     <p>Please fill in all required fields correctly before continuing.</p>
-    <label for="step2" class="prev">Previous</label>
-    <label for="step4" class="next">Next</label>
+    
+    <button type="button" class="prev"
+        onclick="
+            document.getElementById('step2').checked = true;
+            document.getElementById('major').focus();
+        ">Previous</button>
+
+    <button type="button" class="next"
+        onclick="
+            const currentStep = this.closest('fieldset');
+            const invalidField = currentStep.querySelector('input:invalid, select:invalid, textarea:invalid');
+
+            if (invalidField) {
+                invalidField.reportValidity();
+                invalidField.focus();
+            } else {
+                document.getElementById('step4').checked = true;
+                document.getElementById('ProjectTitle').focus();
+            }
+        ">Next</button>
+
 </fieldset>
 
 <fieldset>
@@ -187,7 +232,13 @@
     <input type="date" id="meeting-date" name="meeting_date" required>
     <label for="meeting-time">Preferred Meeting Time</label>
     <input type="time" id="meeting-time" name="meeting_time" required>
-    <label for="step3" class="prev">Previous</label>
+    
+    <button type="button" class="prev"
+        onclick="
+            document.getElementById('step3').checked = true;
+            document.getElementById('skill1').focus();
+        ">Previous</button>
+
     <p>
         <input type="checkbox" id="confirmation" name="confirmation" required>
         <label for="confirmation">I confirm that the information provided is accurate.</label>
