@@ -89,6 +89,10 @@
     margin: 0 0 24px;
 }
 
+#questionText:empty {
+    display: none;
+}
+
 #choices {
     position: relative;
 }
