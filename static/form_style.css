@@ -1154,3 +1154,31 @@ main article.profile .profile-title {
     clip: rect(0 0 0 0);
     white-space: nowrap;
 }
+/* Week 12 - Accessibility: Profile title contrast */
+.profile-header .profile-title {
+    color: #dce9e7;
+}
+
+/* Week 12 - Accessible wizard controls */
+#ProfileForm button.next,
+#ProfileForm button.prev {
+    font-family: inherit;
+}
+
+#ProfileForm button.next:focus-visible,
+#ProfileForm button.prev:focus-visible {
+    outline: 3px solid var(--color-teal-dark);
+    outline-offset: 3px;
+}
+
+/* Allow invalid fields to be reported when Next is activated */
+#ProfileForm > fieldset:has(:invalid) .next {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Week 4: prevent Next when required fields are invalid */
+#ProfileForm > fieldset:has(:invalid) label.next {
+    pointer-events: none;
+    cursor: not-allowed;
+}

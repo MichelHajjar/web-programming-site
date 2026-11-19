@@ -27,14 +27,14 @@
 #resultsPanel h2::after,
 #resultsPanel h3::before,
 #resultsPanel h3::after,
-.container h1::before,
-.container h1::after {
+.container .quiz-title::before,
+.container .quiz-title::after {
     content: none !important;
     display: none !important;
 }
 
 /* ---------- 2. New page style: no container/card ---------- */
-.container h1 {
+.container .quiz-title {
     text-align: left;
     color: #0a1f33;
     font-size: clamp(2rem, 4vw, 2.8rem);

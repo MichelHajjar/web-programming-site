@@ -147,3 +147,69 @@ confirmButton.addEventListener("click", function () {
 reviewPanel.classList.remove("open");
 form.submit();
 });
+// week 12
+// Select all Next and Previous buttons inside the form.
+form.querySelectorAll("button.next, button.prev").forEach(function (button) {
+    // Run this function whenever a Next or Previous button is clicked.
+    // This also works when the button is activated using Enter or Space.
+    button.addEventListener("click", function () {
+
+        // Find the fieldset (current form step) containing the clicked button.
+        const currentStep = button.closest("fieldset");
+
+        // Check validation only when moving forward (Next).
+        // Previous does not need validation.
+        if (button.classList.contains("next")) {
+
+            // Get all input fields, dropdown menus, and textareas
+            // belonging to the current step.
+            const fields = currentStep.querySelectorAll(
+                "input, select, textarea"
+            );
+
+            // Loop through every field in the current step.
+            for (const field of fields) {
+
+                // Check whether the field satisfies its HTML validation rules.
+                if (!field.checkValidity()) {
+
+                    // Display the browser's built-in validation error message.
+                    field.reportValidity();
+
+                    // Move keyboard focus to the invalid field.
+                    field.focus();
+
+                    // Stop here so the user cannot move to the next step.
+                    return;
+                }
+            }
+        }
+
+        // Read the destination step from the button's data-step attribute.
+        // Example: data-step="step2" gives targetId = "step2".
+        const targetId = button.dataset.step;
+
+        // Select the hidden radio button corresponding to the destination step.
+        // The existing CSS uses this radio button to display the correct fieldset.
+        document.getElementById(targetId).checked = true;
+
+        // Extract the step number and convert it to a zero-based index.
+        // Example: "step2" -> 2 - 1 = 1 (second fieldset).
+        const stepIndex = Number(targetId.replace("step", "")) - 1;
+
+        // Get all direct fieldsets inside the form (the wizard steps).
+        const fieldsets = form.querySelectorAll(":scope > fieldset");
+
+        // Find the first input, dropdown, or textarea in the destination step.
+        const firstField = fieldsets[stepIndex].querySelector(
+            "input, select, textarea"
+        );
+
+        // Move keyboard focus to the first field of the new step.
+        // This allows keyboard users to continue without pressing Tab
+        // through unrelated elements.
+        if (firstField) {
+            firstField.focus();
+        }
+    });
+});

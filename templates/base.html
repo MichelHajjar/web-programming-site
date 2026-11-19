@@ -9,10 +9,11 @@
       {% block head %}{% endblock %}
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header> {% block header %}{% endblock %} </header>
     {% block navigation %}{% endblock %} 
     
-     <main> {% block content %}{% endblock%} </main>
+     <main id="main-content" tabindex="-1"> {% block content %}{% endblock%} </main>
     
     <footer>
         <p>Web Programming — built with Flask and deployed on Render.</p>

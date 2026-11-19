@@ -53,9 +53,13 @@
 {% for f in step1_fields if errors.get(f) %}{% set ns.step = 1 %}{% endfor %}
 
 <input type="radio" name="wizard_step" id="step1" {% if ns.step == 1 %}checked{% endif %} tabindex="-1">
+<label for="step1" class="wizard-step-label">Step 1: Personal Information</label>
 <input type="radio" name="wizard_step" id="step2" {% if ns.step == 2 %}checked{% endif %} tabindex="-1">
+<label for="step2" class="wizard-step-label">Step 2: Academic Information</label>
 <input type="radio" name="wizard_step" id="step3" {% if ns.step == 3 %}checked{% endif %} tabindex="-1">
+<label for="step3" class="wizard-step-label">Step 3: Technical Background</label>
 <input type="radio" name="wizard_step" id="step4" {% if ns.step == 4 %}checked{% endif %} tabindex="-1">
+<label for="step4" class="wizard-step-label">Step 4: Final Year Project</label>
 <hr aria-hidden="true">
 <p aria-live="polite">
     <span>Step 1 of 4 — Personal information</span>

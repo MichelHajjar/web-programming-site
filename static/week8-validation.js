@@ -86,6 +86,8 @@ function goToStep(index) {
         // Give the span the CSS class "error".
         error.className = "error";
 
+        error.setAttribute("role", "alert");
+        
         // Put the error message inside the span.
         error.textContent = message;
 

@@ -2237,3 +2237,24 @@ body:has(nav) main > section:last-of-type > ul > li:has(a)::before {
         padding-left: 0;
     }
 }
+
+/* Accessibility: Skip to main content */
+.skip-link {
+    position: fixed;
+    top: -80px;
+    left: 16px;
+    padding: 12px 18px;
+    background: #d8f3ef;
+    color: #0a1f33;
+    border: 2px solid #0a1f33;
+    border-radius: 6px;
+    z-index: 9999;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-link:focus {
+    top: 16px;
+    outline: 3px solid #0a1f33;
+    outline-offset: 3px;
+}
