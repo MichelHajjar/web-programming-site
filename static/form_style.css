@@ -425,7 +425,8 @@ textarea::placeholder {
 input:focus,
 select:focus,
 textarea:focus {
-    outline: none;
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
     border-color: var(--color-teal);
     box-shadow: 0 0 0 3px rgba(86, 216, 202, 0.28);
 }

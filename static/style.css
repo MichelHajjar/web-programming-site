@@ -1573,7 +1573,8 @@ body:has(nav a[href="/web-history-ai"][aria-current="page"]) main > section:last
 
     body:not(:has(nav)) main section {/*Targets Weekly Work.*/
         flex: 0 1 var(--home-card-width);
-        width: var(--home-card-width);
+        width: 100%;
+        max-width: var(--home-card-width);
         min-height: 300px;
         padding: var(--space-6);
         order: initial;
@@ -1722,7 +1723,8 @@ body:has(nav a[href="/web-history-ai"][aria-current="page"]) main > section:last
     }
 
     body:not(:has(nav)) main section {
-        width: var(--home-card-width);
+        width: 100%;
+        max-width: var(--home-card-width);
         min-height: var(--home-card-height);
     }
 
@@ -1995,7 +1997,7 @@ body:has(nav) .profile dl {
     align-items: center;
 
     background: var(--color-teal-soft);
-    color: var(--color-teal-text);
+    color: #116c64;
     font-weight: var(--font-weight-semibold);
 
     transition:

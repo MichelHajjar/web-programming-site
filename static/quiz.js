@@ -250,6 +250,9 @@ function renderQuestion() {
     radio.type = "radio";
     radio.name = "answer";
     radio.value = i;
+    radio.id = "answer-" + currentQuestion + "-" + i;
+    label.setAttribute("for", radio.id);
+
     // Restore an answer previously selected
     // by the user.
     if (userAnswers[currentQuestion] === i) {

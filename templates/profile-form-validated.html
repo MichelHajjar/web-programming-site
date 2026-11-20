@@ -7,7 +7,7 @@
     {% if errors.get(f) %}
 
         {# Display the error message for that field #}
-        <span class="error">{{ errors[f] }}</span>
+        <span class="error" role="alert">{{ errors[f] }}</span>
 
     {% endif %}
 
